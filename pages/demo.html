@@ -1,0 +1,754 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Project preview by Yasir Javed Khan.">
+  <link rel="canonical" href="https://yasirlab.in/pages/demo.html">
+  <meta name="theme-color" content="#0B3D91">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%230B3D91'/%3E%3Ctext x='32' y='43' font-family='Arial,Helvetica,sans-serif' font-size='26' font-weight='800' fill='%23fff' text-anchor='middle'%3EYJ%3C/text%3E%3C/svg%3E">
+  <title>Project Preview — Yasir Javed Khan</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&display=swap" rel="stylesheet">
+  <script src="https://unpkg.com/lucide@0.469.0"></script>
+  <style>
+    :root{--blue:#0B3D91;--blue-dark:#082A66;--text:#0F172A;--muted:#475569;--border:#E5EAF6;--light:#F6F8FF}
+    *{box-sizing:border-box}
+    body{margin:0;color:var(--text);background:#fff;font-family:Inter,system-ui,sans-serif;line-height:1.6}
+    a{text-decoration:none;color:inherit}
+    .container{max-width:900px;margin:0 auto;padding:0 24px}
+    header{position:sticky;top:0;background:rgba(255,255,255,.96);backdrop-filter:blur(10px);border-bottom:1px solid var(--border);z-index:2}
+    .header-inner{min-height:60px;display:flex;align-items:center;justify-content:space-between;gap:16px}
+    .logo{background:var(--blue);color:#fff;font-weight:800;font-size:13px;padding:6px 8px;border-radius:4px}
+    .header-actions{display:flex;align-items:center;gap:8px}
+    .back{display:inline-flex;align-items:center;justify-content:center;color:var(--blue);font-weight:600;font-size:13px;padding:7px 11px;border:1px solid var(--blue);border-radius:5px;background:#fff;transition:background .2s,color .2s}
+    .back:hover{background:var(--blue);color:#fff}
+    main{padding:48px 0 64px}
+    .eyebrow{color:var(--blue);font-weight:700;letter-spacing:.14em;font-size:11px;text-transform:uppercase}
+    h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:clamp(28px,5vw,42px);line-height:1.12;margin:10px 0}
+    .desc{color:var(--muted);max-width:720px}
+    .hero-img{width:100%;max-height:360px;object-fit:cover;border:1px solid var(--border);border-radius:10px;margin:24px 0;background:var(--light)}
+    .tags{display:flex;gap:8px;flex-wrap:wrap;margin:18px 0}
+    .tags span{background:var(--light);border:1px solid var(--border);color:var(--blue);padding:5px 10px;border-radius:999px;font-size:12px;font-weight:600}
+    .card{border:1px solid var(--border);border-radius:10px;padding:22px;margin-top:24px;box-shadow:0 8px 24px rgba(15,23,42,.05)}
+    .card h2{font-size:18px;margin:0 0 6px}
+    .card p{color:var(--muted);font-size:14px;margin:0 0 16px}
+    .actions{display:flex;gap:10px;flex-wrap:wrap}
+    .btn{display:inline-flex;align-items:center;justify-content:center;padding:10px 16px;border:1px solid var(--blue);border-radius:5px;font-weight:600;font-size:14px}
+    .btn-primary{background:var(--blue);color:#fff}
+    .btn-primary:hover{background:var(--blue-dark)}
+    .btn-outline{color:var(--blue)}
+    .btn-outline:hover{background:var(--light)}
+    .status{margin-top:16px;color:var(--muted);font-size:13px}
+    .demo-output{margin-top:16px;padding:16px;border:1px solid var(--border);border-radius:8px;background:var(--light);color:var(--text);font-size:14px}
+    .demo-output strong{display:block;margin-bottom:4px}
+    .calculator-demo{margin-top:16px;padding:16px;border:1px solid var(--border);border-radius:8px;background:var(--light)}
+    .calculator-display{width:100%;padding:12px;border:1px solid var(--border);border-radius:6px;background:#fff;color:var(--text);font:700 22px/1.2 Consolas,monospace;text-align:right}
+    .calculator-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:10px}
+    .calculator-grid button{padding:11px;border:1px solid var(--border);border-radius:6px;background:#fff;color:var(--text);font-weight:700;cursor:pointer}
+    .calculator-grid button:hover{background:#eaf0ff;color:var(--blue)}
+    .calculator-grid .operator{background:var(--blue);color:#fff}
+    footer{text-align:center;padding:20px;border-top:1px solid var(--border);color:var(--muted);font-size:12px}
+    .actions button{cursor:pointer;font-family:inherit}
+    .steps{list-style:none;margin:14px 0 0;padding:0;display:none}
+    .steps.active{display:grid;gap:6px}
+    .steps li{position:relative;padding-left:22px;font-size:13px;color:#94A3B8}
+    .steps li::before{content:"";position:absolute;left:4px;top:7px;width:8px;height:8px;border-radius:50%;background:#CBD5E1}
+    .steps li.done{color:var(--muted)}
+    .steps li.done::before{background:#16A34A}
+    .steps li.active{color:var(--text);font-weight:600}
+    .steps li.active::before{background:var(--blue);box-shadow:0 0 0 3px rgba(11,61,145,.15)}
+    .steps li.error{color:#B91C1C;font-weight:600}
+    .steps li.error::before{background:#DC2626}
+    .frame-wrap{margin-top:16px;border:1px solid var(--border);border-radius:10px;overflow:hidden;background:#fff;position:relative;scroll-margin-top:76px}
+    .calculator-demo{scroll-margin-top:76px}
+    .spinner{width:26px;height:26px;border-radius:50%;border:3px solid #D7E0F5;border-top-color:var(--blue);animation:spin .8s linear infinite}
+    @keyframes spin{to{transform:rotate(360deg)}}
+    .frame-skeleton{position:absolute;inset:0;display:flex;flex-direction:column;gap:10px;align-items:center;justify-content:center;background:linear-gradient(110deg,#F6F8FF 30%,#EDF2FF 45%,#F6F8FF 60%);background-size:200% 100%;animation:shimmer 1.4s linear infinite;color:var(--muted);font-size:13px;z-index:1}
+    @keyframes shimmer{to{background-position:-200% 0}}
+    .btn.loading{opacity:.75;pointer-events:none}
+    .btn.loading::after{content:"";display:inline-block;width:11px;height:11px;margin-left:8px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-1px}
+    .steps li{animation:stepIn .25s ease both}
+    @keyframes stepIn{from{opacity:0;transform:translateY(3px)}to{opacity:1;transform:none}}
+    @media(prefers-reduced-motion:reduce){.steps li,.frame-skeleton,.btn.loading::after{animation:none}}
+    .frame-bar{display:flex;justify-content:space-between;align-items:center;gap:8px;padding:8px 12px;background:var(--light);border-bottom:1px solid var(--border);font-size:12px;color:var(--muted)}
+    .frame-badge{background:var(--blue);color:#fff;border-radius:999px;padding:2px 8px;font-size:11px;font-weight:700;white-space:nowrap;text-align:right}
+    .demo-frame{width:100%;height:min(68vh,600px);border:0;display:block;background:#fff}
+    .error-panel,.note-panel{margin-top:16px;border:1px solid var(--border);border-left:4px solid var(--blue);border-radius:8px;padding:14px 16px;background:var(--light)}
+    .error-panel{border-left-color:#DC2626;background:#FEF2F2}
+    .note-panel h3,.error-panel h3{margin:0 0 6px;font-size:15px;color:var(--blue-dark)}
+    .error-panel h3{color:#991B1B}
+    .panel-detail{white-space:pre-line;margin:6px 0 0;font-size:13px;color:var(--muted)}
+    .error-panel .panel-detail{color:#7F1D1D}
+    .panel-actions{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
+    .panel-actions a,.panel-actions button{display:inline-flex;align-items:center;padding:7px 12px;border:1px solid var(--blue);border-radius:5px;font-size:13px;font-weight:600;background:#fff;color:var(--blue);cursor:pointer}
+    .panel-actions a:hover,.panel-actions button:hover{background:var(--blue);color:#fff}
+    .source-meta{margin-top:8px;font-size:12.5px;color:var(--muted)}
+    .source-meta code{background:#fff;border:1px solid var(--border);padding:1px 5px;border-radius:4px}
+    .details-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:22px 0}
+    .detail-card{border:1px solid var(--border);border-radius:8px;background:#fff;padding:14px 14px;box-shadow:0 4px 12px rgba(15,23,42,.04)}
+    .detail-card h4{font-size:13px;font-weight:700;color:var(--blue);margin:0 0 6px;letter-spacing:.02em}
+    .detail-card p{font-size:13px;color:var(--muted);margin:0;line-height:1.6}
+    .metrics-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin:16px 0}
+    .metric-card{border:1px solid var(--border);border-radius:8px;background:#fff;padding:14px 10px;text-align:center;box-shadow:0 2px 8px rgba(15,23,42,.04)}
+    .metric-card strong{font-size:19px;font-weight:800;color:var(--blue);line-height:1}
+    .metric-card span{font-size:11px;font-weight:700;color:var(--text);letter-spacing:.06em;text-transform:uppercase;margin-top:4px;display:block}
+    .metric-card small{font-size:11px;color:var(--muted);margin-top:2px;display:block}
+    .engineering-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:16px 0}
+    .eng-card{border:1px solid var(--border);border-radius:8px;background:var(--light);padding:14px;box-shadow:0 2px 8px rgba(15,23,42,.04)}
+    .eng-card h4{font-size:12px;font-weight:700;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin:0 0 6px}
+    .eng-card p{font-size:13px;color:var(--muted);margin:0;line-height:1.6}
+    .verification-banner{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0;padding:12px 14px;border:1px solid var(--border);border-radius:8px;background:var(--light)}
+    .verification-step{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:600;color:var(--text)}
+    .verification-step i{color:var(--blue);width:14px;height:14px}
+    .verification-arrow{color:var(--muted);font-weight:700}
+    @media(max-width:640px){.details-grid{grid-template-columns:1fr}.engineering-grid{grid-template-columns:1fr}}
+    .panel-link{display:inline-block;margin-top:8px;font-weight:600;color:var(--blue);font-size:13px}
+    .panel-link:hover{text-decoration:underline}
+    .scroll-arrow{position:fixed;right:18px;bottom:18px;width:46px;height:46px;border-radius:50%;border:0;background:var(--blue);color:#fff;font-size:20px;line-height:1;cursor:pointer;box-shadow:0 6px 16px rgba(11,61,145,.35);z-index:50;display:flex;align-items:center;justify-content:center;animation:bob 1.2s ease-in-out infinite}
+    .scroll-arrow:hover{background:var(--blue-dark)}
+    @keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(6px)}}
+    @media(prefers-reduced-motion:reduce){.scroll-arrow{animation:none}}
+    @media(max-width:520px){.container{padding:0 16px}.header-inner{min-height:56px}.back{font-size:12px}main{padding-top:32px}.actions a{width:100%}}
+  </style>
+</head>
+<body>
+  <header>
+    <div class="container header-inner">
+      <a href="../index.html" class="logo" aria-label="Back to portfolio">YJ</a>
+      <span id="headerTitle">Project Preview</span>
+      <nav class="header-actions" aria-label="Project navigation">
+        <a href="all-projects.html" class="back">Back to All Projects</a>
+        <a href="../index.html" class="back">Back to Portfolio</a>
+      </nav>
+    </div>
+  </header>
+  <main class="container">
+    <p class="eyebrow">Project preview</p>
+    <h1 id="projectTitle">Project</h1>
+    <p id="projectDescription" class="desc">Loading project details...</p>
+    <img id="projectImage" class="hero-img" alt="" hidden>
+    <div id="projectTags" class="tags" aria-label="Technologies"></div>
+    <div id="projectDetails" class="details-grid" hidden>
+      <div class="detail-card" id="cardProblem"><h4>Problem</h4><p id="detailProblem"></p></div>
+      <div class="detail-card" id="cardApproach"><h4>Approach</h4><p id="detailApproach"></p></div>
+      <div class="detail-card" id="cardDataset"><h4>Dataset</h4><p id="detailDataset"></p></div>
+      <div class="detail-card" id="cardModel"><h4>Model / Architecture</h4><p id="detailModel"></p></div>
+      <div class="detail-card" id="cardPreprocessing"><h4>Data Preprocessing</h4><p id="detailPreprocessing"></p></div>
+      <div class="detail-card" id="cardFeatures"><h4>Features / Inputs</h4><p id="detailFeatures"></p></div>
+      <div class="detail-card" id="cardTraining"><h4>Training</h4><p id="detailTraining"></p></div>
+      <div class="detail-card" id="cardEvaluation"><h4>Evaluation</h4><p id="detailEvaluation"></p></div>
+      <div class="detail-card" id="cardDeployment"><h4>Deployment</h4><p id="detailDeployment"></p></div>
+      <div class="detail-card" id="cardLimitations"><h4>Limitations</h4><p id="detailLimitations"></p></div>
+      <div class="detail-card" id="cardEngineering"><h4>Engineering</h4><p id="detailEngineering"></p></div>
+      <div class="detail-card" id="detailResultsCard"><h4>Results / Summary</h4><p id="detailResults"></p></div>
+    </div>
+    <div id="metricsSection" hidden>
+      <h3 style="font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--text)">Metrics</h3>
+      <div id="metricsGrid" class="metrics-grid"></div>
+    </div>
+    <div id="engineeringSection" hidden>
+      <h3 style="font-size:14px;font-weight:700;margin:18px 0 8px;color:var(--text)">Engineering Details</h3>
+      <div id="engineeringGrid" class="engineering-grid"></div>
+    </div>
+    <div id="verificationBanner" class="verification-banner" hidden>
+      <div class="verification-step"><i data-lucide="file-code"></i> Project</div>
+      <span class="verification-arrow">→</span>
+      <div class="verification-step"><i data-lucide="github"></i> GitHub Repository</div>
+      <span class="verification-arrow">→</span>
+      <div class="verification-step"><i data-lucide="shield-check"></i> Inspected &amp; Verified</div>
+      <span class="verification-arrow">→</span>
+      <div class="verification-step"><i data-lucide="play"></i> Sandboxed Demo</div>
+    </div>
+    <section class="card" aria-labelledby="availabilityTitle">
+      <h2 id="availabilityTitle">Project actions</h2>
+      <p id="availabilityText">Open the verified source link or view this project’s local preview.</p>
+      <div class="actions">
+        <button id="runDemo" class="btn btn-primary" type="button">Run Demo</button>
+        <a id="sourceCode" class="btn btn-outline" href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
+      </div>
+      <ol id="pipeline" class="steps" aria-label="Demo loading progress" hidden></ol>
+      <div id="noticePanel" class="note-panel" hidden></div>
+      <div id="errorPanel" class="error-panel" hidden></div>
+      <div id="calculatorDemo" class="calculator-demo" hidden>
+        <input id="calculatorDisplay" class="calculator-display" value="0" aria-label="Calculator input and output" readonly>
+        <div class="calculator-grid">
+          <button type="button" data-calc="clear">C</button><button type="button" data-calc="delete">⌫</button><button type="button" data-calc="/" class="operator">÷</button><button type="button" data-calc="*" class="operator">×</button>
+          <button type="button" data-calc="7">7</button><button type="button" data-calc="8">8</button><button type="button" data-calc="9">9</button><button type="button" data-calc="-" class="operator">−</button>
+          <button type="button" data-calc="4">4</button><button type="button" data-calc="5">5</button><button type="button" data-calc="6">6</button><button type="button" data-calc="+" class="operator">+</button>
+          <button type="button" data-calc="1">1</button><button type="button" data-calc="2">2</button><button type="button" data-calc="3">3</button><button type="button" data-calc="=" class="operator">=</button>
+          <button type="button" data-calc="0">0</button><button type="button" data-calc=".">.</button>
+        </div>
+      </div>
+      <div id="frameWrap" class="frame-wrap" hidden>
+        <div class="frame-bar"><span id="frameTitle">preview</span><span class="frame-badge" id="frameBadge"></span></div>
+        <iframe id="demoFrame" class="demo-frame" title="Live project preview" sandbox="allow-scripts allow-forms allow-popups allow-modals"></iframe>
+        <div id="frameSkeleton" class="frame-skeleton" hidden>
+          <div class="spinner"></div>
+          <span>Fetching and preparing the real project…</span>
+        </div>
+      </div>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+    </section>
+  </main>
+  <footer>&copy; <span id="year"></span> Yasir Javed Khan</footer>
+  <button id="scrollToDemo" class="scroll-arrow" type="button" aria-label="Scroll to demo" hidden>&#8595;</button>
+  <script src="../script.js"></script>
+  <script src="../demo-runner.js"></script>
+  <script>
+    const params = new URLSearchParams(location.search);
+    const requestedName = params.get('project') || params.get('title') || '';
+    const fallback = {
+      name: requestedName || 'Project',
+      description: 'Project details are not available right now.',
+      technologies: []
+    };
+
+    const titleEl = document.getElementById('projectTitle');
+    const headerEl = document.getElementById('headerTitle');
+    const descriptionEl = document.getElementById('projectDescription');
+    const tagsEl = document.getElementById('projectTags');
+    const imageEl = document.getElementById('projectImage');
+    const statusEl = document.getElementById('status');
+    const demoOutputEl = document.getElementById('demoOutput');
+    const runDemoEl = document.getElementById('runDemo');
+    const sourceCodeEl = document.getElementById('sourceCode');
+    const availabilityTextEl = document.getElementById('availabilityText');
+    const calculatorDemoEl = document.getElementById('calculatorDemo');
+    const calculatorDisplayEl = document.getElementById('calculatorDisplay');
+    const detailsGridEl = document.getElementById('projectDetails');
+    const detailProblemEl = document.getElementById('detailProblem');
+    const detailApproachEl = document.getElementById('detailApproach');
+    const detailDatasetEl = document.getElementById('detailDataset');
+    const detailModelEl = document.getElementById('detailModel');
+    const detailResultsEl = document.getElementById('detailResults');
+    const detailResultsCardEl = document.getElementById('detailResultsCard');
+    const detailEngineeringEl = document.getElementById('detailEngineering');
+    const detailPreprocessingEl = document.getElementById('detailPreprocessing');
+    const detailFeaturesEl = document.getElementById('detailFeatures');
+    const detailTrainingEl = document.getElementById('detailTraining');
+    const detailEvaluationEl = document.getElementById('detailEvaluation');
+    const detailDeploymentEl = document.getElementById('detailDeployment');
+    const detailLimitationsEl = document.getElementById('detailLimitations');
+    const cardProblemEl = document.getElementById('cardProblem');
+    const cardApproachEl = document.getElementById('cardApproach');
+    const cardDatasetEl = document.getElementById('cardDataset');
+    const cardModelEl = document.getElementById('cardModel');
+    const cardPreprocessingEl = document.getElementById('cardPreprocessing');
+    const cardFeaturesEl = document.getElementById('cardFeatures');
+    const cardTrainingEl = document.getElementById('cardTraining');
+    const cardEvaluationEl = document.getElementById('cardEvaluation');
+    const cardDeploymentEl = document.getElementById('cardDeployment');
+    const cardLimitationsEl = document.getElementById('cardLimitations');
+    const cardEngineeringEl = document.getElementById('cardEngineering');
+    const metricsSectionEl = document.getElementById('metricsSection');
+    const metricsGridEl = document.getElementById('metricsGrid');
+    const engineeringSectionEl = document.getElementById('engineeringSection');
+    const engineeringGridEl = document.getElementById('engineeringGrid');
+    const verificationBannerEl = document.getElementById('verificationBanner');
+    let calculatorExpression = '';
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    const runner = window.GithubDemoRunner;
+    let currentProject = null;
+
+    function renderProject(project) {
+      currentProject = project;
+      titleEl.textContent = project.name;
+      headerEl.textContent = project.name;
+      document.title = project.name + ' — Project Preview';
+      descriptionEl.textContent = project.description || 'Project details are not available right now.';
+      const repoInfo = runner ? runner.parseGithubUrl(project.github || '') : null;
+      if (sourceCodeEl) {
+        sourceCodeEl.href = project.github || 'https://github.com/codewithyazzy';
+        sourceCodeEl.textContent = repoInfo ? 'Open Source Code' : 'GitHub Profile';
+      }
+      if (availabilityTextEl) {
+        availabilityTextEl.textContent = repoInfo
+          ? 'This project has a verified public repository on GitHub — "Run Demo" inspects and runs the real source.'
+          : 'A specific public repository was not provided for this project yet, so there is no live source to run.';
+      }
+      tagsEl.replaceChildren();
+      (Array.isArray(project.technologies) ? project.technologies : []).forEach(technology => {
+        const tag = document.createElement('span');
+        tag.textContent = technology;
+        tagsEl.appendChild(tag);
+      });
+      if (project.image) {
+        imageEl.src = '../' + project.image;
+        imageEl.alt = project.name + ' preview';
+        imageEl.hidden = false;
+      }
+      const detailMap = [
+        [cardProblemEl, detailProblemEl, project.problem],
+        [cardApproachEl, detailApproachEl, project.approach],
+        [cardDatasetEl, detailDatasetEl, project.dataset],
+        [cardModelEl, detailModelEl, project.model],
+        [cardPreprocessingEl, detailPreprocessingEl, project.dataPreprocessing],
+        [cardFeaturesEl, detailFeaturesEl, project.features],
+        [cardTrainingEl, detailTrainingEl, project.training],
+        [cardEvaluationEl, detailEvaluationEl, project.evaluation],
+        [cardDeploymentEl, detailDeploymentEl, project.deployment],
+        [cardLimitationsEl, detailLimitationsEl, project.limitations],
+        [cardEngineeringEl, detailEngineeringEl, project.engineering],
+      ];
+      let visibleDetails = 0;
+      detailMap.forEach(([card, el, val]) => {
+        if (val && String(val).trim()) { el.textContent = val; card.hidden = false; visibleDetails++; } else { card.hidden = true; }
+      });
+      if (project.results && String(project.results).trim()) { detailResultsEl.textContent = project.results; detailResultsCardEl.hidden = false; visibleDetails++; } else { detailResultsCardEl.hidden = true; }
+      if (detailsGridEl) detailsGridEl.hidden = visibleDetails === 0;
+
+      if (metricsSectionEl && metricsGridEl) {
+        const metrics = Array.isArray(project.metrics) ? project.metrics.filter(m => m && m.label && m.value) : [];
+        metricsGridEl.replaceChildren();
+        if (metrics.length) {
+          metrics.forEach(m => {
+            const card = document.createElement('div');
+            card.className = 'metric-card';
+            const v = document.createElement('strong'); v.textContent = m.value;
+            const l = document.createElement('span'); l.textContent = m.label;
+            card.append(v, l);
+            if (m.note) { const n = document.createElement('small'); n.textContent = m.note; card.appendChild(n); }
+            metricsGridEl.appendChild(card);
+          });
+          metricsSectionEl.hidden = false;
+        } else { metricsSectionEl.hidden = true; }
+      }
+
+      if (engineeringSectionEl && engineeringGridEl) {
+        const engFields = [
+          ['Architecture', project.architecture],
+          ['Inference', project.inference],
+          ['API', project.api],
+          ['Optimization', project.optimization],
+          ['Testing', project.testing],
+        ].filter(([, v]) => v && String(v).trim());
+        engineeringGridEl.replaceChildren();
+        if (engFields.length) {
+          engFields.forEach(([label, val]) => {
+            const card = document.createElement('div'); card.className = 'eng-card';
+            const h = document.createElement('h4'); h.textContent = label;
+            const p = document.createElement('p'); p.textContent = val;
+            card.append(h, p); engineeringGridEl.appendChild(card);
+          });
+          engineeringSectionEl.hidden = false;
+        } else { engineeringSectionEl.hidden = true; }
+      }
+
+      if (verificationBannerEl) {
+        verificationBannerEl.hidden = !repoInfo;
+        try { lucide.createIcons(); } catch (e) {}
+      }
+    }
+
+    function showCalculator(visible) {
+      if (calculatorDemoEl) calculatorDemoEl.hidden = !visible;
+    }
+
+    async function loadProject() {
+      renderProject(fallback);
+      try {
+        const response = await fetch('../assets/projects.json');
+        if (!response.ok) throw new Error('Project data unavailable');
+        const data = await response.json();
+        const projects = Array.isArray(data.projects) ? data.projects : [];
+        const project = projects.find(item => item.name.toLowerCase() === requestedName.toLowerCase());
+        if (project) {
+          renderProject(project);
+          showCalculator(false);
+        }
+        else statusEl.textContent = 'This project is not listed in the current catalog.';
+      } catch (error) {
+        const localProject = (window.PROJECT_CATALOG || []).find(item => item.name.toLowerCase() === requestedName.toLowerCase());
+        if (localProject) {
+          renderProject(localProject);
+          showCalculator(false);
+          statusEl.textContent = '';
+        } else {
+          statusEl.textContent = 'Project details could not be loaded.';
+        }
+      }
+    }
+    // ==========================================
+    // DEMO EXECUTION PIPELINE (real GitHub inspection)
+    // ==========================================
+    const pipelineEl = document.getElementById('pipeline');
+    const noticePanelEl = document.getElementById('noticePanel');
+    const errorPanelEl = document.getElementById('errorPanel');
+    const frameWrapEl = document.getElementById('frameWrap');
+    const frameTitleEl = document.getElementById('frameTitle');
+    const frameBadgeEl = document.getElementById('frameBadge');
+    const demoFrameEl = document.getElementById('demoFrame');
+    const frameSkeletonEl = document.getElementById('frameSkeleton');
+    const scrollArrowEl = document.getElementById('scrollToDemo');
+    let stepItems = [];
+
+    demoFrameEl.addEventListener('load', () => { frameSkeletonEl.hidden = true; });
+
+    function scrollToEl(el) {
+      if (!el) return;
+      try {
+        if (typeof el.scrollIntoView === 'function') el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      } catch (err) { /* older browsers */ }
+    }
+
+    // Auto-scroll to the running demo, then retire the floating arrow.
+    function settleDemo(target) {
+      scrollToEl(target);
+      setTimeout(() => { if (scrollArrowEl) scrollArrowEl.hidden = true; }, 1600);
+    }
+
+    function hideAllOutputs() {
+      [noticePanelEl, errorPanelEl, frameWrapEl].forEach(el => { el.hidden = true; });
+      frameSkeletonEl.hidden = true;
+      if (calculatorDemoEl) calculatorDemoEl.hidden = true;
+      if (scrollArrowEl) scrollArrowEl.hidden = true;
+      statusEl.textContent = '';
+    }
+
+    function resetPipeline() {
+      pipelineEl.hidden = false;
+      pipelineEl.classList.add('active');
+      pipelineEl.replaceChildren();
+      stepItems = [];
+    }
+
+    function addStep(label, state) {
+      const li = document.createElement('li');
+      li.textContent = label;
+      if (state) li.classList.add(state);
+      pipelineEl.appendChild(li);
+      stepItems.push(li);
+      return li;
+    }
+
+    function onStep(label) {
+      stepItems.forEach(li => li.classList.replace('active', 'done'));
+      addStep(label, 'active');
+    }
+    function completeStep() {
+      stepItems.forEach(li => li.classList.remove('active', 'error'));
+      stepItems.forEach(li => li.classList.add('done'));
+    }
+    function failStep() {
+      const active = [...stepItems].reverse().find(li => li.classList.contains('active'));
+      if (active) active.classList.replace('active', 'error');
+    }
+
+    function panelActions(container, actions) {
+      (actions || []).forEach(action => {
+        const link = document.createElement('a');
+        link.href = action.href || '#';
+        link.target = '_blank';
+        link.rel = 'noopener noreferrer';
+        link.textContent = action.label;
+        container.appendChild(link);
+      });
+    }
+
+    function showUnavailable(model) {
+      errorPanelEl.hidden = false;
+      errorPanelEl.className = 'note-panel';
+      errorPanelEl.replaceChildren();
+      const h = document.createElement('h3');
+      h.textContent = model.title || 'Demo unavailable';
+      const p = document.createElement('p');
+      p.className = 'panel-detail';
+      p.textContent = model.detail || '';
+      errorPanelEl.append(h, p);
+      panelActions(errorPanelEl, model.actions);
+      statusEl.textContent = 'This project cannot be executed directly in the browser — see the reason above.';
+      frameWrapEl.hidden = true;
+      frameSkeletonEl.hidden = true;
+      if (scrollArrowEl) scrollArrowEl.hidden = true;
+      scrollToEl(errorPanelEl);
+    }
+
+    function showError(model) {
+      errorPanelEl.hidden = false;
+      errorPanelEl.className = 'error-panel';
+      errorPanelEl.replaceChildren();
+      const h = document.createElement('h3');
+      h.textContent = model.title || 'Demo failed';
+      const p = document.createElement('p');
+      p.className = 'panel-detail';
+      p.textContent = model.detail || '';
+      errorPanelEl.append(h, p);
+      const retry = document.createElement('button');
+      retry.type = 'button';
+      retry.textContent = 'Retry';
+      retry.addEventListener('click', () => executeRun(false));
+      const actions = document.createElement('div');
+      actions.className = 'panel-actions';
+      actions.appendChild(retry);
+      errorPanelEl.appendChild(actions);
+      statusEl.textContent = 'The demo could not be loaded. Technical details are in the browser console.';
+      frameWrapEl.hidden = true;
+      frameSkeletonEl.hidden = true;
+      if (scrollArrowEl) scrollArrowEl.hidden = true;
+      scrollToEl(errorPanelEl);
+    }
+
+    function showNotice(text) {
+      noticePanelEl.hidden = false;
+      noticePanelEl.replaceChildren();
+      const p = document.createElement('p');
+      p.className = 'panel-detail';
+      p.style.margin = '0';
+      p.textContent = text;
+      noticePanelEl.appendChild(p);
+    }
+
+    function renderStaticFrame(html, label) {
+      frameWrapEl.hidden = false;
+      frameTitleEl.textContent = currentProject ? currentProject.name : 'preview';
+      frameBadgeEl.textContent = label.toUpperCase();
+      demoFrameEl.srcdoc = html;
+      settleDemo(frameWrapEl);
+    }
+
+    function renderDeployedFrame(url) {
+      frameWrapEl.hidden = false;
+      frameTitleEl.textContent = url;
+      frameBadgeEl.textContent = 'DEPLOYED APP';
+      demoFrameEl.removeAttribute('srcdoc');
+      demoFrameEl.src = url;
+      showNotice('If the preview area stays blank, this deployment refuses iframe embedding — open it directly:');
+      const link = document.createElement('a');
+      link.className = 'panel-link';
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.textContent = 'Open Live Demo ↗';
+      noticePanelEl.appendChild(link);
+      settleDemo(frameWrapEl);
+    }
+
+    let backendOnline = false;
+
+    async function probeBackend() {
+      try {
+        const controller = new AbortController();
+        const timer = setTimeout(() => controller.abort(), 1200);
+        const res = await fetch('http://127.0.0.1:8766/api/health', { signal: controller.signal });
+        clearTimeout(timer);
+        backendOnline = res.ok;
+      } catch (err) {
+        backendOnline = false;
+      }
+      return backendOnline;
+    }
+
+    // Safe arithmetic evaluator — recursive descent, NO eval()/Function().
+    // Mirrors server.py rules: + - * / % ^, parentheses, unary +/-, size guards.
+    function evaluateLocally(rawExpression) {
+      let source = String(rawExpression || '')
+        .replace(/×/g, '*').replace(/÷/g, '/').replace(/−/g, '-')
+        .trim();
+      if (!source) throw new Error('Enter a valid expression.');
+      source = source.replace(/[+\-*/%^.\s]+$/, '');
+      if (!source) throw new Error('Enter a valid expression.');
+
+      const tokens = source.match(/\d*\.?\d+|[+\-*/%^()]/g);
+      if (!tokens || tokens.join('') !== source.replace(/\s+/g, '')) {
+        throw new Error('Enter a valid expression.');
+      }
+      let pos = 0;
+      const peek = () => tokens[pos];
+
+      function parsePrimary() {
+        const token = tokens[pos];
+        if (token === undefined) throw new Error('Enter a valid expression.');
+        pos++;
+        if (token === '(') {
+          const value = parseExpression();
+          if (peek() !== ')') throw new Error('Enter a valid expression.');
+          pos++;
+          return value;
+        }
+        const number = Number(token);
+        if (isNaN(number) || !isFinite(number)) throw new Error('Enter a valid expression.');
+        if (Math.abs(number) > 1e12) throw new Error('Number is too large.');
+        return number;
+      }
+      function parseUnary() {
+        if (peek() === '-') { pos++; return -parseUnary(); }
+        if (peek() === '+') { pos++; return parseUnary(); }
+        return parsePrimary();
+      }
+      function parseFactor() {
+        const base = parseUnary();
+        if (peek() === '^') {
+          pos++;
+          const exponent = parseFactor();
+          if (Math.abs(exponent) > 10) throw new Error('Power is too large.');
+          return Math.pow(base, exponent);
+        }
+        return base;
+      }
+      function parseTerm() {
+        let value = parseFactor();
+        while (peek() === '*' || peek() === '/' || peek() === '%') {
+          const op = tokens[pos++];
+          const rhs = parseFactor();
+          if ((op === '/' || op === '%') && rhs === 0) throw new Error('Cannot divide by zero.');
+          value = op === '*' ? value * rhs : op === '/' ? value / rhs : value % rhs;
+        }
+        return value;
+      }
+      function parseExpression() {
+        let value = parseTerm();
+        while (peek() === '+' || peek() === '-') {
+          const op = tokens[pos++];
+          const rhs = parseTerm();
+          value = op === '+' ? value + rhs : value - rhs;
+        }
+        return value;
+      }
+
+      const result = parseExpression();
+      if (pos !== tokens.length) throw new Error('Enter a valid expression.');
+      if (!isFinite(result)) throw new Error('Result is out of range.');
+      return parseFloat(result.toPrecision(12));
+    }
+
+    async function runCalculatorLocal(sourceInfo) {
+      showCalculator(true);
+      if (calculatorDisplayEl) calculatorDisplayEl.focus();
+      await probeBackend();
+      if (backendOnline) {
+        statusEl.textContent = 'Optional Python backend detected — it evaluates your expressions.';
+      } else {
+        statusEl.textContent = 'Ready — expressions are evaluated securely inside your browser. No Python or server needed.';
+      }
+      if (sourceInfo && sourceInfo.path) {
+        const card = availabilityTextEl.parentElement;
+        let meta = document.getElementById('ghSourceMeta');
+        if (!meta) {
+          meta = document.createElement('p');
+          meta.id = 'ghSourceMeta';
+          meta.className = 'source-meta';
+          const anchor = card.querySelector('.status');
+          card.insertBefore(meta, anchor);
+        }
+        meta.replaceChildren();
+        meta.append('Verified GitHub source: ');
+        const code = document.createElement('code');
+        code.textContent = sourceInfo.path + ' · ' + sourceInfo.lines + ' lines · ' + Math.round(sourceInfo.bytes / 1024) + ' KB' + (sourceInfo.gui ? ' · Tkinter GUI confirmed in code' : '');
+        meta.appendChild(code);
+        meta.append(' — a desktop Python app cannot run inside a web page, so this preview evaluates in your browser (the Python backend is used automatically when it is running).');
+      }
+      settleDemo(calculatorDemoEl);
+    }
+
+    async function executeRun(force) {
+      if (!runner) {
+        statusEl.textContent = 'Demo runner failed to load — refresh the page.';
+        return;
+      }
+      hideAllOutputs();
+      resetPipeline();
+      if (scrollArrowEl) scrollArrowEl.hidden = false;
+
+      const project = currentProject || Object.assign({}, fallback);
+      const config = {
+        name: project.name,
+        github: project.github || '',
+        subdir: project.subdir || '',
+        demoUrl: (project.demoUrl && /^https?:/i.test(project.demoUrl)) ? project.demoUrl
+                 : (project.demo && /^https?:/i.test(project.demo)) ? project.demo : '',
+        localDemo: project.localDemo || ''
+      };
+
+      await runner.runDemo(config, {
+        onStep: (label) => {
+          if (/Preparing demo|Loading deployed/i.test(label)) {
+            frameWrapEl.hidden = false;
+            frameSkeletonEl.hidden = false;
+          }
+          onStep(label);
+        },
+        completeStep,
+        failStep,
+        onReady: (message) => { statusEl.textContent = message; },
+        onNotice: showNotice,
+        onUnavailable: showUnavailable,
+        onError: showError,
+        renderStatic: renderStaticFrame,
+        renderDeployed: renderDeployedFrame,
+        renderLocalDemo: async (info) => {
+          frameWrapEl.hidden = true;
+          frameSkeletonEl.hidden = true;
+          await runCalculatorLocal(info.sourceInfo);
+        }
+      }, { force: !!force });
+    }
+
+    runDemoEl.addEventListener('click', () => {
+      executeRun(false).finally(() => {
+        runDemoEl.classList.remove('loading');
+        runDemoEl.disabled = false;
+      });
+      runDemoEl.classList.add('loading');
+      runDemoEl.disabled = true;
+    });
+    if (scrollArrowEl) {
+      scrollArrowEl.addEventListener('click', () => {
+        scrollToEl(!frameWrapEl.hidden ? frameWrapEl : calculatorDemoEl);
+      });
+    }
+
+    window.addEventListener('message', event => {
+      const data = event.data;
+      if (!data || data.__ghDemoFrame !== true) return;
+      if (data.type === 'error') console.warn('[demo frame]', data.message, data.source + ':' + data.line);
+      else if (data.type === 'rejection') console.warn('[demo frame] unhandled rejection:', data.message);
+    });
+
+    async function calculateOnServer() {
+      if (!calculatorExpression) return;
+      if (backendOnline) {
+        statusEl.textContent = 'Running the optional Python backend…';
+        try {
+          const response = await fetch('http://127.0.0.1:8766/api/calculator', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({expression: calculatorExpression})
+          });
+          const data = await response.json();
+          if (!response.ok || !data.ok) throw new Error(data.error || 'Backend error');
+          calculatorExpression = String(data.result);
+          calculatorDisplayEl.value = calculatorExpression;
+          statusEl.textContent = 'Result returned by the optional Python backend.';
+          return;
+        } catch (error) {
+          backendOnline = false;
+        }
+      }
+      try {
+        const result = evaluateLocally(calculatorExpression);
+        calculatorExpression = String(result);
+        calculatorDisplayEl.value = calculatorExpression;
+        statusEl.textContent = 'Evaluated locally in your browser — no Python or server required.';
+      } catch (err) {
+        statusEl.textContent = err && err.message ? err.message : 'Enter a valid expression.';
+      }
+    }
+
+    document.querySelectorAll('[data-calc]').forEach(button => {
+      button.addEventListener('click', () => {
+        const value = button.dataset.calc;
+        if (value === 'clear') calculatorExpression = '';
+        else if (value === 'delete') calculatorExpression = calculatorExpression.slice(0, -1);
+        else if (value === '=') { calculateOnServer(); return; }
+        else calculatorExpression += value;
+        calculatorDisplayEl.value = calculatorExpression || '0';
+      });
+    });
+
+    loadProject();
+  </script>
+</body>
+</html>
