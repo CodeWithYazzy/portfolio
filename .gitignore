@@ -4,3 +4,12 @@ Thumbs.db
 node_modules/
 .vscode/
 .server.pid
+# Local / sensitive — never push to GitHub
+server.py
+.env
+.env.*
+*.pem
+*.key
+.opencode/
+__pycache__/
+*.pyc
