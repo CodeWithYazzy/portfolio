@@ -714,6 +714,15 @@
 
       let packageJsonText = null;
       const scopedPaths = scopePaths(treePaths, subdir);
+      if (subdir && scopedPaths.length === 0) {
+        safeHooks.failStep();
+        safeHooks.onUnavailable({
+          title: 'Project code not yet pushed',
+          detail: `This project folder is a placeholder — no files have been pushed to GitHub yet.\n\nExpected location:\nhttps://github.com/${owner}/${repo}/tree/${branch}/${subdir}\n\nPush your code to that folder and the demo will be inspected automatically. Until then, View Source opens the (empty) folder.`,
+          actions: [{ label: 'Open Folder on GitHub ↗', href: `https://github.com/${owner}/${repo}/tree/${branch}/${subdir}` }]
+        });
+        return { status: 'unavailable', reason: 'placeholder-empty' };
+      }
       if (scopedPaths.includes('package.json')) {
         try {
           packageJsonText = (await fetchGithubFile(owner, repo, branch, normalizeDir(subdir) + 'package.json', { force })).text;
