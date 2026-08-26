@@ -132,6 +132,44 @@ h2 {
 .logo:hover {
   background: var(--blue-dark);
 }
+.logo--with-type {
+  background: none;
+  padding: 0;
+  gap: 8px;
+  border-radius: 0;
+  font-size: inherit;
+}
+.logo-mark {
+  background: var(--blue);
+  color: #fff;
+  font-weight: 800;
+  font-size: 13px;
+  padding: 6px 8px;
+  border-radius: 4px;
+  letter-spacing: .04em;
+  line-height: 1;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .15s ease;
+}
+.logo--with-type:hover .logo-mark {
+  background: var(--blue-dark);
+}
+.logo--with-type:hover {
+  background: none;
+}
+.logo-type {
+  font-family: 'Plus Jakarta Sans', sans-serif;
+  font-weight: 700;
+  font-size: 14px;
+  letter-spacing: .02em;
+  color: var(--text);
+}
+.logo-type span {
+  color: var(--blue);
+  font-weight: 800;
+}
 .nav-links {
   list-style: none;
   display: flex;

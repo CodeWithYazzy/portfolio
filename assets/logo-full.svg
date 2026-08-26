@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 260" width="800" height="520" role="img" aria-label="YasirLab logo">
+  <rect width="400" height="260" rx="18" fill="#FFF7EB"/>
+  <defs>
+    <linearGradient id="yGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FF6B7A"/>
+      <stop offset="100%" stop-color="#B91C2E"/>
+    </linearGradient>
+  </defs>
+  <!-- Stylized Y -->
+  <text x="200" y="118" font-family="Brush Script MT, Segoe Script, Dancing Script, cursive" font-size="145" font-weight="400" fill="url(#yGrad)" text-anchor="middle" dominant-baseline="middle" style="letter-spacing:-0.02em;">y</text>
+  <!-- YASIRLAB -->
+  <text x="200" y="185" font-family="Inter, Plus Jakarta Sans, Helvetica, Arial, sans-serif" font-size="36" font-weight="800" fill="#0F172A" text-anchor="middle" letter-spacing="0.14em">YASIRLAB</text>
+  <!-- SINCE 2025 -->
+  <text x="200" y="212" font-family="Inter, Helvetica, Arial, sans-serif" font-size="13" font-weight="600" fill="#0F172A" text-anchor="middle" letter-spacing="0.42em">SINCE 2025</text>
+</svg>
