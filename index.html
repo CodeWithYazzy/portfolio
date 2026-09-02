@@ -66,10 +66,11 @@
     <div class="hero-left">
       <p class="eyebrow">HELLO, I'M <span></span></p>
       <h1><span class="blue">Yasir</span> Javed Khan</h1>
-      <p class="subtitle">Machine Learning Engineer <span class="sep">&bull;</span> AI Developer <span class="sep">&bull;</span> Systems Builder</p>
-      <p class="desc">I build practical machine learning systems, from data and model development to deployment.</p>
+      <p class="subtitle">Machine Learning Developer <span class="sep">&bull;</span> AI Systems Builder</p>
+      <p class="desc">I work across data, model development, experimentation, evaluation, and deployment — building ML systems that are measured and documented, not just claimed.</p>
       <div class="hero-btns">
         <a href="#projects" class="btn-primary">View Projects <i data-lucide="arrow-right"></i></a>
+        <a href="#lab" class="btn-outline">Explore ML Lab <i data-lucide="flask-conical"></i></a>
         <a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" class="btn-outline">GitHub <i data-lucide="github"></i></a>
       </div>
       <div class="hero-connect">
@@ -127,6 +128,17 @@
         <div class="drive-card"><div class="drive-icon"><i data-lucide="blocks"></i></div><div><h4>Build</h4><p>Turn notebooks into maintainable systems with clean interfaces.</p></div></div>
         <div class="drive-card"><div class="drive-icon"><i data-lucide="bar-chart-3"></i></div><div><h4>Evaluate &amp; Deploy</h4><p>Validate on held-out data and ship to usable applications.</p></div></div>
       </div>
+    </div>
+  </div>
+</section>
+
+<!-- WHY I BUILD — concise, engineering-focused -->
+<section id="why" style="padding: 36px 0; background: #F8FAFF; border-top: 1px solid #E5EAF6; border-bottom: 1px solid #E5EAF6;">
+  <div class="container">
+    <div style="max-width: 720px; margin: 0 auto; text-align: center;">
+      <p class="eyebrow" style="justify-content: center;">WHY I BUILD <span></span></p>
+      <h2 style="font-size: 28px; margin: 8px 0 0;">Curiosity, disciplined<br><span class="blue">through engineering.</span></h2>
+      <p class="section-desc" style="margin: 12px auto 0; max-width: 640px; text-align: center;">I am interested in how data, models, and software combine to form usable systems. I build to test ideas, measure outcomes, and learn where models break — then iterate with clearer constraints and better data.</p>
     </div>
   </div>
 </section>
@@ -207,6 +219,8 @@
 <section id="approach">
   <div class="container">
     <div class="approach-bar">
+      <div class="approach-step"><i data-lucide="search"></i><span>UNDERSTAND</span></div>
+      <span class="approach-arrow">→</span>
       <div class="approach-step"><i data-lucide="blocks"></i><span>BUILD</span></div>
       <span class="approach-arrow">→</span>
       <div class="approach-step"><i data-lucide="flask-conical"></i><span>EXPERIMENT</span></div>
@@ -218,6 +232,86 @@
       <div class="approach-step"><i data-lucide="refresh-cw"></i><span>ITERATE</span></div>
     </div>
     <p class="approach-note">Evidence over adjectives — every stage is measured and documented.</p>
+  </div>
+</section>
+
+<!-- FLAGSHIP PROJECT -->
+<section id="flagship" style="padding-top: 40px; padding-bottom: 40px; background: #F8FAFF; border-top: 1px solid #E5EAF6; border-bottom: 1px solid #E5EAF6;">
+  <div class="container">
+    <div style="display: flex; align-items: center; gap: 8px; margin-bottom: 10px;">
+      <p class="eyebrow" style="margin:0">FLAGSHIP PROJECT <span></span></p>
+      <span style="background: var(--blue); color: #fff; font-size: 10px; font-weight: 700; letter-spacing: .06em; padding: 3px 8px; border-radius: 999px;">MOST DETAILED</span>
+    </div>
+    <div style="display: grid; grid-template-columns: 1.15fr 0.85fr; gap: 32px; align-items: start; background: #fff; border: 1px solid var(--border); border-radius: 10px; overflow: hidden; box-shadow: 0 8px 24px rgba(15,23,42,.06);">
+      <div style="padding: 24px 24px 20px;">
+        <h2 style="font-size: 28px; line-height: 1.1; margin: 0;">Iris Flower Classifier<br><span class="blue" style="font-size: 18px; font-weight: 600;">End-to-end tabular pipeline — from raw measurements to deployed inference.</span></h2>
+        <p class="section-desc" style="margin-top: 10px; max-width: 560px;">A complete classification system built to demonstrate rigorous ML engineering: stratified splits, preprocessing pipelines, cross-validated model comparison, and held-out evaluation — not a notebook-only demo.</p>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 18px;">
+          <div style="border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; background: var(--light);">
+            <div style="font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue);">Problem</div>
+            <div style="font-size: 12.5px; color: var(--muted); margin-top: 4px; line-height: 1.5;">Classify iris species from 4 numeric measurements.</div>
+          </div>
+          <div style="border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px; background: var(--light);">
+            <div style="font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue);">Architecture</div>
+            <div style="font-size: 12.5px; color: var(--muted); margin-top: 4px; line-height: 1.5;">Single-stage scikit-learn pipeline (Scaler + Classifier).</div>
+          </div>
+          <div style="border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px;">
+            <div style="font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue);">Data</div>
+            <div style="font-size: 12.5px; color: var(--muted); margin-top: 4px; line-height: 1.5;">Iris — 150 samples, 4 features, 3 classes. 80/20 stratified split.</div>
+          </div>
+          <div style="border: 1px solid var(--border); border-radius: 6px; padding: 10px 12px;">
+            <div style="font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue);">Training</div>
+            <div style="font-size: 12.5px; color: var(--muted); margin-top: 4px; line-height: 1.5;">StandardScaler fit on train only; cross-validated model comparison.</div>
+          </div>
+        </div>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px;">
+          <div style="border: 1px solid var(--border); border-radius: 6px; padding: 12px; background: #fff;">
+            <div style="font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue);">Metrics — held-out test</div>
+            <div style="display: flex; gap: 12px; margin-top: 8px;">
+              <div style="text-align: center; flex: 1; border: 1px solid var(--border); border-radius: 6px; padding: 8px 4px; background: var(--light);">
+                <div style="font-size: 18px; font-weight: 800; color: var(--blue);">97%</div>
+                <div style="font-size: 11px; font-weight: 600; color: var(--muted);">Accuracy</div>
+              </div>
+              <div style="text-align: center; flex: 1; border: 1px solid var(--border); border-radius: 6px; padding: 8px 4px;">
+                <div style="font-size: 11px; font-weight: 600; color: var(--muted);">Add metric</div>
+                <div style="font-size: 10px; color: var(--muted);">Precision / Recall</div>
+              </div>
+            </div>
+            <div style="font-size: 11px; color: var(--muted); margin-top: 6px;">Confusion matrix and classification report in notebook — no fabricated numbers.</div>
+          </div>
+          <div style="border: 1px solid var(--border); border-radius: 6px; padding: 12px; background: #fff;">
+            <div style="font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue);">Deployment &amp; API</div>
+            <div style="font-size: 12.5px; color: var(--muted); margin-top: 6px; line-height: 1.5;">Pipeline serialized for <code style="background: var(--light); padding: 1px 5px; border-radius: 4px; border: 1px solid var(--border); font-size: 11px;">predict()</code> on single rows. Notebook demo; API-ready.</div>
+            <div style="font-size: 11px; color: var(--muted); margin-top: 6px; border-top: 1px solid #F1F5F9; padding-top: 8px;"><strong style="color: var(--text);">Limitations:</strong> Small, clean dataset — not noisy production data. No drift handling yet.</div>
+          </div>
+        </div>
+        <div style="margin-top: 16px; display: flex; gap: 10px; flex-wrap: wrap;">
+          <a href="https://github.com/codewithyazzy/projects/tree/main/iris-classifier" target="_blank" rel="noopener noreferrer" class="btn-primary btn-sm">GitHub <i data-lucide="github" style="width:14px;height:14px"></i></a>
+          <a href="pages/demo.html?project=Iris%20Flower%20Classifier" class="btn-outline btn-sm">Technical Details <i data-lucide="external-link" style="width:14px;height:14px"></i></a>
+          <a href="pages/demo.html?project=Iris%20Flower%20Classifier" class="btn-outline btn-sm">Live Demo <i data-lucide="play" style="width:14px;height:14px"></i></a>
+        </div>
+        <div style="margin-top: 10px; font-size: 11px; color: var(--muted);"><i data-lucide="shield-check" style="width: 11px; height: 11px; vertical-align: -1px;"></i> Metrics are from held-out test set — see notebook for confusion matrix. No fabricated results.</div>
+      </div>
+      <div style="background: var(--light); border-left: 1px solid var(--border); padding: 0; display: flex; flex-direction: column;">
+        <img src="assets/iris-classifier.webp" alt="Iris Flower Classifier preview" style="width: 100%; height: 220px; object-fit: cover; border-bottom: 1px solid var(--border);" loading="lazy">
+        <div style="padding: 16px 18px; background: #fff; flex: 1;">
+          <div style="font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue);">Experiments</div>
+          <ul style="margin: 8px 0 0; padding-left: 16px; font-size: 12.5px; color: var(--muted); line-height: 1.6;">
+            <li>Baseline: Logistic Regression vs Random Forest</li>
+            <li>Scaling: StandardScaler vs. no scaling</li>
+            <li>Validation: 5-fold CV vs. single split</li>
+          </ul>
+          <div style="margin-top: 14px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--blue);">Error Analysis</div>
+          <p style="font-size: 12.5px; color: var(--muted); margin: 6px 0 0; line-height: 1.6;">Misclassifications concentrate on Versicolor/Virginica overlap — expected given feature overlap in petal dimensions.</p>
+          <div style="margin-top: 14px; display: flex; gap: 6px; flex-wrap: wrap;">
+            <span style="background: var(--light); border: 1px solid var(--border); color: var(--blue); padding: 4px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;">Python</span>
+            <span style="background: var(--light); border: 1px solid var(--border); color: var(--blue); padding: 4px 8px; border-radius: 999px; font-size: 11px; font-weight: 600;">scikit-learn</span>
+            <span style="background: var(--light); border:1px solid var(--border);color:var(--blue);padding:4px 8px;border-radius:999px;font-size:11px;font-weight:600">Pandas</span>
+            <span style="background: var(--light); border:1px solid var(--border);color:var(--blue);padding:4px 8px;border-radius:999px;font-size:11px;font-weight:600">Model Evaluation</span>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -261,11 +355,11 @@
     </div>
 
     <div class="ach-grid">
-      <div class="ach-card"><div class="ach-icon"><i data-lucide="trophy"></i></div><h4>Coding Competition — 1st Place</h4><p>Secured 1st place in the interschool coding competition organized by CodeVerse.</p><span><i data-lucide="calendar"></i> Nov 2023</span></div>
-      <div class="ach-card"><div class="ach-icon"><i data-lucide="medal"></i></div><h4>Academic Excellence — Grade 10</h4><p>Awarded for outstanding academic performance in Grade 10.</p><span><i data-lucide="calendar"></i> Mar 2024</span></div>
-      <div class="ach-card"><div class="ach-icon"><i data-lucide="award"></i></div><h4>Python Programming — Certified</h4><p>Completed the Python Programming course (Udemy) with hands-on project work.</p><span><i data-lucide="calendar"></i> Jun 2024</span></div>
-      <div class="ach-card"><div class="ach-icon"><i data-lucide="brain"></i></div><h4>AI/ML Workshop — Hands-on Builds</h4><p>Participated in an AI &amp; ML workshop and built real-world mini projects.</p><span><i data-lucide="calendar"></i> Aug 2024</span></div>
-      <div class="ach-card"><div class="ach-icon"><i data-lucide="rocket"></i></div><h4>Deployed Systems — 5+ Projects</h4><p>Built and shipped 5+ end-to-end systems including ML prototypes and web applications.</p><span><i data-lucide="calendar"></i> May 2024</span></div>
+      <div class="ach-card"><div class="ach-icon"><i data-lucide="trophy"></i></div><h4>Coding Competition — 1st Place</h4><p>Secured 1st place in the interschool coding competition organized by CodeVerse.</p><div style="margin-top: 6px;"><a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" style="font-size: 11px; font-weight: 600; color: var(--blue); display: inline-flex; gap: 4px; align-items: center;">View evidence <i data-lucide="external-link" style="width:11px;height:11px"></i></a> <span style="font-size: 11px; color: var(--muted);">· Add certificate link when available</span></div><span><i data-lucide="calendar"></i> Nov 2023</span></div>
+      <div class="ach-card"><div class="ach-icon"><i data-lucide="medal"></i></div><h4>Academic Excellence — Grade 10</h4><p>Awarded for outstanding academic performance in Grade 10.</p><div style="margin-top: 6px; font-size: 11px; color: var(--muted);">Add certificate link when available</div><span><i data-lucide="calendar"></i> Mar 2024</span></div>
+      <div class="ach-card"><div class="ach-icon"><i data-lucide="award"></i></div><h4>Python Programming — Certified</h4><p>Completed the Python Programming course (Udemy) with hands-on project work.</p><div style="margin-top: 6px;"><a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" style="font-size: 11px; font-weight: 600; color: var(--blue); display: inline-flex; gap: 4px; align-items: center;">View certificate <i data-lucide="external-link" style="width:11px;height:11px"></i></a> <span style="font-size: 11px; color: var(--muted);">· Add direct link</span></div><span><i data-lucide="calendar"></i> Jun 2024</span></div>
+      <div class="ach-card"><div class="ach-icon"><i data-lucide="brain"></i></div><h4>AI/ML Workshop — Hands-on Builds</h4><p>Participated in an AI &amp; ML workshop and built real-world mini projects.</p><div style="margin-top: 6px; font-size: 11px; color: var(--muted);">Add workshop evidence link</div><span><i data-lucide="calendar"></i> Aug 2024</span></div>
+      <div class="ach-card"><div class="ach-icon"><i data-lucide="rocket"></i></div><h4>Deployed Systems — 5+ Projects</h4><p>Built and shipped 5+ end-to-end systems including ML prototypes and web applications.</p><div style="margin-top: 6px;"><a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" style="font-size: 11px; font-weight: 600; color: var(--blue); display: inline-flex; gap: 4px; align-items: center;">View GitHub <i data-lucide="external-link" style="width:11px;height:11px"></i></a></div><span><i data-lucide="calendar"></i> May 2024</span></div>
     </div>
 
     <div class="stats-bar stats-bar--dark">

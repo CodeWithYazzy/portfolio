@@ -273,9 +273,10 @@ const LAB_EXPERIMENTS = [
     title: 'CNN vs Transfer Learning',
     desc: 'Comparing training from scratch against pretrained backbones on image classification.',
     hypothesis: 'Pretrained features reduce training time and improve generalization on small datasets.',
-    experiment: 'Train a small CNN from scratch vs fine-tune a pretrained backbone on the same splits.',
-    method: 'Same data pipeline, train/val/test splits, and evaluation protocol; log accuracy, loss, and training time.',
-    comparison: 'From-scratch CNN vs fine-tuned pretrained — architecture and data regime are the variables.',
+    setup: 'CIFAR-10, 50k train / 10k test, 80/20 train/val split, fixed seed, same augmentation for both arms.',
+    baseline: '3-layer CNN from scratch — 1.2M params, trained 50 epochs.',
+    method: 'Fine-tune ResNet-18 (ImageNet pretrained, last block unfrozen) for 10 epochs; same optimizer and schedule.',
+    metrics: 'Held-out accuracy, training time, and per-class F1 — logged per epoch.',
     result: '',
     conclusion: ''
   },
@@ -283,9 +284,10 @@ const LAB_EXPERIMENTS = [
     title: 'Model Evaluation',
     desc: 'Systematic evaluation with train/validation/test discipline.',
     hypothesis: 'Held-out evaluation reveals true generalization beyond training metrics.',
-    experiment: 'Evaluate with stratified splits, confusion matrices, precision/recall, and ROC analysis.',
-    method: 'Train/validation/test splits, cross-validation where applicable, and per-class reporting.',
-    comparison: 'Training metrics vs validation vs held-out test — detecting overfitting.',
+    setup: 'Stratified 70/15/15 split; 5-fold CV on train; test locked until final reporting.',
+    baseline: 'Training accuracy alone — optimistic and not trusted for decisions.',
+    method: 'Train/val/test splits, cross-validation where applicable, and per-class reporting.',
+    metrics: 'Accuracy, precision/recall, F1, ROC-AUC, and confusion matrices on held-out test.',
     result: '',
     conclusion: ''
   },
@@ -293,9 +295,10 @@ const LAB_EXPERIMENTS = [
     title: 'Hyperparameter Experiments',
     desc: 'Grid and randomized search for learning rate, depth, and regularization.',
     hypothesis: 'Learning rate and regularization dominate validation performance.',
-    experiment: 'Sweep learning rate, depth, weight decay, and batch size; log validation curves.',
-    method: 'Grid and randomized search with validation tracking and early stopping.',
-    comparison: 'Baseline vs tuned configurations on validation set.',
+    setup: 'Single dataset, fixed split, early stopping on validation loss.',
+    baseline: 'Default hyperparameters from library defaults.',
+    method: 'Grid and randomized search for learning rate, depth, weight decay, batch size.',
+    metrics: 'Validation loss/accuracy curves and best-config test score.',
     result: '',
     conclusion: ''
   },
@@ -303,9 +306,10 @@ const LAB_EXPERIMENTS = [
     title: 'Transformer Experiments',
     desc: 'Exploring attention-based models for text.',
     hypothesis: 'Attention handles long-range dependencies better than bag-of-words baselines.',
-    experiment: 'Train transformer-style models vs TF-IDF linear baselines on the same corpus.',
-    method: 'Tokenization, sequence handling, and fine-tuning workflows with held-out evaluation.',
-    comparison: 'TF-IDF linear vs transformer — accuracy and qualitative outputs.',
+    setup: 'Same text corpus, 80/20 split, shared tokenizer vocabulary and max length.',
+    baseline: 'TF-IDF + Logistic Regression (bag-of-words, no sequence).',
+    method: 'Transformer-style model: tokenization, positional encoding, fine-tuning with held-out evaluation.',
+    metrics: 'Accuracy, F1, and qualitative generation samples on held-out set.',
     result: '',
     conclusion: ''
   },
@@ -313,9 +317,10 @@ const LAB_EXPERIMENTS = [
     title: 'Data Analysis',
     desc: 'Exploratory analysis of feature distributions and preprocessing decisions.',
     hypothesis: 'Understanding distributions and correlations informs better feature engineering.',
-    experiment: 'Profile feature distributions, correlations, missing data, and outlier impact before modeling.',
+    setup: 'Raw CSV loaded, profiling with Pandas; no modeling yet.',
+    baseline: 'Raw features without scaling or imputation.',
     method: 'Pandas profiling, visualization, and preprocessing ablations.',
-    comparison: 'Raw vs preprocessed features on downstream model performance.',
+    metrics: 'Distribution plots, correlation heatmaps, and missing-value impact on baseline model.',
     result: '',
     conclusion: ''
   },
@@ -323,9 +328,10 @@ const LAB_EXPERIMENTS = [
     title: 'Model Optimization',
     desc: 'Profiling inference latency and model size trade-offs.',
     hypothesis: 'Smaller models can retain accuracy while improving latency for deployment.',
-    experiment: 'Measure inference time, model size, and accuracy across model variants.',
-    method: 'Benchmarking with batch sizes, profiling, and export for deployment readiness.',
-    comparison: 'Baseline vs optimized variants — accuracy vs latency/size.',
+    setup: 'Fixed test set, batch sizes 1/16/32, same hardware (CPU/GPU) for all runs.',
+    baseline: 'Full-precision, unoptimized model.',
+    method: 'Quantization, pruning, and export (ONNX/TorchScript) with latency profiling.',
+    metrics: 'Latency (ms), model size (MB), and accuracy delta vs baseline.',
     result: '',
     conclusion: ''
   }
@@ -345,9 +351,10 @@ function openLabModal(index) {
     labModalBody.replaceChildren();
     const fields = [
       ['Hypothesis', exp.hypothesis],
-      ['Experiment', exp.experiment],
-      ['Method', exp.method],
-      ['Comparison', exp.comparison],
+      ['Setup', exp.setup],
+      ['Baseline', exp.baseline],
+      ['Model / Method', exp.method],
+      ['Metrics', exp.metrics],
       ['Result', exp.result || 'Evaluation pending — documented after held-out testing. No fabricated results.'],
       ['Conclusion', exp.conclusion || 'Pending — updated when measurements are available.']
     ];
@@ -746,7 +753,10 @@ function buildCardHTML(p, basePath) {
       <p>${projectDescription}</p>
       ${signal ? `<p class="card-signal">${signal}</p>` : ``}
       <div class="tags">${tagsHTML}</div>
-      <a href="#" class="view-link" data-title="${projectName}" data-github="${escapeHTML(githubUrl)}" data-demo="${escapeHTML(demoUrl)}">View Demo <i data-lucide="arrow-right"></i></a>
+      <div style="display: flex; gap: 8px; padding: 12px 14px 14px; border-top: 1px solid #f1f5f9; margin-top: 4px;">
+        <a href="#" class="view-link" data-title="${projectName}" data-github="${escapeHTML(githubUrl)}" data-demo="${escapeHTML(demoUrl)}" style="flex: 1; display: inline-flex; gap: 6px; align-items: center; justify-content: center; padding: 7px 10px; background: var(--blue); color: #fff; border-radius: 4px; font-size: 12.5px; font-weight: 600; text-decoration: none;">View Demo <i data-lucide="arrow-right" style="width:14px;height:14px"></i></a>
+        <a href="${escapeHTML(githubUrl)}" target="_blank" rel="noopener noreferrer" aria-label="GitHub for ${projectName}" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 32px; border: 1px solid var(--border); border-radius: 4px; background: #fff; color: var(--text); flex-shrink: 0;"><i data-lucide="github" style="width:16px;height:16px"></i></a>
+      </div>
     </div>
   `;
 }

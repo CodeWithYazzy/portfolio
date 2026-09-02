@@ -1772,3 +1772,28 @@ a:focus-visible {
     border-bottom: none !important;
   }
 }
+
+/* FLAGSHIP — responsive */
+#flagship > .container > div:last-child {
+  grid-template-columns: 1.15fr 0.85fr;
+}
+@media (max-width: 900px) {
+  #flagship > .container > div:last-child {
+    grid-template-columns: 1fr !important;
+  }
+  #flagship > .container > div:last-child > div:last-child {
+    border-left: none !important;
+    border-top: 1px solid var(--border);
+  }
+  #flagship img {
+    height: 200px !important;
+  }
+}
+@media (max-width: 640px) {
+  #flagship h2 {
+    font-size: 22px !important;
+  }
+  #flagship h2 span {
+    font-size: 15px !important;
+  }
+}
