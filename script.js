@@ -184,8 +184,9 @@ const modalDesc = document.getElementById('modalDesc');
 let lastFocus = null;
 
 function openDemoTab(title) {
+  const isFile = location.protocol === 'file:';
   const pageRoot = location.pathname.includes('/pages/') ? '../' : '';
-  const demoPrefix = `${pageRoot}pages/demo.html`;
+  const demoPrefix = `${pageRoot}pages/demo${isFile ? '.html' : ''}`;
   const url = `${demoPrefix}?project=${encodeURIComponent(title)}`;
   const win = window.open(url, '_blank');
   if (!win) toast('Please allow popups for demo');
@@ -403,7 +404,9 @@ const viewAllBtn = document.getElementById('viewAllBtn');
 if (viewAllBtn) {
   viewAllBtn.addEventListener('click', e => {
     e.preventDefault();
-    window.location.href = location.pathname.includes('/pages/') ? 'all-projects.html' : 'pages/all-projects.html';
+    const isFile = location.protocol === 'file:';
+    const target = location.pathname.includes('/pages/') ? `all-projects${isFile ? '.html' : ''}` : `pages/all-projects${isFile ? '.html' : ''}`;
+    window.location.href = target;
   });
 }
 
@@ -736,7 +739,8 @@ function buildCardHTML(p, basePath) {
   }
   const badge = p.badge || 'Project';
   const tagsHTML = (p.technologies || []).map(t => `<span>${escapeHTML(t)}</span>`).join('');
-  const demoUrl = p.demo || `${basePath}pages/demo.html?project=${encodeURIComponent(p.name)}`;
+  const isFileNow = location.protocol === 'file:';
+  const demoUrl = p.demo || `${basePath}pages/demo${isFileNow ? '.html' : ''}?project=${encodeURIComponent(p.name)}`;
   const githubUrl = safeExternalUrl(p.github);
   const signal = p.signal ? escapeHTML(p.signal) : '';
   const imageHTML = imgUrl
