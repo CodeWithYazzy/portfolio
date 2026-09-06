@@ -13,9 +13,27 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+  <script>!function(){try{var t=localStorage.getItem("theme");if(!t)t=matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){}}();</script>
   <script src="https://unpkg.com/lucide@0.469.0"></script>
   <style>
-    :root{--blue:#0B3D91;--blue-dark:#082A66;--ink:#0B1220;--text:#0F172A;--muted:#5B6576;--muted-2:#8A95A8;--border:#E6EAF0;--line-soft:#F1F3F7;--light:#F6F7FB;--soft:#F6F7FB;--paper:#FFFFFF;--radius:16px;--radius-pill:999px}
+    :root{--blue:#0B3D91;--blue-dark:#082A66;--ink:#0B1220;--text:#0F172A;--muted:#5B6576;--muted-2:#6B7280;--border:#E6EAF0;--line-soft:#F1F3F7;--light:#F6F7FB;--soft:#F6F7FB;--paper:#FFFFFF;--radius:16px;--radius-pill:999px}
+    [data-theme="dark"]{--paper:#0F1115;--soft:#1A1F28;--light:#1A1F28;--text:#E6E8EB;--muted:#9AA0A8;--muted-2:#7A818C;--border:#252D3A;--ink:#F1F3F5}
+    [data-theme="dark"] body{background:var(--paper);color:var(--text)}
+    [data-theme="dark"] header{background:rgba(15,17,21,.86);border-color:#252D3A}
+    [data-theme="dark"] .logo{background:#E6E8EB;color:#0F1115}
+    [data-theme="dark"] .back{background:transparent;border-color:#252D3A;color:#E6E8EB}
+    [data-theme="dark"] .back:hover{background:#E6E8EB;color:#0F1115}
+    [data-theme="dark"] .card{border-color:#252D3A;background:#1A1F28}
+    [data-theme="dark"] .card h2{color:#F1F3F5}
+    [data-theme="dark"] .hero-img{border-color:#252D3A}
+    [data-theme="dark"] .detail-card{border-color:#252D3A;background:#1A1F28}
+    [data-theme="dark"] .metric-card{border-color:#252D3A;background:#1A1F28}
+    [data-theme="dark"] .eng-card{border-color:#252D3A;background:#1A1F28}
+    [data-theme="dark"] .frame-wrap{border-color:#252D3A}
+    [data-theme="dark"] .frame-bar{background:#1A1F28;border-color:#252D3A}
+    [data-theme="dark"] .calculator-demo{border-color:#252D3A;background:#1A1F28}
+    [data-theme="dark"] .iris-demo{border-color:#252D3A;background:#1A1F28}
+    [data-theme="dark"] footer{border-color:#252D3A;color:var(--muted)}
     *{box-sizing:border-box}
     body{margin:0;color:var(--text);background:var(--paper);font-family:Inter,system-ui,sans-serif;line-height:1.65;-webkit-font-smoothing:antialiased}
     a{text-decoration:none;color:inherit}
