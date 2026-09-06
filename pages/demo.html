@@ -114,7 +114,7 @@
     .eng-card{border:1px solid var(--border);border-radius:14px;background:var(--light);padding:16px;box-shadow:0 2px 8px rgba(15,23,42,.04)}
     .eng-card h4{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--blue);letter-spacing:.06em;text-transform:uppercase;margin:0 0 6px}
     .eng-card p{font-size:13px;color:var(--muted);margin:0;line-height:1.6}
-    .verification-banner{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:18px 0;padding:12px 14px;border:1px solid var(--border);border-radius:12px;background:var(--light)}
+    .verification-banner{display:none !important}
     .verification-step{display:flex;align-items:center;gap:6px;font-size:11px;font-weight:600;color:var(--ink);font-family:'JetBrains Mono',monospace}
     .verification-step i{color:var(--ink);width:14px;height:14px}
     .verification-arrow{color:var(--muted-2);font-weight:700}
@@ -376,7 +376,7 @@
       }
 
       if (verificationBannerEl) {
-        verificationBannerEl.hidden = !repoInfo;
+        verificationBannerEl.hidden = true;
         try { lucide.createIcons(); } catch (e) {}
       }
     }
