@@ -9,6 +9,14 @@ try { lucide.createIcons(); } catch (e) {}
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+// Navbar scrolled state — premium shadow
+const navbar = document.getElementById('navbar');
+if (navbar) {
+  const onScrollNav = () => navbar.classList.toggle('scrolled', window.scrollY > 10);
+  window.addEventListener('scroll', onScrollNav, { passive: true });
+  onScrollNav();
+}
+
 // ==========================================
 // 1. MOBILE NAVIGATION
 // ==========================================
@@ -757,9 +765,9 @@ function buildCardHTML(p, basePath) {
       <p>${projectDescription}</p>
       ${signal ? `<p class="card-signal">${signal}</p>` : ``}
       <div class="tags">${tagsHTML}</div>
-      <div style="display: flex; gap: 8px; padding: 12px 14px 14px; border-top: 1px solid #f1f5f9; margin-top: 4px;">
-        <a href="#" class="view-link" data-title="${projectName}" data-github="${escapeHTML(githubUrl)}" data-demo="${escapeHTML(demoUrl)}" style="flex: 1; display: inline-flex; gap: 6px; align-items: center; justify-content: center; padding: 7px 10px; background: var(--blue); color: #fff; border-radius: 4px; font-size: 12.5px; font-weight: 600; text-decoration: none;">View Demo <i data-lucide="arrow-right" style="width:14px;height:14px"></i></a>
-        <a href="${escapeHTML(githubUrl)}" target="_blank" rel="noopener noreferrer" aria-label="GitHub for ${projectName}" style="display: inline-flex; align-items: center; justify-content: center; width: 36px; height: 32px; border: 1px solid var(--border); border-radius: 4px; background: #fff; color: var(--text); flex-shrink: 0;"><i data-lucide="github" style="width:16px;height:16px"></i></a>
+      <div class="project-actions">
+        <a href="#" class="view-link" data-title="${projectName}" data-github="${escapeHTML(githubUrl)}" data-demo="${escapeHTML(demoUrl)}">View Demo <i data-lucide="arrow-right" style="width:14px;height:14px"></i></a>
+        <a href="${escapeHTML(githubUrl)}" target="_blank" rel="noopener noreferrer" aria-label="GitHub for ${projectName}" class="gh-link"><i data-lucide="github" style="width:16px;height:16px"></i></a>
       </div>
     </div>
   `;
