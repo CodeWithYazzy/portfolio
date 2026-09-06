@@ -9,6 +9,10 @@ try { lucide.createIcons(); } catch (e) {}
 const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+// Hero image fallback (CSP-safe, replaces inline onerror)
+const heroImg = document.getElementById('heroImg');
+if (heroImg) heroImg.addEventListener('error', () => { heroImg.onerror = null; heroImg.src = 'assets/me.png'; });
+
 // Navbar scrolled state — premium shadow
 const navbar = document.getElementById('navbar');
 if (navbar) {
@@ -62,36 +66,36 @@ if (navbar) {
 const ham = document.getElementById('hamburger');
 const mobile = document.getElementById('mobileMenu');
 if (ham && mobile) {
-  ham.addEventListener('click', () => {
-    const open = mobile.classList.toggle('open');
+  const iconMenu = ham.querySelector('.icon-menu');
+  const iconClose = ham.querySelector('.icon-close');
+  function setMenuState(open){
+    mobile.classList.toggle('open', open);
     ham.setAttribute('aria-expanded', String(open));
     ham.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
     mobile.setAttribute('aria-hidden', String(!open));
-    ham.innerHTML = open ? '<i data-lucide="x"></i>' : '<i data-lucide="menu"></i>';
-    try { lucide.createIcons(); } catch (e) {}
+    if(iconMenu) iconMenu.style.display = open ? 'none' : '';
+    if(iconClose) iconClose.style.display = open ? '' : 'none';
     document.body.style.overflow = open ? 'hidden' : '';
+    // a11y: make background inert when menu open
+    const mainEl = document.getElementById('main-content');
+    if(mainEl){ if(open) mainEl.setAttribute('inert',''); else mainEl.removeAttribute('inert'); }
+  }
+  ham.addEventListener('click', () => {
+    const open = !mobile.classList.contains('open');
+    setMenuState(open);
   });
 
-  mobile.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
-    mobile.classList.remove('open');
-    mobile.setAttribute('aria-hidden', 'true');
-    ham.setAttribute('aria-expanded', 'false');
-    ham.setAttribute('aria-label', 'Open menu');
-    ham.innerHTML = '<i data-lucide="menu"></i>';
-    try { lucide.createIcons(); } catch (e) {}
-    document.body.style.overflow = '';
-  }));
+  mobile.querySelectorAll('a, button').forEach(a => a.addEventListener('click', () => setMenuState(false)));
 
   // Close on outside click
   document.addEventListener('click', (e) => {
     if (mobile.classList.contains('open') && !mobile.contains(e.target) && !ham.contains(e.target)) {
-      mobile.classList.remove('open');
-      mobile.setAttribute('aria-hidden', 'true');
-      ham.setAttribute('aria-expanded', 'false');
-      ham.innerHTML = '<i data-lucide="menu"></i>';
-      try { lucide.createIcons(); } catch (e) {}
-      document.body.style.overflow = '';
+      setMenuState(false);
     }
+  });
+  // Close on Escape
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && mobile.classList.contains('open')) setMenuState(false);
   });
 }
 
@@ -119,9 +123,11 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
         if (ham) {
           ham.setAttribute('aria-expanded', 'false');
           ham.setAttribute('aria-label', 'Open menu');
-          ham.innerHTML = '<i data-lucide="menu"></i>';
-          try { lucide.createIcons(); } catch (e) {}
+          const im = ham.querySelector('.icon-menu'), ic = ham.querySelector('.icon-close');
+          if(im) im.style.display=''; if(ic) ic.style.display='none';
           document.body.style.overflow = '';
+          const mainEl2 = document.getElementById('main-content');
+          if(mainEl2) mainEl2.removeAttribute('inert');
         }
       }
 
@@ -269,6 +275,10 @@ function openModal(title, github, demo) {
   modal.classList.add('open');
   modal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  const _mainA = document.getElementById('main-content');
+  const _navA = document.getElementById('navbar');
+  if(_mainA) _mainA.setAttribute('inert','');
+  if(_navA) _navA.setAttribute('inert','');
   try { lucide.createIcons(); } catch (e) {}
 
   const closeBtn = document.getElementById('modalClose');
@@ -280,6 +290,10 @@ function closeModal() {
   modal.classList.remove('open');
   modal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+  const _mainB = document.getElementById('main-content');
+  const _navB = document.getElementById('navbar');
+  if(_mainB) _mainB.removeAttribute('inert');
+  if(_navB) _navB.removeAttribute('inert');
   if (lastFocus) lastFocus.focus();
 }
 
@@ -397,6 +411,9 @@ function openLabModal(index) {
   const exp = LAB_EXPERIMENTS[index];
   if (!exp || !labModal || !labModalTitle) return;
   labLastFocus = document.activeElement;
+  document.querySelectorAll('.lab-card').forEach(c=>c.setAttribute('aria-expanded','false'));
+  const trigger = document.querySelector(`.lab-card[data-lab="${index}"]`);
+  if(trigger) trigger.setAttribute('aria-expanded','true');
   labModalTitle.textContent = exp.title;
   if (labModalDesc) labModalDesc.textContent = exp.desc;
   if (labModalBody) {
@@ -426,6 +443,10 @@ function openLabModal(index) {
   labModal.classList.add('open');
   labModal.setAttribute('aria-hidden', 'false');
   document.body.style.overflow = 'hidden';
+  const _mainC = document.getElementById('main-content');
+  const _navC = document.getElementById('navbar');
+  if(_mainC) _mainC.setAttribute('inert','');
+  if(_navC) _navC.setAttribute('inert','');
   try { lucide.createIcons(); } catch (e) {}
   const c = document.getElementById('labModalClose');
   if (c) c.focus();
@@ -435,12 +456,25 @@ function closeLabModal() {
   labModal.classList.remove('open');
   labModal.setAttribute('aria-hidden', 'true');
   document.body.style.overflow = '';
+  const _mainD = document.getElementById('main-content');
+  const _navD = document.getElementById('navbar');
+  if(_mainD) _mainD.removeAttribute('inert');
+  if(_navD) _navD.removeAttribute('inert');
+  document.querySelectorAll('.lab-card').forEach(c=>c.setAttribute('aria-expanded','false'));
   if (labLastFocus) labLastFocus.focus();
 }
 const labModalCloseBtn = document.getElementById('labModalClose');
 if (labModalCloseBtn) labModalCloseBtn.addEventListener('click', closeLabModal);
 if (labModal) {
   labModal.addEventListener('click', e => { if (e.target === labModal) closeLabModal(); });
+  labModal.addEventListener('keydown', e => {
+    if (e.key !== 'Tab' || !labModal.classList.contains('open')) return;
+    const focusable = labModal.querySelectorAll('button, a[href], input, textarea, [tabindex]:not([tabindex="-1"])');
+    if (focusable.length === 0) return;
+    const first = focusable[0], last = focusable[focusable.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  });
 }
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && labModal && labModal.classList.contains('open')) closeLabModal(); });
 document.querySelectorAll('.lab-card').forEach(card => {
@@ -796,7 +830,7 @@ function buildCardHTML(p, basePath) {
   const githubUrl = safeExternalUrl(p.github);
   const signal = p.signal ? escapeHTML(p.signal) : '';
   const imageHTML = imgUrl
-    ? `<img src="${escapeHTML(imgUrl)}" alt="${projectName} preview" loading="lazy" decoding="async">`
+    ? `<img src="${escapeHTML(imgUrl)}" alt="${projectName} preview" loading="lazy" decoding="async" width="600" height="400" style="aspect-ratio:600/400;object-fit:cover">`
     : `<div class="proj-placeholder" role="img" aria-label="${projectName} project preview"><span>${escapeHTML((p.name || 'Project').slice(0, 1))}</span></div>`;
 
   return `
@@ -942,7 +976,12 @@ document.querySelectorAll('img').forEach(img => {
 // ==========================================
 const backToTop = document.getElementById('backToTop');
 if (backToTop) {
-  const toggleBackToTop = () => backToTop.classList.toggle('show', window.scrollY > 600);
+  const toggleBackToTop = () => {
+    const show = window.scrollY > 600;
+    backToTop.classList.toggle('show', show);
+    backToTop.setAttribute('aria-hidden', String(!show));
+    backToTop.tabIndex = show ? 0 : -1;
+  };
   window.addEventListener('scroll', toggleBackToTop, { passive: true });
   toggleBackToTop();
   backToTop.addEventListener('click', () => window.scrollTo({ top: 0, behavior: 'smooth' }));

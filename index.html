@@ -10,11 +10,14 @@
 <meta property="og:title" content="Yasir Javed Khan — Machine Learning Engineer">
 <meta property="og:description" content="Machine Learning Engineer building practical ML systems — from data and model development to deployment.">
 <meta property="og:image" content="https://yasirlab.in/assets/me.png">
+<meta property="og:image:width" content="1165">
+<meta property="og:image:height" content="1350">
+<meta property="og:image:alt" content="Yasir Javed Khan portrait">
 <meta name="theme-color" content="#0B1220">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/assets/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="/assets/favicon.png">
-<meta name="twitter:card" content="summary">
+<link rel="icon" href="favicon.ico" sizes="any">
+<link rel="icon" href="assets/favicon.png" type="image/png">
+<link rel="apple-touch-icon" href="assets/favicon.png">
+<meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Yasir Javed Khan — Machine Learning Engineer">
 <meta name="twitter:description" content="Building practical ML systems from data and model development to deployment.">
 <meta name="twitter:image" content="https://yasirlab.in/assets/me.png">
@@ -26,11 +29,12 @@
 <script>!function(){try{var t=localStorage.getItem("theme");if(!t)t=matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=t==="dark"?"#0F1115":"#0B1220"}catch(e){}}();</script>
 <script src="https://unpkg.com/lucide@0.469.0"></script>
 <link rel="stylesheet" href="style.css">
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Yasir Javed Khan","url":"https://yasirlab.in","jobTitle":"Machine Learning Engineer","sameAs":["https://github.com/codewithyazzy","https://x.com/codewithyazzy"]}</script>
 </head>
 <body>
-<a class="skip-link" href="#home">Skip to content</a>
+<a class="skip-link" href="#main-content">Skip to content</a>
 <!-- NAVBAR — only 4 items -->
-<nav id="navbar">
+<nav id="navbar" aria-label="Primary">
   <div class="nav-inner">
     <a href="#home" class="logo logo--with-type" aria-label="YasirLab Home"><span class="logo-mark" aria-hidden="true">YL</span><span class="logo-type">YASIR<span>LAB</span></span></a>
     <ul class="nav-links" id="navLinks">
@@ -42,7 +46,7 @@
     <div class="nav-right">
       <a href="#contact" class="btn-primary btn-sm" data-scroll>Let's Connect</a>
       <button id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode"><i data-lucide="moon" class="icon-moon"></i><i data-lucide="sun" class="icon-sun" style="display:none"></i></button>
-      <button id="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><i data-lucide="menu"></i></button>
+      <button id="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><i data-lucide="menu" class="icon-menu"></i><i data-lucide="x" class="icon-close" style="display:none"></i></button>
     </div>
   </div>
   <div id="mobileMenu" aria-hidden="true">
@@ -54,16 +58,17 @@
   </div>
 </nav>
 
+<main id="main-content" tabindex="-1">
 <!-- HOME — premium landing, compact previews -->
-<section id="home" class="hero">
+<section id="home" class="hero" aria-labelledby="heroTitle">
   <div class="hero-bg-decor" aria-hidden="true">
     <div class="hero-decor-circle"></div>
   </div>
   <div class="container hero-grid">
     <div class="hero-left">
       <div class="hero-kicker"><b>YasirLab</b> — AI Systems Laboratory • India</div>
-      <h1><span class="light">Yasir</span> <span class="line-accent">Javed Khan</span></h1>
-      <p class="subtitle">Machine Learning Developer <span class="sep"></span> AI Systems Builder</p>
+      <h1 id="heroTitle"><span class="light">Yasir</span> <span class="line-accent">Javed Khan</span></h1>
+      <p class="subtitle">Machine Learning Developer <span class="sep" aria-hidden="true"></span> AI Systems Builder</p>
       <p class="desc">I work across data, model development, experimentation, evaluation, and deployment — building ML systems that are measured and documented, not just claimed.</p>
       <div class="hero-btns">
         <a href="#projects" class="btn-primary">View Projects <i data-lucide="arrow-right"></i></a>
@@ -83,8 +88,8 @@
       <div class="portrait-wrapper">
         <div class="hero-dot-grid" aria-hidden="true"></div>
         <div class="portrait-frame">
-          <img src="assets/me.webp" alt="Yasir Javed Khan" width="1165" height="1350" loading="eager" fetchpriority="high" onerror="this.onerror=null;this.src='assets/me.png'">
-          <div class="portrait-badge" aria-hidden="true">
+          <img src="assets/me.webp" alt="Yasir Javed Khan" width="1165" height="1350" loading="eager" fetchpriority="high" decoding="async" srcset="assets/me.webp 1165w" sizes="(max-width: 1000px) 360px, 400px" id="heroImg">
+          <div class="portrait-badge">
             <i data-lucide="cpu" style="width:16px;height:16px"></i>
             <div><b>ML Systems • Build → Deploy</b><span>Data → Model → Evaluation → Ship</span></div>
           </div>
@@ -95,10 +100,10 @@
   <!-- compact previews — flagship + lab + workflow (home stays short) -->
   <div class="container home-previews-wrap">
     <div class="home-previews">
-      <a href="#flagship" class="home-preview-card home-preview-flagship">
-        <div class="home-preview-top"><span class="mono">FEATURED CASE</span><span class="dot"></span></div>
+      <a href="#flagship" class="home-preview-card home-preview-flagship" aria-label="View flagship Iris case study">
+        <div class="home-preview-top"><span class="mono">FEATURED CASE</span><span class="dot" aria-hidden="true"></span></div>
         <div class="home-preview-body">
-          <img src="assets/iris-classifier.webp" alt="" loading="lazy">
+          <img src="assets/iris-classifier.webp" alt="Iris Flower Classifier preview" loading="lazy" decoding="async" width="800" height="600">
           <div>
             <h4>Iris Flower Classifier</h4>
             <p>End-to-end tabular pipeline — 97% held-out, stratified split, scaler + classifier.</p>
@@ -117,7 +122,7 @@
           </div>
         </div>
       </a>
-      <div class="home-preview-card home-preview-workflow" aria-hidden="true">
+      <div class="home-preview-card home-preview-workflow">
         <div class="home-preview-top"><span class="mono">WORKFLOW</span></div>
         <div class="workflow-mini">Understand <span>→</span> Build <span>→</span> Experiment <span>→</span> Evaluate <span>→</span> Deploy <span>→</span> Iterate</div>
         <p>Evidence over adjectives — every stage measured.</p>
@@ -288,7 +293,7 @@
           <p class="eyebrow" style="margin:0">FLAGSHIP PROJECT <span></span></p>
           <span class="flagship-badge">MOST DETAILED</span>
         </div>
-        <h2>Iris Flower Classifier<br><span>End-to-end tabular pipeline — from raw measurements to deployed inference.</span></h2>
+        <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:28px;line-height:1.06;margin:0;letter-spacing:-.035em;color:var(--ink)">Iris Flower Classifier<br><span style="font-size:15.5px;font-weight:500;color:var(--muted);display:block;margin-top:8px;letter-spacing:-.01em;line-height:1.6">End-to-end tabular pipeline — from raw measurements to deployed inference.</span></h3>
         <p class="flagship-desc">A complete classification system built to demonstrate rigorous ML engineering: stratified splits, preprocessing pipelines, cross-validated model comparison, and held-out evaluation — not a notebook-only demo.</p>
         <div class="flagship-grid">
           <div class="flagship-mini"><b>Problem</b><span>Classify iris species from 4 numeric measurements.</span></div>
@@ -335,22 +340,22 @@
         </div>
       </div>
       <div class="lab-grid">
-        <div class="lab-card" data-lab="0" tabindex="0" role="button" aria-label="Open CNN vs Transfer Learning experiment">
+        <div class="lab-card" data-lab="0" tabindex="0" role="button" aria-label="Open CNN vs Transfer Learning experiment" aria-haspopup="dialog" aria-expanded="false">
           <div class="lab-card-top"><b>EXP.01</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot"></span> ACTIVE</span></div>
           <div class="lab-card-head"><i data-lucide="layers"></i><h4>CNN vs Transfer Learning</h4></div><p>Comparing training from scratch against pretrained backbones on image classification; tracking accuracy, training time, and generalization.</p><small><i data-lucide="eye" style="width:11px;height:11px"></i> Computer Vision • PyTorch</small></div>
-        <div class="lab-card" data-lab="1" tabindex="0" role="button" aria-label="Open Model Evaluation experiment">
+        <div class="lab-card" data-lab="1" tabindex="0" role="button" aria-label="Open Model Evaluation experiment" aria-haspopup="dialog" aria-expanded="false">
           <div class="lab-card-top"><b>EXP.02</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#3B82F6;box-shadow:0 0 0 4px rgba(59,130,246,.12)"></span> EVALUATION</span></div>
           <div class="lab-card-head"><i data-lucide="bar-chart-3"></i><h4>Model Evaluation</h4></div><p>Systematic evaluation with train/validation/test splits, confusion matrices, precision/recall, and ROC analysis on held-out data.</p><small><i data-lucide="clipboard-check" style="width:11px;height:11px"></i> Evaluation • Scikit-learn</small></div>
-        <div class="lab-card" data-lab="2" tabindex="0" role="button" aria-label="Open Hyperparameter Experiments">
+        <div class="lab-card" data-lab="2" tabindex="0" role="button" aria-label="Open Hyperparameter Experiments" aria-haspopup="dialog" aria-expanded="false">
           <div class="lab-card-top"><b>EXP.03</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#F59E0B;box-shadow:0 0 0 4px rgba(245,158,11,.12)"></span> TUNING</span></div>
           <div class="lab-card-head"><i data-lucide="sliders-horizontal"></i><h4>Hyperparameter Experiments</h4></div><p>Grid and randomized search for learning rate, depth, regularization, and batch size — logging validation curves.</p><small><i data-lucide="settings-2" style="width:11px;height:11px"></i> Tuning • Validation</small></div>
-        <div class="lab-card" data-lab="3" tabindex="0" role="button" aria-label="Open Transformer Experiments">
+        <div class="lab-card" data-lab="3" tabindex="0" role="button" aria-label="Open Transformer Experiments" aria-haspopup="dialog" aria-expanded="false">
           <div class="lab-card-top"><b>EXP.04</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot"></span> RESEARCH</span></div>
           <div class="lab-card-head"><i data-lucide="bot"></i><h4>Transformer Experiments</h4></div><p>Exploring attention-based models for text, including tokenization, sequence handling, and fine-tuning workflows.</p><small><i data-lucide="languages" style="width:11px;height:11px"></i> NLP • Transformers</small></div>
-        <div class="lab-card" data-lab="4" tabindex="0" role="button" aria-label="Open Data Analysis experiment">
+        <div class="lab-card" data-lab="4" tabindex="0" role="button" aria-label="Open Data Analysis experiment" aria-haspopup="dialog" aria-expanded="false">
           <div class="lab-card-top"><b>EXP.05</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#8B5CF6;box-shadow:0 0 0 4px rgba(139,92,246,.12)"></span> DATA</span></div>
           <div class="lab-card-head"><i data-lucide="database"></i><h4>Data Analysis</h4></div><p>Exploratory analysis of feature distributions, correlations, missing data, and preprocessing decisions before modeling.</p><small><i data-lucide="table-2" style="width:11px;height:11px"></i> EDA • Pandas</small></div>
-        <div class="lab-card" data-lab="5" tabindex="0" role="button" aria-label="Open Model Optimization experiment">
+        <div class="lab-card" data-lab="5" tabindex="0" role="button" aria-label="Open Model Optimization experiment" aria-haspopup="dialog" aria-expanded="false">
           <div class="lab-card-top"><b>EXP.06</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#EF4444;box-shadow:0 0 0 4px rgba(239,68,68,.12)"></span> DEPLOY</span></div>
           <div class="lab-card-head"><i data-lucide="zap"></i><h4>Model Optimization</h4></div><p>Profiling inference latency, model size trade-offs, and deployment readiness for practical use.</p><small><i data-lucide="gauge" style="width:11px;height:11px"></i> Optimization • Deployment</small></div>
       </div>
@@ -369,6 +374,7 @@
         <a href="pages/demo?project=Iris%20Flower%20Classifier" class="btn-outline btn-sm" style="white-space:nowrap">Try a Demo — Iris 97% <i data-lucide="external-link" style="width:14px;height:14px"></i></a>
       </div>
       <div class="projects-grid" id="projectsGrid"></div>
+      <noscript><p style="margin-top:12px;color:var(--muted);font-size:14px">Enable JavaScript to view projects. See <a href="pages/all-projects.html" style="color:var(--blue);text-decoration:underline">all projects</a>.</p></noscript>
     </div>
   </div>
 </section>
@@ -403,6 +409,7 @@
     </div>
   </div>
 </section>
+</main>
 
 <footer>
   <div class="container footer-inner">
