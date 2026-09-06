@@ -23,6 +23,7 @@
 <link rel="preconnect" href="https://unpkg.com">
 <title>Yasir Javed Khan — Machine Learning Engineer</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<script>!function(){try{var t=localStorage.getItem("theme");if(!t)t=matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t);var m=document.querySelector('meta[name="theme-color"]');if(m)m.content=t==="dark"?"#0B1220":"#0B1220"}catch(e){}}();</script>
 <script src="https://unpkg.com/lucide@0.469.0"></script>
 <link rel="stylesheet" href="style.css">
 </head>
@@ -40,6 +41,7 @@
     </ul>
     <div class="nav-right">
       <a href="#contact" class="btn-primary btn-sm" data-scroll>Let's Connect</a>
+      <button id="themeToggle" type="button" aria-label="Toggle dark mode" aria-pressed="false" title="Toggle dark mode"><i data-lucide="moon" class="icon-moon"></i><i data-lucide="sun" class="icon-sun" style="display:none"></i></button>
       <button id="hamburger" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="mobileMenu"><i data-lucide="menu"></i></button>
     </div>
   </div>
@@ -48,6 +50,7 @@
     <a href="#about">About</a>
     <a href="#projects">Projects</a>
     <a href="#contact">Contact</a>
+    <button id="themeToggleMobile" type="button" aria-label="Toggle dark mode" style="margin-top:8px; padding:12px; border:1px solid var(--line); border-radius:10px; background:var(--soft); font-weight:600; font-size:13px; display:flex; align-items:center; justify-content:center; gap:8px;"><i data-lucide="moon" class="icon-moon" style="width:16px;height:16px"></i><i data-lucide="sun" class="icon-sun" style="width:16px;height:16px; display:none"></i> Toggle dark mode</button>
   </div>
 </nav>
 

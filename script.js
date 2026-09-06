@@ -18,6 +18,45 @@ if (navbar) {
 }
 
 // ==========================================
+// THEME — dark mode deep, respects system, persists, no break
+// ==========================================
+(function(){
+  const docEl = document.documentElement;
+  const metaTheme = document.querySelector('meta[name="theme-color"]');
+  const t1 = document.getElementById('themeToggle');
+  const t2 = document.getElementById('themeToggleMobile');
+  function getPreferred(){ try{ const s=localStorage.getItem('theme'); if(s==='dark'||s==='light') return s; }catch(e){} return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'; }
+  function applyTheme(theme){
+    docEl.setAttribute('data-theme', theme);
+    try{ localStorage.setItem('theme', theme); }catch(e){}
+    if(metaTheme) metaTheme.setAttribute('content', theme==='dark' ? '#080E1E' : '#0B1220');
+    const isDark = theme==='dark';
+    [t1, t2].forEach(btn=>{
+      if(!btn) return;
+      btn.setAttribute('aria-pressed', String(isDark));
+      const moon = btn.querySelector('.icon-moon');
+      const sun = btn.querySelector('.icon-sun');
+      if(moon && sun){ moon.style.display = isDark ? 'none' : ''; sun.style.display = isDark ? '' : 'none'; }
+      btn.setAttribute('title', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+      btn.setAttribute('aria-label', isDark ? 'Switch to light mode' : 'Switch to dark mode');
+    });
+    try{ lucide.createIcons(); }catch(e){}
+  }
+  // init from early script (already set) but ensure icons sync
+  applyTheme(docEl.getAttribute('data-theme') || getPreferred());
+  function toggle(){ applyTheme(docEl.getAttribute('data-theme')==='dark' ? 'light' : 'dark'); }
+  if(t1) t1.addEventListener('click', toggle);
+  if(t2) t2.addEventListener('click', toggle);
+  // follow system if no explicit choice
+  try{
+    const mq = window.matchMedia('(prefers-color-scheme: dark)');
+    mq.addEventListener('change', e=>{
+      try{ if(!localStorage.getItem('theme')) applyTheme(e.matches ? 'dark' : 'light'); }catch(err){}
+    });
+  }catch(e){}
+})();
+
+// ==========================================
 // 1. MOBILE NAVIGATION
 // ==========================================
 const ham = document.getElementById('hamburger');
