@@ -260,7 +260,7 @@ function openModal(title, github, demo) {
   modalTitle.textContent = title;
 
   if (modalGithub) {
-    modalGithub.href = github || 'https://github.com/codewithyazzy';
+    modalGithub.href = github || 'https://github.com/CodeWithYazzy';
     modalGithub.setAttribute('aria-label', 'GitHub profile for ' + title);
   }
   if (modalDemo) {
@@ -507,7 +507,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/iris-classifier.webp",
       "description": "Multi-class classification on the Iris dataset — stratified split, scikit-learn pipeline, 97% test accuracy.",
       "technologies": ["Python", "scikit-learn", "Pandas", "Model Evaluation"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/iris-classifier",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/iris-classifier",
       "demo": "",
       "featured": true,
       "signal": "Scikit-learn · Classification · Tabular",
@@ -535,7 +535,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/sales-dashboard.webp",
       "description": "Exploratory sales analysis with Pandas and Matplotlib — distributions, trends, and aggregation.",
       "technologies": ["Python", "Pandas", "Matplotlib", "EDA"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/sales-dashboard",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/sales-dashboard",
       "demo": "",
       "featured": false,
       "problem": "Surface trends in sales data for operational decisions.",
@@ -552,7 +552,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/pytorch-classifier.webp",
       "description": "CNN image classifier built with PyTorch on CIFAR-10 — data pipeline, training loop, and held-out evaluation.",
       "technologies": ["PyTorch", "CNN", "Python", "Computer Vision"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/pytorch-image-classifier",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/pytorch-image-classifier",
       "demo": "",
       "featured": true,
       "signal": "PyTorch · CNN · Computer Vision",
@@ -579,7 +579,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/house-price-predictor.webp",
       "description": "Regression system for house prices — feature engineering, scikit-learn model, and validation on test split.",
       "technologies": ["Python", "scikit-learn", "Regression", "Feature Engineering"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/house-price-predictor",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/house-price-predictor",
       "demo": "",
       "featured": true,
       "signal": "Scikit-learn · Regression · Tabular",
@@ -604,7 +604,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/portfolio-website.webp",
       "description": "Static site architecture — semantic HTML, responsive CSS, vanilla JS, no framework.",
       "technologies": ["HTML", "CSS", "JavaScript"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/portfolio-website",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/portfolio-website",
       "demo": "",
       "featured": false,
       "problem": "Present engineering work credibly across devices and without build tooling.",
@@ -621,7 +621,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/sentiment-analysis.webp",
       "description": "NLP sentiment classifier — text preprocessing, vectorization, scikit-learn training, and test-set evaluation.",
       "technologies": ["Python", "scikit-learn", "NLP", "Model Evaluation"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/sentiment-analysis",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/sentiment-analysis",
       "demo": "",
       "featured": true,
       "signal": "Scikit-learn · NLP · Text Classification",
@@ -646,7 +646,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/numpy-explorer.webp",
       "description": "Explore datasets with Numpy and Pandas — filtering, grouping, stats.",
       "technologies": ["Numpy", "Pandas", "Advanced Python"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/numpy-explorer",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/numpy-explorer",
       "demo": "",
       "featured": false,
       "problem": "Enable fast, programmatic exploration of tabular datasets.",
@@ -663,7 +663,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/matplotlib-visualizer.webp",
       "description": "Custom chart gallery — bar, line, scatter with Matplotlib styling.",
       "technologies": ["Matplotlib", "Pandas", "Python"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/matplotlib-visualizer",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/matplotlib-visualizer",
       "demo": "",
       "featured": false,
       "problem": "Generate reproducible, publication-quality charts.",
@@ -680,7 +680,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/pytorch-chatbot.webp",
       "description": "Sequence model for conversational text — tokenization, PyTorch training, and inference pipeline.",
       "technologies": ["PyTorch", "NLP", "Deep Learning"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/pytorch-chatbot",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/pytorch-chatbot",
       "demo": "",
       "featured": false,
       "problem": "Generate coherent responses to short prompts.",
@@ -697,7 +697,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/heart-disease-predictor.webp",
       "description": "Machine Learning classifier for heart disease using scikit-learn.",
       "technologies": ["Machine Learning", "scikit-learn", "Pandas"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/heart-disease-predictor",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/heart-disease-predictor",
       "demo": "",
       "featured": false,
       "problem": "Predict heart disease presence from clinical features.",
@@ -714,7 +714,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/customer-segmentation.webp",
       "description": "Unsupervised clustering for customer segments — feature scaling, k-means, and cluster analysis.",
       "technologies": ["Python", "scikit-learn", "Clustering"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/customer-segmentation",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/customer-segmentation",
       "demo": "",
       "featured": false,
       "problem": "Segment customers for targeted analysis.",
@@ -731,7 +731,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/digit-classifier.webp",
       "description": "MNIST digit recognition with PyTorch — CNN, data pipeline, and test-set evaluation.",
       "technologies": ["PyTorch", "CNN", "Python", "Computer Vision"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/handwritten-digit-classifier",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/handwritten-digit-classifier",
       "demo": "",
       "featured": false,
       "problem": "Recognize handwritten digits (0–9).",
@@ -748,7 +748,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/stock-predictor.webp",
       "description": "Time-series forecasting prototype — windowing, baseline models, and trend evaluation.",
       "technologies": ["Python", "Pandas", "Time Series"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/stock-predictor",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/stock-predictor",
       "demo": "",
       "featured": false,
       "problem": "Forecast near-term price movement from historical data.",
@@ -765,7 +765,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/ai-assistant.webp",
       "description": "AI concepts prototype — Python, deep learning components, and retrieval exploration.",
       "technologies": ["Python", "LLMs", "RAG", "Deep Learning"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/ai-assistant",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/ai-assistant",
       "demo": "",
       "featured": false,
       "problem": "Prototype an AI assistant that can retrieve and generate answers.",
@@ -782,7 +782,7 @@ const FALLBACK_PROJECTS = [
       "image": "assets/calculator-app.webp",
       "description": "Scientific calculator with history — Advanced Python.",
       "technologies": ["Advanced Python", "HTML", "CSS"],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/calculator-app",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/calculator-app",
       "demo": "",
       "featured": false,
       "problem": "Evaluate arithmetic reliably with history and correct precedence.",
@@ -807,7 +807,7 @@ function escapeHTML(value) {
   })[character]);
 }
 
-function safeExternalUrl(value, fallback = 'https://github.com/codewithyazzy') {
+function safeExternalUrl(value, fallback = 'https://github.com/CodeWithYazzy') {
   try {
     const url = new URL(value || fallback, window.location.href);
     return ['http:', 'https:'].includes(url.protocol) ? url.href : fallback;

@@ -11,7 +11,7 @@
         "Pandas",
         "Model Evaluation"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/iris-classifier",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/iris-classifier",
       "demo": "",
       "featured": true,
       "signal": "Scikit-learn · Classification · Tabular",
@@ -50,7 +50,7 @@
         "Matplotlib",
         "EDA"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/sales-dashboard",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/sales-dashboard",
       "demo": "",
       "featured": false,
       "problem": "Surface trends in sales data for operational decisions.",
@@ -72,7 +72,7 @@
         "Python",
         "Computer Vision"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/pytorch-image-classifier",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/pytorch-image-classifier",
       "demo": "",
       "featured": true,
       "signal": "PyTorch · CNN · Computer Vision",
@@ -104,7 +104,7 @@
         "Regression",
         "Feature Engineering"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/house-price-predictor",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/house-price-predictor",
       "demo": "",
       "featured": true,
       "signal": "Scikit-learn · Regression · Tabular",
@@ -133,7 +133,7 @@
         "CSS",
         "JavaScript"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/portfolio-website",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/portfolio-website",
       "demo": "",
       "featured": false,
       "problem": "Present engineering work credibly across devices and without build tooling.",
@@ -155,7 +155,7 @@
         "NLP",
         "Model Evaluation"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/sentiment-analysis",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/sentiment-analysis",
       "demo": "",
       "featured": true,
       "signal": "Scikit-learn · NLP · Text Classification",
@@ -184,7 +184,7 @@
         "Pandas",
         "Advanced Python"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/numpy-explorer",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/numpy-explorer",
       "demo": "",
       "featured": false,
       "problem": "Enable fast, programmatic exploration of tabular datasets.",
@@ -205,7 +205,7 @@
         "Pandas",
         "Python"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/matplotlib-visualizer",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/matplotlib-visualizer",
       "demo": "",
       "featured": false,
       "problem": "Generate reproducible, publication-quality charts.",
@@ -226,7 +226,7 @@
         "NLP",
         "Deep Learning"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/pytorch-chatbot",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/pytorch-chatbot",
       "demo": "",
       "featured": false,
       "problem": "Generate coherent responses to short prompts.",
@@ -247,7 +247,7 @@
         "scikit-learn",
         "Pandas"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/heart-disease-predictor",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/heart-disease-predictor",
       "demo": "",
       "featured": false,
       "problem": "Predict heart disease presence from clinical features.",
@@ -268,7 +268,7 @@
         "scikit-learn",
         "Clustering"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/customer-segmentation",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/customer-segmentation",
       "demo": "",
       "featured": false,
       "problem": "Segment customers for targeted analysis.",
@@ -290,7 +290,7 @@
         "Python",
         "Computer Vision"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/handwritten-digit-classifier",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/handwritten-digit-classifier",
       "demo": "",
       "featured": false,
       "problem": "Recognize handwritten digits (0–9).",
@@ -311,7 +311,7 @@
         "Pandas",
         "Time Series"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/stock-predictor",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/stock-predictor",
       "demo": "",
       "featured": false,
       "problem": "Forecast near-term price movement from historical data.",
@@ -333,7 +333,7 @@
         "RAG",
         "Deep Learning"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/ai-assistant",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/ai-assistant",
       "demo": "",
       "featured": false,
       "problem": "Prototype an AI assistant that can retrieve and generate answers.",
@@ -354,7 +354,7 @@
         "HTML",
         "CSS"
       ],
-      "github": "https://github.com/codewithyazzy/projects/tree/main/calculator-app",
+      "github": "https://github.com/CodeWithYazzy/projects/tree/main/calculator-app",
       "demo": "",
       "demoUrl": "",
       "localDemo": "calculator",

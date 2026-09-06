@@ -199,7 +199,7 @@
       <p id="availabilityText">Open the verified source link or view this project’s local preview.</p>
       <div class="actions">
         <button id="runDemo" class="btn btn-primary" type="button">Run Demo</button>
-        <a id="sourceCode" class="btn btn-outline" href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
+        <a id="sourceCode" class="btn btn-outline" href="https://github.com/CodeWithYazzy" target="_blank" rel="noopener noreferrer">Source Code ↗</a>
       </div>
       <ol id="pipeline" class="steps" aria-label="Demo loading progress" hidden></ol>
       <div id="noticePanel" class="note-panel" hidden></div>
@@ -317,7 +317,7 @@
       descriptionEl.textContent = project.description || 'Project details are not available right now.';
       const repoInfo = runner ? runner.parseGithubUrl(project.github || '') : null;
       if (sourceCodeEl) {
-        sourceCodeEl.href = project.github || 'https://github.com/codewithyazzy';
+        sourceCodeEl.href = project.github || 'https://github.com/CodeWithYazzy';
         sourceCodeEl.textContent = repoInfo ? 'Open Source Code' : 'GitHub Profile';
       }
       if (availabilityTextEl) {
