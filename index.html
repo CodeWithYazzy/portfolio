@@ -28,17 +28,14 @@
 </head>
 <body>
 <a class="skip-link" href="#home">Skip to content</a>
-<!-- NAVBAR -->
+<!-- NAVBAR — only 4 items -->
 <nav id="navbar">
   <div class="nav-inner">
     <a href="#home" class="logo logo--with-type" aria-label="YasirLab Home"><span class="logo-mark" aria-hidden="true">YL</span><span class="logo-type">YASIR<span>LAB</span></span></a>
     <ul class="nav-links" id="navLinks">
       <li><a href="#home" class="active">Home</a></li>
       <li><a href="#about">About</a></li>
-      <li><a href="#skills">Skills</a></li>
-      <li><a href="#lab">ML Lab</a></li>
       <li><a href="#projects">Projects</a></li>
-      <li><a href="#achievements">Achievements</a></li>
       <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-right">
@@ -49,15 +46,12 @@
   <div id="mobileMenu" aria-hidden="true">
     <a href="#home">Home</a>
     <a href="#about">About</a>
-    <a href="#skills">Skills</a>
-    <a href="#lab">ML Lab</a>
     <a href="#projects">Projects</a>
-    <a href="#achievements">Achievements</a>
     <a href="#contact">Contact</a>
   </div>
 </nav>
 
-<!-- HOME / HERO -->
+<!-- HOME — premium landing, compact previews -->
 <section id="home" class="hero">
   <div class="hero-bg-decor" aria-hidden="true">
     <div class="hero-decor-circle"></div>
@@ -70,7 +64,7 @@
       <p class="desc">I work across data, model development, experimentation, evaluation, and deployment — building ML systems that are measured and documented, not just claimed.</p>
       <div class="hero-btns">
         <a href="#projects" class="btn-primary">View Projects <i data-lucide="arrow-right"></i></a>
-        <a href="#lab" class="btn-outline">Explore ML Lab <i data-lucide="flask-conical"></i></a>
+        <a href="#about" class="btn-outline">About Me <i data-lucide="user"></i></a>
         <a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" class="btn-outline">GitHub <i data-lucide="github"></i></a>
       </div>
       <div class="hero-connect">
@@ -95,7 +89,39 @@
       </div>
     </div>
   </div>
-  <!-- dark stats bar — measurable technical proof -->
+  <!-- compact previews — flagship + lab + workflow (home stays short) -->
+  <div class="container home-previews-wrap">
+    <div class="home-previews">
+      <a href="#flagship" class="home-preview-card home-preview-flagship">
+        <div class="home-preview-top"><span class="mono">FEATURED CASE</span><span class="dot"></span></div>
+        <div class="home-preview-body">
+          <img src="assets/iris-classifier.webp" alt="" loading="lazy">
+          <div>
+            <h4>Iris Flower Classifier</h4>
+            <p>End-to-end tabular pipeline — 97% held-out, stratified split, scaler + classifier.</p>
+            <span class="home-preview-link">View case study <i data-lucide="arrow-right" style="width:12px;height:12px"></i></span>
+          </div>
+        </div>
+      </a>
+      <a href="#lab" class="home-preview-card home-preview-lab">
+        <div class="home-preview-top"><span class="mono">ML LAB • 6 EXPERIMENTS</span><span class="dot" style="background:#7C3AED;box-shadow:0 0 0 4px rgba(124,58,237,.12)"></span></div>
+        <div class="home-preview-body">
+          <div class="lab-mini-icons"><i data-lucide="layers"></i><i data-lucide="sliders-horizontal"></i><i data-lucide="bot"></i></div>
+          <div>
+            <h4>Hypothesis → Result</h4>
+            <p>CNN vs Transfer, Evaluation, Hyperparams, Transformers, Data, Optimization — click to open.</p>
+            <span class="home-preview-link">Explore lab <i data-lucide="flask-conical" style="width:12px;height:12px"></i></span>
+          </div>
+        </div>
+      </a>
+      <div class="home-preview-card home-preview-workflow" aria-hidden="true">
+        <div class="home-preview-top"><span class="mono">WORKFLOW</span></div>
+        <div class="workflow-mini">Understand <span>→</span> Build <span>→</span> Experiment <span>→</span> Evaluate <span>→</span> Deploy <span>→</span> Iterate</div>
+        <p>Evidence over adjectives — every stage measured.</p>
+      </div>
+    </div>
+  </div>
+  <!-- stats bar -->
   <div class="container hero-stats-wrap">
     <div class="stats-bar stats-bar--dark">
       <div class="stat"><div class="stat-icon"><i data-lucide="code-2"></i></div><div class="stat-content"><strong>15</strong><span>Projects</span><small>In portfolio catalog</small></div></div>
@@ -106,7 +132,7 @@
   </div>
 </section>
 
-<!-- ABOUT — engineering positioning -->
+<!-- ABOUT — merged: About + Why + Skills + Workflow + Achievements -->
 <section id="about">
   <div class="container">
     <div class="section-num">01 — ABOUT</div>
@@ -136,6 +162,16 @@
         </div>
       </div>
     </div>
+
+    <!-- Why I Build — inside About -->
+    <div id="why" class="about-subsection about-why">
+      <div class="about-why-inner">
+        <p class="eyebrow" style="justify-content:center;">WHY I BUILD <span></span></p>
+        <h3>Curiosity, disciplined<br><span class="blue">through engineering.</span></h3>
+        <p class="section-desc" style="margin:12px auto 0; max-width:640px; text-align:center;">I am interested in how data, models, and software combine to form usable systems. I build to test ideas, measure outcomes, and learn where models break — then iterate with clearer constraints and better data.</p>
+      </div>
+    </div>
+
     <div class="about-bottom">
       <div class="drive-text">
         <h3>How I work</h3>
@@ -147,137 +183,108 @@
         <div class="drive-card"><div class="drive-icon"><i data-lucide="bar-chart-3"></i></div><div><h4>Evaluate &amp; Deploy</h4><p>Validate on held-out data and ship to usable applications.</p></div></div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- WHY I BUILD — concise, engineering-focused -->
-<section id="why">
-  <div class="container">
-    <div style="max-width:720px;margin:0 auto;text-align:center;">
-      <p class="eyebrow" style="justify-content:center;">WHY I BUILD <span></span></p>
-      <h2 style="font-size:clamp(26px,4vw,32px);margin:10px 0 0;line-height:1.05;">Curiosity, disciplined<br><span class="blue">through engineering.</span></h2>
-      <p class="section-desc" style="margin:14px auto 0;max-width:640px;text-align:center;">I am interested in how data, models, and software combine to form usable systems. I build to test ideas, measure outcomes, and learn where models break — then iterate with clearer constraints and better data.</p>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS — grouped, no percentages -->
-<section id="skills">
-  <div class="container">
-    <div class="section-num">02 — CAPABILITIES</div>
-    <div class="skills-top skills-top--single">
-      <div>
+    <!-- Skills — inside About -->
+    <div id="skills" class="about-subsection about-skills">
+      <div class="about-skills-head">
         <p class="eyebrow">TECHNICAL STACK <span></span></p>
-        <h2>Tools for<br><span class="blue">building ML systems.</span></h2>
+        <h3>Tools for<br><span class="blue">building ML systems.</span></h3>
         <p class="section-desc">Grouped by capability. Each area reflects hands-on use across projects — from data preparation to model development and deployment.</p>
       </div>
+      <div class="skill-groups">
+        <div class="skill-group">
+          <div class="skill-group-head"><i data-lucide="code-2"></i><h4>Programming</h4></div>
+          <div class="skill-badges"><span>Python</span><span>SQL</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-head"><i data-lucide="brain"></i><h4>Machine Learning</h4></div>
+          <div class="skill-badges"><span>Scikit-learn</span><span>Regression</span><span>Classification</span><span>Clustering</span><span>Feature Engineering</span><span>Model Evaluation</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-head"><i data-lucide="layers"></i><h4>Deep Learning</h4></div>
+          <div class="skill-badges"><span>PyTorch</span><span>CNNs</span><span>Transfer Learning</span><span>Transformers</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-head"><i data-lucide="bot"></i><h4>AI</h4></div>
+          <div class="skill-badges"><span>NLP</span><span>Computer Vision</span><span>LLMs</span><span>RAG</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-head"><i data-lucide="database"></i><h4>Data</h4></div>
+          <div class="skill-badges"><span>NumPy</span><span>Pandas</span><span>Matplotlib</span></div>
+        </div>
+        <div class="skill-group">
+          <div class="skill-group-head"><i data-lucide="server"></i><h4>Systems / MLOps</h4></div>
+          <div class="skill-badges"><span>Linux</span><span>Git</span><span>Docker</span><span>APIs</span><span>FastAPI</span></div>
+        </div>
+        <div class="skill-group" style="grid-column:1/-1;max-width:420px;justify-self:center;width:100%;">
+          <div class="skill-group-head"><i data-lucide="cpu"></i><h4>GPU / Compute</h4></div>
+          <div class="skill-badges"><span>CUDA</span><span>GPU Computing</span></div>
+        </div>
+      </div>
+      <div class="mini-stats">
+        <div><i data-lucide="blocks"></i><div><b>Build</b><span>From data to working software.</span></div></div>
+        <div><i data-lucide="flask-conical"></i><div><b>Experiment</b><span>Compare models and configurations.</span></div></div>
+        <div><i data-lucide="bar-chart-3"></i><div><b>Evaluate</b><span>Measure on held-out data.</span></div></div>
+        <div><i data-lucide="rocket"></i><div><b>Deploy</b><span>Ship to usable applications.</span></div></div>
+      </div>
     </div>
 
-    <div class="skill-groups">
-      <div class="skill-group">
-        <div class="skill-group-head"><i data-lucide="code-2"></i><h4>Programming</h4></div>
-        <div class="skill-badges"><span>Python</span><span>SQL</span></div>
+    <!-- Workflow compact inside About -->
+    <div id="approach" class="about-subsection about-approach">
+      <div class="approach-bar">
+        <div class="approach-step"><i data-lucide="search"></i><span>UNDERSTAND</span></div>
+        <span class="approach-arrow">→</span>
+        <div class="approach-step"><i data-lucide="blocks"></i><span>BUILD</span></div>
+        <span class="approach-arrow">→</span>
+        <div class="approach-step"><i data-lucide="flask-conical"></i><span>EXPERIMENT</span></div>
+        <span class="approach-arrow">→</span>
+        <div class="approach-step"><i data-lucide="bar-chart-3"></i><span>EVALUATE</span></div>
+        <span class="approach-arrow">→</span>
+        <div class="approach-step"><i data-lucide="rocket"></i><span>DEPLOY</span></div>
+        <span class="approach-arrow">→</span>
+        <div class="approach-step"><i data-lucide="refresh-cw"></i><span>ITERATE</span></div>
       </div>
-      <div class="skill-group">
-        <div class="skill-group-head"><i data-lucide="brain"></i><h4>Machine Learning</h4></div>
-        <div class="skill-badges"><span>Scikit-learn</span><span>Regression</span><span>Classification</span><span>Clustering</span><span>Feature Engineering</span><span>Model Evaluation</span></div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-head"><i data-lucide="layers"></i><h4>Deep Learning</h4></div>
-        <div class="skill-badges"><span>PyTorch</span><span>CNNs</span><span>Transfer Learning</span><span>Transformers</span></div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-head"><i data-lucide="bot"></i><h4>AI</h4></div>
-        <div class="skill-badges"><span>NLP</span><span>Computer Vision</span><span>LLMs</span><span>RAG</span></div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-head"><i data-lucide="database"></i><h4>Data</h4></div>
-        <div class="skill-badges"><span>NumPy</span><span>Pandas</span><span>Matplotlib</span></div>
-      </div>
-      <div class="skill-group">
-        <div class="skill-group-head"><i data-lucide="server"></i><h4>Systems / MLOps</h4></div>
-        <div class="skill-badges"><span>Linux</span><span>Git</span><span>Docker</span><span>APIs</span><span>FastAPI</span></div>
-      </div>
-      <div class="skill-group" style="grid-column:1/-1;max-width:420px;justify-self:center;width:100%;">
-        <div class="skill-group-head"><i data-lucide="cpu"></i><h4>GPU / Compute</h4></div>
-        <div class="skill-badges"><span>CUDA</span><span>GPU Computing</span></div>
-      </div>
+      <p class="approach-note">Evidence over adjectives — every stage is measured and documented.</p>
     </div>
 
-    <div class="mini-stats">
-      <div><i data-lucide="blocks"></i><div><b>Build</b><span>From data to working software.</span></div></div>
-      <div><i data-lucide="flask-conical"></i><div><b>Experiment</b><span>Compare models and configurations.</span></div></div>
-      <div><i data-lucide="bar-chart-3"></i><div><b>Evaluate</b><span>Measure on held-out data.</span></div></div>
-      <div><i data-lucide="rocket"></i><div><b>Deploy</b><span>Ship to usable applications.</span></div></div>
+    <!-- Achievements — compact inside About -->
+    <div id="achievements" class="about-subsection about-achievements">
+      <div class="about-achievements-head">
+        <p class="eyebrow">TRACK RECORD <span></span></p>
+        <h3>Milestones that<br><span class="blue">compound.</span></h3>
+        <p class="section-desc">Verified competitions, certifications, and systems shipped — each tied to measurable work.</p>
+      </div>
+      <div class="ach-grid ach-grid--compact">
+        <div class="ach-card"><div class="ach-icon"><i data-lucide="trophy"></i></div><h4>Coding Competition — 1st Place</h4><p>Secured 1st place in the interschool coding competition organized by CodeVerse.</p><div style="margin-top:6px;"><a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:600;color:var(--blue);display:inline-flex;gap:4px;align-items:center;">View evidence <i data-lucide="external-link" style="width:11px;height:11px"></i></a> <span style="font-size:11px;color:var(--muted);">· Add certificate link when available</span></div><div class="ach-meta"><i data-lucide="calendar" style="width:12px;height:12px"></i> Nov 2023</div></div>
+        <div class="ach-card"><div class="ach-icon"><i data-lucide="medal"></i></div><h4>Academic Excellence — Grade 10</h4><p>Awarded for outstanding academic performance in Grade 10.</p><div style="margin-top:6px;font-size:11px;color:var(--muted);">Add certificate link when available</div><div class="ach-meta"><i data-lucide="calendar" style="width:12px;height:12px"></i> Mar 2024</div></div>
+        <div class="ach-card"><div class="ach-icon"><i data-lucide="award"></i></div><h4>Python Programming — Certified</h4><p>Completed the Python Programming course (Udemy) with hands-on project work.</p><div style="margin-top:6px;"><a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:600;color:var(--blue);display:inline-flex;gap:4px;align-items:center;">View certificate <i data-lucide="external-link" style="width:11px;height:11px"></i></a> <span style="font-size:11px;color:var(--muted);">· Add direct link</span></div><div class="ach-meta"><i data-lucide="calendar" style="width:12px;height:12px"></i> Jun 2024</div></div>
+        <div class="ach-card"><div class="ach-icon"><i data-lucide="brain"></i></div><h4>AI/ML Workshop — Hands-on Builds</h4><p>Participated in an AI &amp; ML workshop and built real-world mini projects.</p><div style="margin-top:6px;font-size:11px;color:var(--muted);">Add workshop evidence link</div><div class="ach-meta"><i data-lucide="calendar" style="width:12px;height:12px"></i> Aug 2024</div></div>
+        <div class="ach-card"><div class="ach-icon"><i data-lucide="rocket"></i></div><h4>Deployed Systems — 5+ Projects</h4><p>Built and shipped 5+ end-to-end systems including ML prototypes and web applications.</p><div style="margin-top:6px;"><a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:600;color:var(--blue);display:inline-flex;gap:4px;align-items:center;">View GitHub <i data-lucide="external-link" style="width:11px;height:11px"></i></a></div><div class="ach-meta"><i data-lucide="calendar" style="width:12px;height:12px"></i> May 2024</div></div>
+      </div>
     </div>
   </div>
 </section>
 
-<!-- ML LAB -->
-<section id="lab">
+<!-- PROJECTS — flagship + ML Lab + all projects -->
+<section id="projects">
   <div class="container">
-    <div class="section-num">03 — LABORATORY</div>
+    <div class="section-num">02 — PROJECTS & LAB</div>
     <div class="section-head">
       <div>
-        <p class="eyebrow">ML LAB <span></span></p>
-        <h2>Experiments &amp;<br><span class="blue">benchmarks.</span></h2>
-        <p class="section-desc">Hands-on exploration — comparing models, measuring trade-offs, and documenting findings without fabricated results. Each experiment follows build → evaluate → document.</p>
+        <p class="eyebrow">SELECTED WORK <span></span></p>
+        <h2>Systems that<br><span class="blue">run.</span></h2>
+        <p class="section-desc">Flagship case study, 6 ML experiments, and 15 builds — all GitHub-verified with inspectable demos. The lab lives inside Projects now.</p>
       </div>
-      <div style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted-2);text-align:right;display:none;" class="lab-hint">Click any card → Hypothesis → Result</div>
+      <a href="#" class="btn-primary" id="viewAllBtn">View All Projects <i data-lucide="arrow-right"></i></a>
     </div>
-    <div class="lab-grid">
-      <div class="lab-card" data-lab="0" tabindex="0" role="button" aria-label="Open CNN vs Transfer Learning experiment">
-        <div class="lab-card-top"><b>EXP.01</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot"></span> ACTIVE</span></div>
-        <div class="lab-card-head"><i data-lucide="layers"></i><h4>CNN vs Transfer Learning</h4></div><p>Comparing training from scratch against pretrained backbones on image classification; tracking accuracy, training time, and generalization.</p><small><i data-lucide="eye" style="width:11px;height:11px"></i> Computer Vision • PyTorch</small></div>
-      <div class="lab-card" data-lab="1" tabindex="0" role="button" aria-label="Open Model Evaluation experiment">
-        <div class="lab-card-top"><b>EXP.02</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#3B82F6;box-shadow:0 0 0 4px rgba(59,130,246,.12)"></span> EVALUATION</span></div>
-        <div class="lab-card-head"><i data-lucide="bar-chart-3"></i><h4>Model Evaluation</h4></div><p>Systematic evaluation with train/validation/test splits, confusion matrices, precision/recall, and ROC analysis on held-out data.</p><small><i data-lucide="clipboard-check" style="width:11px;height:11px"></i> Evaluation • Scikit-learn</small></div>
-      <div class="lab-card" data-lab="2" tabindex="0" role="button" aria-label="Open Hyperparameter Experiments">
-        <div class="lab-card-top"><b>EXP.03</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#F59E0B;box-shadow:0 0 0 4px rgba(245,158,11,.12)"></span> TUNING</span></div>
-        <div class="lab-card-head"><i data-lucide="sliders-horizontal"></i><h4>Hyperparameter Experiments</h4></div><p>Grid and randomized search for learning rate, depth, regularization, and batch size — logging validation curves.</p><small><i data-lucide="settings-2" style="width:11px;height:11px"></i> Tuning • Validation</small></div>
-      <div class="lab-card" data-lab="3" tabindex="0" role="button" aria-label="Open Transformer Experiments">
-        <div class="lab-card-top"><b>EXP.04</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot"></span> RESEARCH</span></div>
-        <div class="lab-card-head"><i data-lucide="bot"></i><h4>Transformer Experiments</h4></div><p>Exploring attention-based models for text, including tokenization, sequence handling, and fine-tuning workflows.</p><small><i data-lucide="languages" style="width:11px;height:11px"></i> NLP • Transformers</small></div>
-      <div class="lab-card" data-lab="4" tabindex="0" role="button" aria-label="Open Data Analysis experiment">
-        <div class="lab-card-top"><b>EXP.05</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#8B5CF6;box-shadow:0 0 0 4px rgba(139,92,246,.12)"></span> DATA</span></div>
-        <div class="lab-card-head"><i data-lucide="database"></i><h4>Data Analysis</h4></div><p>Exploratory analysis of feature distributions, correlations, missing data, and preprocessing decisions before modeling.</p><small><i data-lucide="table-2" style="width:11px;height:11px"></i> EDA • Pandas</small></div>
-      <div class="lab-card" data-lab="5" tabindex="0" role="button" aria-label="Open Model Optimization experiment">
-        <div class="lab-card-top"><b>EXP.06</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#EF4444;box-shadow:0 0 0 4px rgba(239,68,68,.12)"></span> DEPLOY</span></div>
-        <div class="lab-card-head"><i data-lucide="zap"></i><h4>Model Optimization</h4></div><p>Profiling inference latency, model size trade-offs, and deployment readiness for practical use.</p><small><i data-lucide="gauge" style="width:11px;height:11px"></i> Optimization • Deployment</small></div>
-    </div>
-  </div>
-</section>
 
-<!-- ENGINEERING APPROACH -->
-<section id="approach">
-  <div class="container">
-    <div class="approach-bar">
-      <div class="approach-step"><i data-lucide="search"></i><span>UNDERSTAND</span></div>
-      <span class="approach-arrow">→</span>
-      <div class="approach-step"><i data-lucide="blocks"></i><span>BUILD</span></div>
-      <span class="approach-arrow">→</span>
-      <div class="approach-step"><i data-lucide="flask-conical"></i><span>EXPERIMENT</span></div>
-      <span class="approach-arrow">→</span>
-      <div class="approach-step"><i data-lucide="bar-chart-3"></i><span>EVALUATE</span></div>
-      <span class="approach-arrow">→</span>
-      <div class="approach-step"><i data-lucide="rocket"></i><span>DEPLOY</span></div>
-      <span class="approach-arrow">→</span>
-      <div class="approach-step"><i data-lucide="refresh-cw"></i><span>ITERATE</span></div>
-    </div>
-    <p class="approach-note">Evidence over adjectives — every stage is measured and documented.</p>
-  </div>
-</section>
-
-<!-- FLAGSHIP PROJECT -->
-<section id="flagship">
-  <div class="container">
-    <div class="section-num">04 — FLAGSHIP</div>
-    <div class="flagship-meta">
-      <p class="eyebrow" style="margin:0">FLAGSHIP PROJECT <span></span></p>
-      <span class="flagship-badge">MOST DETAILED</span>
-    </div>
-    <div class="flagship-wrap">
+    <!-- Flagship Project — prominently featured -->
+    <div id="flagship" class="flagship-wrap" style="margin-bottom:28px">
       <div class="flagship-main">
+        <div class="flagship-meta">
+          <p class="eyebrow" style="margin:0">FLAGSHIP PROJECT <span></span></p>
+          <span class="flagship-badge">MOST DETAILED</span>
+        </div>
         <h2>Iris Flower Classifier<br><span>End-to-end tabular pipeline — from raw measurements to deployed inference.</span></h2>
         <p class="flagship-desc">A complete classification system built to demonstrate rigorous ML engineering: stratified splits, preprocessing pipelines, cross-validated model comparison, and held-out evaluation — not a notebook-only demo.</p>
         <div class="flagship-grid">
@@ -314,85 +321,69 @@
         </div>
       </div>
     </div>
-  </div>
-</section>
 
-<!-- PROJECTS -->
-<section id="projects">
-  <div class="container">
-    <div class="section-num">05 — SELECTED WORK</div>
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">SELECTED WORK <span></span></p>
-        <h2>Systems that<br><span class="blue">run.</span></h2>
-        <p class="section-desc">Four featured systems spanning ML, deep learning, NLP, and computer vision — with full technical detail and inspectable demos. The complete catalog holds 15 builds.</p>
-      </div>
-      <a href="#" class="btn-primary" id="viewAllBtn">View All Projects <i data-lucide="arrow-right"></i></a>
-    </div>
-
-    <div class="demo-banner">
-      <div class="demo-banner-left">
-        <div class="demo-banner-icon"><i data-lucide="play"></i></div>
+    <!-- ML Lab — inside Projects -->
+    <div id="lab" class="lab-subsection">
+      <div class="section-head" style="margin-bottom:16px">
         <div>
-          <h4>Interactive Project Demos</h4>
-          <p>Don't just read about the projects — run them. Each demo is inspected from GitHub and executed in a sandboxed environment.</p>
+          <p class="eyebrow">ML LAB <span></span></p>
+          <h3 style="font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1">Experiments &amp; <span class="blue">benchmarks.</span></h3>
+          <p class="section-desc" style="font-size:13.5px">Hands-on exploration — comparing models, measuring trade-offs, and documenting findings without fabricated results. Each experiment follows Hypothesis → Setup → Baseline → Model → Metrics → Result → Conclusion.</p>
         </div>
       </div>
-      <a href="pages/demo?project=Calculator%20App" class="btn-outline btn-sm" style="white-space:nowrap">Try a Demo <i data-lucide="external-link" style="width:14px;height:14px"></i></a>
-    </div>
-
-    <div class="projects-grid" id="projectsGrid"></div>
-  </div>
-</section>
-
-<!-- ACHIEVEMENTS — verified only -->
-<section id="achievements">
-  <div class="container">
-    <div class="section-num">06 — TRACK RECORD</div>
-    <div class="section-head">
-      <div>
-        <p class="eyebrow">TRACK RECORD <span></span></p>
-        <h2>Milestones that<br><span class="blue">compound.</span></h2>
-        <p class="section-desc">Verified competitions, certifications, and systems shipped — each tied to measurable work.</p>
+      <div class="lab-grid">
+        <div class="lab-card" data-lab="0" tabindex="0" role="button" aria-label="Open CNN vs Transfer Learning experiment">
+          <div class="lab-card-top"><b>EXP.01</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot"></span> ACTIVE</span></div>
+          <div class="lab-card-head"><i data-lucide="layers"></i><h4>CNN vs Transfer Learning</h4></div><p>Comparing training from scratch against pretrained backbones on image classification; tracking accuracy, training time, and generalization.</p><small><i data-lucide="eye" style="width:11px;height:11px"></i> Computer Vision • PyTorch</small></div>
+        <div class="lab-card" data-lab="1" tabindex="0" role="button" aria-label="Open Model Evaluation experiment">
+          <div class="lab-card-top"><b>EXP.02</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#3B82F6;box-shadow:0 0 0 4px rgba(59,130,246,.12)"></span> EVALUATION</span></div>
+          <div class="lab-card-head"><i data-lucide="bar-chart-3"></i><h4>Model Evaluation</h4></div><p>Systematic evaluation with train/validation/test splits, confusion matrices, precision/recall, and ROC analysis on held-out data.</p><small><i data-lucide="clipboard-check" style="width:11px;height:11px"></i> Evaluation • Scikit-learn</small></div>
+        <div class="lab-card" data-lab="2" tabindex="0" role="button" aria-label="Open Hyperparameter Experiments">
+          <div class="lab-card-top"><b>EXP.03</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#F59E0B;box-shadow:0 0 0 4px rgba(245,158,11,.12)"></span> TUNING</span></div>
+          <div class="lab-card-head"><i data-lucide="sliders-horizontal"></i><h4>Hyperparameter Experiments</h4></div><p>Grid and randomized search for learning rate, depth, regularization, and batch size — logging validation curves.</p><small><i data-lucide="settings-2" style="width:11px;height:11px"></i> Tuning • Validation</small></div>
+        <div class="lab-card" data-lab="3" tabindex="0" role="button" aria-label="Open Transformer Experiments">
+          <div class="lab-card-top"><b>EXP.04</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot"></span> RESEARCH</span></div>
+          <div class="lab-card-head"><i data-lucide="bot"></i><h4>Transformer Experiments</h4></div><p>Exploring attention-based models for text, including tokenization, sequence handling, and fine-tuning workflows.</p><small><i data-lucide="languages" style="width:11px;height:11px"></i> NLP • Transformers</small></div>
+        <div class="lab-card" data-lab="4" tabindex="0" role="button" aria-label="Open Data Analysis experiment">
+          <div class="lab-card-top"><b>EXP.05</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#8B5CF6;box-shadow:0 0 0 4px rgba(139,92,246,.12)"></span> DATA</span></div>
+          <div class="lab-card-head"><i data-lucide="database"></i><h4>Data Analysis</h4></div><p>Exploratory analysis of feature distributions, correlations, missing data, and preprocessing decisions before modeling.</p><small><i data-lucide="table-2" style="width:11px;height:11px"></i> EDA • Pandas</small></div>
+        <div class="lab-card" data-lab="5" tabindex="0" role="button" aria-label="Open Model Optimization experiment">
+          <div class="lab-card-top"><b>EXP.06</b><span style="display:inline-flex;align-items:center;gap:6px;"><span class="dot" style="background:#EF4444;box-shadow:0 0 0 4px rgba(239,68,68,.12)"></span> DEPLOY</span></div>
+          <div class="lab-card-head"><i data-lucide="zap"></i><h4>Model Optimization</h4></div><p>Profiling inference latency, model size trade-offs, and deployment readiness for practical use.</p><small><i data-lucide="gauge" style="width:11px;height:11px"></i> Optimization • Deployment</small></div>
       </div>
-      <div class="trophy-illustration"><i data-lucide="trophy" style="width:96px;height:96px;color:#0B1220;opacity:.06"></i></div>
     </div>
 
-    <div class="ach-grid">
-      <div class="ach-card"><div class="ach-icon"><i data-lucide="trophy"></i></div><h4>Coding Competition — 1st Place</h4><p>Secured 1st place in the interschool coding competition organized by CodeVerse.</p><div style="margin-top:6px;"><a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:600;color:var(--blue);display:inline-flex;gap:4px;align-items:center;">View evidence <i data-lucide="external-link" style="width:11px;height:11px"></i></a> <span style="font-size:11px;color:var(--muted);">· Add certificate link when available</span></div><div class="ach-meta"><i data-lucide="calendar" style="width:12px;height:12px"></i> Nov 2023</div></div>
-      <div class="ach-card"><div class="ach-icon"><i data-lucide="medal"></i></div><h4>Academic Excellence — Grade 10</h4><p>Awarded for outstanding academic performance in Grade 10.</p><div style="margin-top:6px;font-size:11px;color:var(--muted);">Add certificate link when available</div><div class="ach-meta"><i data-lucide="calendar" style="width:12px;height:12px"></i> Mar 2024</div></div>
-      <div class="ach-card"><div class="ach-icon"><i data-lucide="award"></i></div><h4>Python Programming — Certified</h4><p>Completed the Python Programming course (Udemy) with hands-on project work.</p><div style="margin-top:6px;"><a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:600;color:var(--blue);display:inline-flex;gap:4px;align-items:center;">View certificate <i data-lucide="external-link" style="width:11px;height:11px"></i></a> <span style="font-size:11px;color:var(--muted);">· Add direct link</span></div><div class="ach-meta"><i data-lucide="calendar" style="width:12px;height:12px"></i> Jun 2024</div></div>
-      <div class="ach-card"><div class="ach-icon"><i data-lucide="brain"></i></div><h4>AI/ML Workshop — Hands-on Builds</h4><p>Participated in an AI &amp; ML workshop and built real-world mini projects.</p><div style="margin-top:6px;font-size:11px;color:var(--muted);">Add workshop evidence link</div><div class="ach-meta"><i data-lucide="calendar" style="width:12px;height:12px"></i> Aug 2024</div></div>
-      <div class="ach-card"><div class="ach-icon"><i data-lucide="rocket"></i></div><h4>Deployed Systems — 5+ Projects</h4><p>Built and shipped 5+ end-to-end systems including ML prototypes and web applications.</p><div style="margin-top:6px;"><a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" style="font-size:11px;font-weight:600;color:var(--blue);display:inline-flex;gap:4px;align-items:center;">View GitHub <i data-lucide="external-link" style="width:11px;height:11px"></i></a></div><div class="ach-meta"><i data-lucide="calendar" style="width:12px;height:12px"></i> May 2024</div></div>
-    </div>
-
-    <div class="stats-bar stats-bar--dark">
-      <div class="stat"><div class="stat-icon"><i data-lucide="trophy"></i></div><div class="stat-content"><strong>5</strong><span>Verified Milestones</span><small>Competitions &amp; Certifications</small></div></div>
-      <div class="stat"><div class="stat-icon"><i data-lucide="book-open"></i></div><div class="stat-content"><strong>2+</strong><span>Years Building</span><small>Continuous Experimentation</small></div></div>
-      <div class="stat"><div class="stat-icon"><i data-lucide="code-2"></i></div><div class="stat-content"><strong>15</strong><span>Projects Shipped</span><small>Portfolio Catalog</small></div></div>
-      <div class="stat"><div class="stat-icon"><i data-lucide="cpu"></i></div><div class="stat-content"><strong>End-to-End</strong><span>Systems Focus</span><small>Data → Model → Deploy</small></div></div>
+    <!-- Projects grid -->
+    <div class="projects-subsection" style="margin-top:28px">
+      <div class="demo-banner">
+        <div class="demo-banner-left">
+          <div class="demo-banner-icon"><i data-lucide="play"></i></div>
+          <div>
+            <h4>Interactive Project Demos</h4>
+            <p>Don't just read about the projects — run them. Each demo is inspected from GitHub and executed in a sandboxed environment.</p>
+          </div>
+        </div>
+        <a href="pages/demo?project=Calculator%20App" class="btn-outline btn-sm" style="white-space:nowrap">Try a Demo <i data-lucide="external-link" style="width:14px;height:14px"></i></a>
+      </div>
+      <div class="projects-grid" id="projectsGrid"></div>
     </div>
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- CONTACT — extremely simple -->
 <section id="contact">
-  <div class="container contact-grid">
-    <div class="contact-left">
-      <div class="section-num">07 — CONTACT</div>
-      <p class="eyebrow">GET IN TOUCH <span></span></p>
-      <h2>Let's build<br><span class="blue">something useful.</span></h2>
-      <p class="section-desc">Have a system to build or a model to evaluate? Reach out — I prioritize clear problem statements and working prototypes.</p>
-      <div class="contact-details">
-        <div><div class="c-icon"><i data-lucide="mail"></i></div><div><b>Email</b><a href="mailto:codewithyazzy@gmail.com">codewithyazzy@gmail.com</a></div></div>
-        <div><div class="c-icon"><i data-lucide="send"></i></div><div><b>Contact</b><a href="mailto:codewithyazzy@gmail.com">Send an email</a></div></div>
-        <div><div class="c-icon"><i data-lucide="map-pin"></i></div><div><b>Location</b><span>India</span></div></div>
-        <div><div class="c-icon"><i data-lucide="clock"></i></div><div><b>Availability</b><span>Mon – Sat : 9:00 AM – 8:00 PM</span></div></div>
+  <div class="container contact-simple">
+    <div class="section-num">03 — CONTACT</div>
+    <p class="eyebrow">GET IN TOUCH <span></span></p>
+    <h2>Let's build<br><span class="blue">something useful.</span></h2>
+    <p class="section-desc">Have a system to build or a model to evaluate? Reach out — I prioritize clear problem statements and working prototypes.</p>
+    <div class="contact-simple-grid">
+      <div class="contact-simple-left">
+        <a href="mailto:codewithyazzy@gmail.com" class="contact-simple-item"><i data-lucide="mail"></i><span>codewithyazzy@gmail.com</span></a>
+        <a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" class="contact-simple-item"><i data-lucide="github"></i><span>github.com/codewithyazzy</span></a>
+        <a href="https://x.com/codewithyazzy" target="_blank" rel="noopener noreferrer" class="contact-simple-item"><svg viewBox="0 0 24 24" width="16" height="16" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.963 6.817H1.684l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg><span>x.com/codewithyazzy</span></a>
       </div>
-    </div>
-    <div class="contact-right">
-      <h3>Send me a message</h3>
-      <form id="contactForm" novalidate>
+      <form id="contactForm" novalidate class="contact-simple-form">
         <div class="row2">
           <label class="sr-only" for="name">Your name</label>
           <input type="text" id="name" name="name" placeholder="Your Name" autocomplete="name" required>
@@ -402,18 +393,10 @@
         <label class="sr-only" for="subject">Subject</label>
         <input type="text" id="subject" name="subject" placeholder="Subject" autocomplete="off" required>
         <label class="sr-only" for="message">Your message</label>
-        <textarea id="message" name="message" rows="6" placeholder="Your Message" required></textarea>
-        <button type="submit" class="btn-primary">Open Email App <i data-lucide="send"></i></button>
-        <p class="form-note">Your default email app will open with the message prepared.</p>
+        <textarea id="message" name="message" rows="5" placeholder="Your Message" required></textarea>
+        <button type="submit" class="btn-primary">Send Message <i data-lucide="send"></i></button>
+        <p class="form-note">Opens your email app with the message prepared.</p>
       </form>
-      <div class="connect-bottom">
-        <p>Connect with me</p>
-        <div class="socials large">
-          <a href="https://x.com/codewithyazzy" target="_blank" rel="noopener noreferrer" aria-label="X (formerly Twitter)"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.963 6.817H1.684l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg></a>
-          <a href="https://github.com/codewithyazzy" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.3 3.438 9.8 8.205 11.385.6.113.82-.258.82-.577 0-.285-.01-1.04-.015-2.04-3.338.724-4.042-1.61-4.042-1.61C4.422 18.07 3.633 17.7 3.633 17.7c-1.087-.744.084-.729.084-.729 1.205.084 1.838 1.236 1.838 1.236 1.07 1.835 2.809 1.305 3.495.998.108-.776.417-1.305.76-1.605-2.665-.3-5.466-1.332-5.466-5.93 0-1.31.465-2.38 1.235-3.22-.135-.303-.54-1.523.105-3.176 0 0 1.005-.322 3.3 1.23.96-.267 1.98-.4 3-.405 1.02.005 2.04.138 3 .405 2.28-1.552 3.285-1.23 3.285-1.23.645 1.653.24 2.873.12 3.176.765.84 1.23 1.91 1.23 3.22 0 4.61-2.805 5.625-5.475 5.92.42.36.81 1.096.81 2.22 0 1.606-.015 2.896-.015 3.286 0 .315.21.69.825.57C20.565 21.795 24 17.295 24 12c0-6.63-5.37-12-12-12z"/></svg></a>
-          <a href="mailto:codewithyazzy@gmail.com" aria-label="Email"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 7l-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg></a>
-        </div>
-      </div>
     </div>
   </div>
 </section>

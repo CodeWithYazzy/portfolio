@@ -98,19 +98,23 @@ document.querySelectorAll('a[href^="#"]').forEach(a => {
 });
 
 // ==========================================
-// 3. ACTIVE NAV HIGHLIGHT ON SCROLL
+// 3. ACTIVE NAV HIGHLIGHT ON SCROLL — 4-item nav (maps subsections)
 // ==========================================
-const sections = document.querySelectorAll('section');
+const mainSections = document.querySelectorAll('#home, #about, #projects, #contact');
 const navLinks = document.querySelectorAll('.nav-links a');
-if ('IntersectionObserver' in window) {
+const sectionToNav = { home:'#home', about:'#about', why:'#about', skills:'#about', approach:'#about', achievements:'#about', projects:'#projects', flagship:'#projects', lab:'#projects', contact:'#contact' };
+if ('IntersectionObserver' in window && mainSections.length) {
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => {
       if (e.isIntersecting) {
-        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === `#${e.target.id}`));
+        const navId = sectionToNav[e.target.id] || `#${e.target.id}`;
+        navLinks.forEach(l => l.classList.toggle('active', l.getAttribute('href') === navId));
       }
     });
   }, { rootMargin: '-20% 0px -55% 0px', threshold: 0 });
-  sections.forEach(s => observer.observe(s));
+  mainSections.forEach(s => observer.observe(s));
+  // also observe key subsections to keep parent active on deep scroll
+  document.querySelectorAll('#flagship, #lab, #skills, #why, #achievements').forEach(el => { if(el) observer.observe(el); });
 }
 
 // ==========================================

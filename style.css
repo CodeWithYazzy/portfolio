@@ -67,19 +67,15 @@ button{font-family:inherit}
 section{scroll-margin-top:76px;position:relative; overflow:clip}
 #home{scroll-margin-top:0; overflow:visible}
 h1,h2,h3,h4{color:var(--ink);text-wrap:balance}
-#about::after,#skills::after,#lab::after,#flagship::after,#projects::after,#achievements::after,#contact::after{
+#about::after,#projects::after,#contact::after{
   content:'';position:absolute; font-family:'Plus Jakarta Sans',sans-serif; font-weight:800; line-height:1;
   color:rgba(11,18,32,.022); pointer-events:none; user-select:none; z-index:0; letter-spacing:-.06em;
 }
-#about::after{content:'01'; right:3%; top:6%; font-size:176px;}
-#skills::after{content:'02'; left:2%; top:4%; font-size:162px;}
-#lab::after{content:'03'; right:4%; top:5%; font-size:180px;}
-#flagship::after{content:'04'; left:3%; top:8%; font-size:168px;}
-#projects::after{content:'05'; right:3%; top:4%; font-size:172px;}
-#achievements::after{content:'06'; left:4%; top:6%; font-size:164px;}
-#contact::after{content:'07'; right:4%; top:8%; font-size:154px;}
-@media(max-width:1100px){ #about::after,#skills::after,#lab::after,#flagship::after,#projects::after,#achievements::after,#contact::after{font-size:120px; opacity:.7}}
-@media(max-width:1000px){ #about::after,#skills::after,#lab::after,#flagship::after,#projects::after,#achievements::after,#contact::after{display:none}}
+#about::after{content:'01'; right:3%; top:4%; font-size:176px;}
+#projects::after{content:'02'; right:3%; top:3%; font-size:180px;}
+#contact::after{content:'03'; right:4%; top:8%; font-size:154px;}
+@media(max-width:1100px){ #about::after,#projects::after,#contact::after{font-size:120px; opacity:.7}}
+@media(max-width:1000px){ #about::after,#projects::after,#contact::after{display:none}}
 h2{
   font-family:'Plus Jakarta Sans',sans-serif;
   font-weight:800;
@@ -392,40 +388,54 @@ h2{
 .stats-bar--dark span{color:#fff}
 .stats-bar--dark small{color:#9AA4B8;font-weight:400}
 
-/* ── SECTION BASE — increased whitespace + transitions ── */
-#about,#skills,#lab,#approach,#projects,#achievements,#contact{padding:104px 0;background:var(--paper);position:relative}
+/* ── SECTION BASE — 4 main destinations ── */
+#home{padding:0;background:var(--paper);position:relative}
+#about,#projects,#contact{padding:104px 0;background:var(--paper);position:relative}
 #about{padding-top:72px;background:var(--paper)}
-/* subtle section hairline transitions */
-#about::before,#skills::before,#lab::before,#projects::before,#achievements::before,#contact::before{
+#projects{background:var(--paper)}
+#contact{background:var(--paper)}
+/* subtle section hairline transitions — only main */
+#about::before,#projects::before,#contact::before{
   content:'';position:absolute;top:0;left:50%;transform:translateX(-50%);
   width:min(1200px,92%);height:1px;
   background:linear-gradient(90deg, transparent, var(--line-soft) 15%, var(--line) 50%, var(--line-soft) 85%, transparent);
   pointer-events:none;
 }
-#skills{border-top:none}
-#lab{background:var(--canvas);border-top:1px solid var(--line)}
-#lab::before{
-  background:linear-gradient(90deg, transparent, rgba(11,61,145,.12) 50%, transparent);
-  opacity:.6;
-}
-#lab::after{
-  content:'';position:absolute;inset:0;
-  background-image:radial-gradient(var(--line) 1px, transparent 1px);
-  background-size:22px 22px;
-  opacity:.28;
-  mask-image:radial-gradient(ellipse 85% 70% at 50% 0%, #000 40%, transparent 85%);
-  -webkit-mask-image:radial-gradient(ellipse 85% 70% at 50% 0%, #000 40%, transparent 85%);
-  pointer-events:none;
-}
-#lab .container{position:relative;z-index:1}
-#approach{
-  padding:32px 0 36px;border-top:1px solid var(--line);background:var(--canvas);
-  border-bottom:1px solid var(--line);
-}
-#flagship{padding-top:96px !important;padding-bottom:96px !important;background:var(--paper) !important;border-top:1px solid var(--line-soft) !important;border-bottom:1px solid var(--line-soft) !important}
-#projects{background:var(--paper)}
-#achievements{background:var(--canvas);border-top:1px solid var(--line)}
-#contact{padding-top:96px;background:var(--paper)}
+/* inner lab/project/approach now subsections — reset outer section styles */
+#lab, #flagship, #skills, #achievements, #approach, #why { padding:0; background:transparent; border:none; }
+#lab::before, #flagship::before, #skills::before, #achievements::before, #approach::before, #why::before { display:none; }
+#lab::after, #flagship::after, #skills::after, #achievements::after, #approach::after, #why::after { display:none; }
+
+/* — HOME PREVIEWS — compact, premium */
+.home-previews-wrap{margin-top:18px; position:relative; z-index:2}
+.home-previews{display:grid;grid-template-columns:1.25fr 1fr .85fr;gap:12px}
+.home-preview-card{border:1px solid var(--line);border-radius:16px;background:#fff;padding:14px 14px;display:flex;flex-direction:column;gap:10px;box-shadow:0 2px 10px rgba(15,23,42,.04);transition:transform .22s var(--ease),box-shadow .22s var(--ease),border-color .22s;text-decoration:none}
+.home-preview-card:hover{transform:translateY(-3px);box-shadow:var(--shadow-hover);border-color:#D8DEEB}
+.home-preview-top{display:flex;align-items:center;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:var(--muted-2)}
+.home-preview-top .mono{font-weight:700;color:var(--ink)}
+.home-preview-top .dot{width:6px;height:6px;border-radius:50%;background:#16A34A;box-shadow:0 0 0 4px rgba(22,163,74,.12)}
+.home-preview-body{display:flex;gap:12px;align-items:flex-start}
+.home-preview-body img{width:64px;height:64px;border-radius:10px;object-fit:cover;border:1px solid var(--line);flex-shrink:0}
+.home-preview-body h4{font-size:13.5px;font-weight:800;letter-spacing:-.015em;line-height:1.25}
+.home-preview-body p{font-size:12.5px;color:var(--muted);line-height:1.5;margin-top:3px}
+.home-preview-link{font-size:11.5px;font-weight:600;color:var(--blue);display:inline-flex;gap:4px;align-items:center;margin-top:6px}
+.lab-mini-icons{display:flex;gap:6px;flex-shrink:0}
+.lab-mini-icons i{width:32px;height:32px;background:var(--soft);border:1px solid var(--line);border-radius:8px;padding:7px;color:var(--ink)}
+.workflow-mini{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;letter-spacing:.06em;color:var(--ink);line-height:1.5}
+.workflow-mini span{color:var(--muted-2);font-weight:400}
+.home-preview-workflow p{font-size:12px;color:var(--muted);line-height:1.5;margin-top:8px}
+
+/* — ABOUT SUBSECTIONS — editorial, not giant */
+.about-subsection{margin-top:48px;padding-top:36px;border-top:1px solid var(--line-soft)}
+.about-subsection:first-of-type{margin-top:36px}
+.about-why{margin-top:36px;padding:28px 24px;background:var(--canvas);border:1px solid var(--line);border-radius:18px;text-align:center}
+.about-why h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-top:8px}
+.about-skills-head h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:26px;font-weight:800;letter-spacing:-.02em;line-height:.95;margin-top:8px}
+.about-achievements-head h3{font-family:'Plus Jakarta Sans',sans-serif;font-size:22px;font-weight:800;letter-spacing:-.02em;line-height:1;margin-top:8px}
+.about-approach .approach-bar{justify-content:center}
+.lab-subsection{margin-top:8px}
+.lab-subsection .lab-grid{margin-top:18px}
+.projects-subsection{margin-top:28px}
 
 /* ── ABOUT — editorial ── */
 .about-top--single{
@@ -848,6 +858,19 @@ h2{
 .socials.large{justify-content:center}
 .socials.large a{width:42px;height:42px;border-radius:50%}
 
+/* — CONTACT SIMPLE — 4-item nav */
+.contact-simple{max-width:820px}
+.contact-simple h2{font-size:clamp(34px,4.2vw,48px);line-height:.9;margin:14px 0}
+.contact-simple-grid{display:grid;grid-template-columns:300px 1fr;gap:28px;margin-top:28px;align-items:start}
+.contact-simple-left{display:flex;flex-direction:column;gap:10px}
+.contact-simple-item{display:flex;align-items:center;gap:10px;padding:12px 14px;background:var(--soft);border:1px solid var(--line);border-radius:12px;font-size:13.5px;font-weight:500;color:var(--ink);transition:background .15s,border-color .15s,transform .15s var(--ease)}
+.contact-simple-item:hover{background:#fff;border-color:#D8DEEB;transform:translateY(-1px);color:var(--blue)}
+.contact-simple-item i,.contact-simple-item svg{width:16px;height:16px;flex-shrink:0}
+.contact-simple-form{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;box-shadow:var(--shadow-card)}
+.ach-grid--compact{grid-template-columns:repeat(3,1fr)}
+@media(max-width:900px){ .ach-grid--compact{grid-template-columns:1fr 1fr} }
+@media(max-width:640px){ .ach-grid--compact{grid-template-columns:1fr} .contact-simple-grid{grid-template-columns:1fr} }
+
 footer{
   padding:32px 0;color:var(--muted-2);font-size:12.5px;
   background:var(--paper);border-top:1px solid var(--line-soft);margin-top:0;
@@ -934,6 +957,7 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:2
   .lab-card:first-child{grid-column:auto}
   .skill-groups{grid-template-columns:repeat(2,1fr)}
   .skill-group:nth-child(2){grid-column:auto}
+  .home-previews{grid-template-columns:1fr 1fr}
 }
 @media(max-width:1000px){
   .hero-grid{grid-template-columns:1fr;gap:32px;text-align:left;min-height:auto}
@@ -957,9 +981,10 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:2
   .hero{padding-top:86px}
   .hero::after{font-size:86px;opacity:.45}
   .hero h1{font-size:clamp(40px,11vw,56px)}
-  .about-top h2,.skills-top--single h2,.section-head h2,.contact-left h2{font-size:36px}
-  #about,#skills,#lab,#projects,#achievements,#contact{padding:64px 0}
-  #flagship{padding-top:64px !important;padding-bottom:64px !important}
+  .about-top h2,.section-head h2,.contact-simple h2{font-size:36px}
+  #about,#projects,#contact{padding:64px 0}
+  .home-previews{grid-template-columns:1fr}
+  .about-subsection{margin-top:32px;padding-top:24px}
   .drive-cards{grid-template-columns:1fr}
   .stats-bar{grid-template-columns:1fr 1fr}
   .stat{border-right:1px solid var(--line);border-bottom:1px solid var(--line);padding:14px 14px}
