@@ -202,7 +202,7 @@ h2{
 /* ── HERO — striking, editorial, high contrast ── */
 .hero{
   position:relative;
-  padding:144px 0 28px;
+  padding:152px 0 32px;
   background:var(--paper);
   overflow:visible;
   isolation:isolate;
@@ -394,8 +394,8 @@ h2{
 
 /* ── SECTION BASE — 4 main destinations ── */
 #home{padding:0;background:var(--paper);position:relative}
-#about,#projects,#contact{padding:104px 0;background:var(--paper);position:relative}
-#about{padding-top:72px;background:var(--paper)}
+#about,#projects,#contact{padding:112px 0;background:var(--paper);position:relative}
+#about{padding-top:80px;background:var(--paper)}
 #projects{background:var(--paper)}
 #contact{background:var(--paper)}
 /* subtle section hairline transitions — only main */
