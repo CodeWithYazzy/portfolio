@@ -204,7 +204,6 @@
           <label>Petal length <input id="irisPl" type="number" step="0.1" value="1.4" min="1.0" max="6.9"></label>
           <label>Petal width <input id="irisPw" type="number" step="0.1" value="0.2" min="0.1" max="2.5"></label>
         </div>
-        <button id="irisPredict" type="button" class="btn btn-primary" style="margin-top:10px">Predict species</button>
         <div id="irisResult" class="iris-result" aria-live="polite"></div>
         <p style="font-size:11px;color:var(--muted);margin-top:8px;font-family:'JetBrains Mono',monospace">Weights from <code>src/train.py</code> — scaler mean/scale + LR coef/intercept, softmax in JS. Try 5.1/3.5/1.4/0.2 → setosa, 6.0/2.2/4.0/1.0 → versicolor, 6.3/3.3/6.0/2.5 → virginica.</p>
       </div>
@@ -250,7 +249,6 @@
     const irisPlEl = document.getElementById('irisPl');
     const irisPwEl = document.getElementById('irisPw');
     const irisResultEl = document.getElementById('irisResult');
-    const irisPredictEl = document.getElementById('irisPredict');
     const detailsGridEl = document.getElementById('projectDetails');
     const detailProblemEl = document.getElementById('detailProblem');
     const detailApproachEl = document.getElementById('detailApproach');
@@ -801,10 +799,7 @@
         scrollToEl(target);
       });
     }
-    if (irisPredictEl) {
-      irisPredictEl.addEventListener('click', () => renderIrisResult(parseFloat(irisSlEl.value), parseFloat(irisSwEl.value), parseFloat(irisPlEl.value), parseFloat(irisPwEl.value)));
-      [irisSlEl, irisSwEl, irisPlEl, irisPwEl].forEach(el => el && el.addEventListener('input', () => renderIrisResult(parseFloat(irisSlEl.value), parseFloat(irisSwEl.value), parseFloat(irisPlEl.value), parseFloat(irisPwEl.value))));
-    }
+    [irisSlEl, irisSwEl, irisPlEl, irisPwEl].forEach(el => el && el.addEventListener('input', () => renderIrisResult(parseFloat(irisSlEl.value), parseFloat(irisSwEl.value), parseFloat(irisPlEl.value), parseFloat(irisPwEl.value))));
 
     window.addEventListener('message', event => {
       const data = event.data;
