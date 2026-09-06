@@ -29,7 +29,7 @@ if (navbar) {
   function applyTheme(theme){
     docEl.setAttribute('data-theme', theme);
     try{ localStorage.setItem('theme', theme); }catch(e){}
-    if(metaTheme) metaTheme.setAttribute('content', theme==='dark' ? '#080E1E' : '#0B1220');
+    if(metaTheme) metaTheme.setAttribute('content', theme==='dark' ? '#0F1115' : '#0B1220');
     const isDark = theme==='dark';
     [t1, t2].forEach(btn=>{
       if(!btn) return;
