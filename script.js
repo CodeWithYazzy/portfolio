@@ -849,9 +849,16 @@ async function loadAndRenderProjects() {
     projectList = FALLBACK_PROJECTS;
   }
 
-  // If on homepage, only show featured projects (or top 4)
+  // If on homepage, show featured projects excluding flagship (to avoid duplicate with flagship case study)
   const displayProjects = isHomepage
-    ? projectList.filter(p => p.featured !== false).slice(0, 4)
+    ? (() => {
+        const featuredNoFlagship = projectList.filter(p => p.featured && p.name !== "Iris Flower Classifier");
+        // show 3 featured + 1 additional to keep 4 cards without duplicating flagship
+        const extra = projectList.find(p => !p.featured && p.name !== "Iris Flower Classifier");
+        const list = featuredNoFlagship.slice(0, 3);
+        if (extra && list.length < 4) list.push(extra);
+        return list.length ? list : projectList.filter(p => p.featured !== false).slice(0, 4);
+      })()
     : projectList;
 
   grid.innerHTML = displayProjects.map(p => buildCardHTML(p, basePath)).join('');
