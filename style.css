@@ -267,6 +267,7 @@ h2{
   letter-spacing:-.055em;
   margin:0;
   color:var(--ink);
+  text-rendering:optimizeLegibility;
 }
 .hero h1 .line-accent{
   display:block;
