@@ -36,7 +36,8 @@
       "limitations": "Small, clean tabular dataset — not representative of noisy production data.",
       "architecture": "Single-stage classification pipeline.",
       "inference": "Single-row prediction via scikit-learn predict().",
-      "demoUrl": ""
+      "demoUrl": "",
+      "localDemo": "iris"
     },
     {
       "name": "Sales Data Dashboard",

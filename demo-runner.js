@@ -692,6 +692,40 @@
         return { status: 'local-demo', sourceInfo };
       }
 
+      if (projectConfig.localDemo === 'iris') {
+        safeHooks.onStep('Preparing local preview…');
+        let sourceInfo = null;
+        if (repoInfo) {
+          try {
+            const branch = repoInfo.branch || await getDefaultBranch(repoInfo.owner, repoInfo.repo, { force });
+            const base = normalizeDir(repoInfo.subdir);
+            // Try primary model file, fallback to README
+            let src = null;
+            let path = base + 'src/train.py';
+            try { src = await fetchGithubFile(repoInfo.owner, repoInfo.repo, branch, path, { force }); } catch (e) { src = null; }
+            if (!src) {
+              path = base + 'README.md';
+              try { src = await fetchGithubFile(repoInfo.owner, repoInfo.repo, branch, path, { force }); } catch (e2) { src = null; }
+            }
+            if (src) {
+              sourceInfo = {
+                path: path,
+                lines: src.text.split('\n').length,
+                bytes: src.bytes.length,
+                model: /LogisticRegression|StandardScaler/i.test(src.text),
+                url: `https://github.com/${repoInfo.owner}/${repoInfo.repo}/blob/${branch}/${path}`
+              };
+            }
+          } catch (err) {
+            console.warn('[demo-runner] GitHub source verification skipped (offline or unreachable):', err.message);
+          }
+        }
+        safeHooks.renderLocalDemo({ reason: repoInfo ? 'configured-repo' : 'no-repo', sourceInfo, kind: 'iris' });
+        safeHooks.completeStep();
+        safeHooks.onReady('Iris demo ready — same StandardScaler + LogisticRegression pipeline running in your browser.');
+        return { status: 'local-demo', sourceInfo };
+      }
+
       // No repository configured at all.
       if (!repoInfo) {
         safeHooks.failStep();

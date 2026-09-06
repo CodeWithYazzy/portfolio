@@ -450,6 +450,7 @@ const FALLBACK_PROJECTS = [
       "limitations": "Small, clean tabular dataset — not representative of noisy production data.",
       "inference": "Single-row prediction via scikit-learn predict().",
       "demoUrl": "",
+      "localDemo": "iris",
     },
     {
       "name": "Sales Data Dashboard",

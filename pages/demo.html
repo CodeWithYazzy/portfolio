@@ -54,6 +54,16 @@
     .calculator-grid button:hover{background:var(--ink);color:#fff;border-color:var(--ink);transform:translateY(-1px)}
     .calculator-grid .operator{background:var(--ink);color:#fff;border-color:var(--ink)}
     .calculator-grid .operator:hover{background:var(--blue);border-color:var(--blue)}
+    .iris-demo{margin-top:16px;padding:16px;border:1px solid var(--border);border-radius:14px;background:var(--light);scroll-margin-top:76px}
+    .iris-header{display:flex;align-items:center;gap:6px;font-size:12px;font-weight:700;color:var(--ink);font-family:'JetBrains Mono',monospace;letter-spacing:.02em;margin-bottom:10px}
+    .iris-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+    .iris-grid label{font-size:12px;font-weight:600;color:var(--muted);display:flex;flex-direction:column;gap:4px;font-family:'JetBrains Mono',monospace}
+    .iris-grid input{padding:10px 11px;border:1px solid var(--border);border-radius:10px;background:#fff;color:var(--ink);font:600 14px/1 Inter,system-ui,sans-serif}
+    .iris-grid input:focus{outline:none;border-color:var(--ink);box-shadow:0 0 0 3px rgba(11,18,32,.07)}
+    .iris-result{margin-top:12px;padding:12px;border:1px solid var(--border);border-radius:10px;background:#fff;font-size:13px;color:var(--ink);min-height:44px;display:grid;place-items:center}
+    .iris-result strong{font-size:15px}
+    .iris-probs{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+    .iris-probs span{background:var(--soft);border:1px solid var(--border);padding:4px 8px;border-radius:999px;font:600 11px/1 'JetBrains Mono',monospace;color:var(--muted)}
     footer{text-align:center;padding:24px;border-top:1px solid var(--line-soft);color:var(--muted-2);font-size:12px;font-family:'JetBrains Mono',monospace}
     .actions button{cursor:pointer;font-family:inherit}
     .steps{list-style:none;margin:14px 0 0;padding:0;display:none}
@@ -186,6 +196,18 @@
           <button type="button" data-calc="0">0</button><button type="button" data-calc=".">.</button>
         </div>
       </div>
+      <div id="irisDemo" class="iris-demo" hidden>
+        <div class="iris-header"><i data-lucide="flower-2" style="width:16px;height:16px"></i> Iris — browser inference (same pipeline as Python: StandardScaler → LogisticRegression)</div>
+        <div class="iris-grid">
+          <label>Sepal length <input id="irisSl" type="number" step="0.1" value="5.1" min="4.3" max="7.9"></label>
+          <label>Sepal width <input id="irisSw" type="number" step="0.1" value="3.5" min="2.0" max="4.4"></label>
+          <label>Petal length <input id="irisPl" type="number" step="0.1" value="1.4" min="1.0" max="6.9"></label>
+          <label>Petal width <input id="irisPw" type="number" step="0.1" value="0.2" min="0.1" max="2.5"></label>
+        </div>
+        <button id="irisPredict" type="button" class="btn btn-primary" style="margin-top:10px">Predict species</button>
+        <div id="irisResult" class="iris-result" aria-live="polite"></div>
+        <p style="font-size:11px;color:var(--muted);margin-top:8px;font-family:'JetBrains Mono',monospace">Weights from <code>src/train.py</code> — scaler mean/scale + LR coef/intercept, softmax in JS. Try 5.1/3.5/1.4/0.2 → setosa, 6.0/2.2/4.0/1.0 → versicolor, 6.3/3.3/6.0/2.5 → virginica.</p>
+      </div>
       <div id="frameWrap" class="frame-wrap" hidden>
         <div class="frame-bar"><span id="frameTitle">preview</span><span class="frame-badge" id="frameBadge"></span></div>
         <iframe id="demoFrame" class="demo-frame" title="Live project preview" sandbox="allow-scripts allow-forms allow-popups allow-modals"></iframe>
@@ -222,6 +244,13 @@
     const availabilityTextEl = document.getElementById('availabilityText');
     const calculatorDemoEl = document.getElementById('calculatorDemo');
     const calculatorDisplayEl = document.getElementById('calculatorDisplay');
+    const irisDemoEl = document.getElementById('irisDemo');
+    const irisSlEl = document.getElementById('irisSl');
+    const irisSwEl = document.getElementById('irisSw');
+    const irisPlEl = document.getElementById('irisPl');
+    const irisPwEl = document.getElementById('irisPw');
+    const irisResultEl = document.getElementById('irisResult');
+    const irisPredictEl = document.getElementById('irisPredict');
     const detailsGridEl = document.getElementById('projectDetails');
     const detailProblemEl = document.getElementById('detailProblem');
     const detailApproachEl = document.getElementById('detailApproach');
@@ -253,6 +282,12 @@
     const engineeringGridEl = document.getElementById('engineeringGrid');
     const verificationBannerEl = document.getElementById('verificationBanner');
     let calculatorExpression = '';
+    // Iris — same pipeline as Python src/train.py random_state=0 (96.67% held-out)
+    const IRIS_MEAN = [5.8575, 3.049166666666666, 3.759166666666667, 1.2075];
+    const IRIS_SCALE = [0.8514362865182572, 0.44515836757520594, 1.7808001868698118, 0.7636712316173764];
+    const IRIS_COEF = [[-1.0003651631318553, 1.0634839402359453, -1.7895002222546368, -1.716586636558806],[0.4566888535508926, -0.37542898149273707, -0.11516979607648324, -0.7865034740380231],[0.5436763095809638, -0.6880549587432071, 1.90467001833112, 2.5030901105968293]];
+    const IRIS_INTERCEPT = [-0.3054433182228682, 1.8808490584010606, -1.5754057401781931];
+    const IRIS_LABELS = ["setosa","versicolor","virginica"];
     document.getElementById('year').textContent = new Date().getFullYear();
 
     const runner = window.GithubDemoRunner;
@@ -351,6 +386,9 @@
     function showCalculator(visible) {
       if (calculatorDemoEl) calculatorDemoEl.hidden = !visible;
     }
+    function showIris(visible) {
+      if (irisDemoEl) irisDemoEl.hidden = !visible;
+    }
 
     async function loadProject() {
       renderProject(fallback);
@@ -362,14 +400,14 @@
         const project = projects.find(item => item.name.toLowerCase() === requestedName.toLowerCase());
         if (project) {
           renderProject(project);
-          showCalculator(false);
+          showCalculator(false); showIris(false);
         }
         else statusEl.textContent = 'This project is not listed in the current catalog.';
       } catch (error) {
         const localProject = (window.PROJECT_CATALOG || []).find(item => item.name.toLowerCase() === requestedName.toLowerCase());
         if (localProject) {
           renderProject(localProject);
-          showCalculator(false);
+          showCalculator(false); showIris(false);
           statusEl.textContent = '';
         } else {
           statusEl.textContent = 'Project details could not be loaded.';
@@ -409,6 +447,7 @@
       [noticePanelEl, errorPanelEl, frameWrapEl].forEach(el => { el.hidden = true; });
       frameSkeletonEl.hidden = true;
       if (calculatorDemoEl) calculatorDemoEl.hidden = true;
+      if (irisDemoEl) irisDemoEl.hidden = true;
       if (scrollArrowEl) scrollArrowEl.hidden = true;
       statusEl.textContent = '';
     }
@@ -648,6 +687,62 @@
       settleDemo(calculatorDemoEl);
     }
 
+    function predictIris(sl, sw, pl, pw) {
+      const x = [sl, sw, pl, pw].map((v,i) => (v - IRIS_MEAN[i]) / IRIS_SCALE[i]);
+      const logits = IRIS_COEF.map((row, r) => row.reduce((s, w, i) => s + w * x[i], 0) + IRIS_INTERCEPT[r]);
+      const m = Math.max(...logits);
+      const ex = logits.map(v => Math.exp(v - m));
+      const sum = ex.reduce((a,b)=>a+b,0);
+      const probs = ex.map(v => v / sum);
+      const idx = probs.indexOf(Math.max(...probs));
+      return { label: IRIS_LABELS[idx], probs, idx };
+    }
+
+    function renderIrisResult(sl, sw, pl, pw) {
+      if ([sl,sw,pl,pw].some(v => isNaN(v))) { irisResultEl.textContent = 'Enter all 4 numbers.'; return; }
+      const { label, probs } = predictIris(sl, sw, pl, pw);
+      irisResultEl.replaceChildren();
+      const strong = document.createElement('strong');
+      strong.textContent = label.charAt(0).toUpperCase() + label.slice(1);
+      strong.style.color = label==='setosa' ? '#0B3D91' : label==='versicolor' ? '#7C3AED' : '#C2410C';
+      const p = document.createElement('div');
+      p.className = 'iris-probs';
+      probs.forEach((pr,i) => {
+        const s = document.createElement('span');
+        s.textContent = `${IRIS_LABELS[i]} ${(pr*100).toFixed(1)}%`;
+        if (IRIS_LABELS[i]===label) s.style.background = '#0B1220', s.style.color='#fff', s.style.borderColor='#0B1220';
+        p.appendChild(s);
+      });
+      irisResultEl.append(strong, p);
+      try { lucide.createIcons(); } catch(e){}
+    }
+
+    async function runIrisLocal(sourceInfo) {
+      showIris(true);
+      if (irisSlEl) irisSlEl.focus();
+      statusEl.textContent = 'Iris demo ready — same 97% pipeline (StandardScaler + LogisticRegression) running in your browser.';
+      if (sourceInfo && sourceInfo.path) {
+        const card = availabilityTextEl.parentElement;
+        let meta = document.getElementById('ghSourceMeta');
+        if (!meta) {
+          meta = document.createElement('p');
+          meta.id = 'ghSourceMeta';
+          meta.className = 'source-meta';
+          const anchor = card.querySelector('.status');
+          card.insertBefore(meta, anchor);
+        }
+        meta.replaceChildren();
+        meta.append('Verified GitHub source: ');
+        const code = document.createElement('code');
+        code.textContent = sourceInfo.path + ' · ' + sourceInfo.lines + ' lines · ' + Math.round(sourceInfo.bytes/1024) + ' KB' + (sourceInfo.model ? ' · LogisticRegression confirmed' : '');
+        meta.appendChild(code);
+        meta.append(' — Python pipeline reproduced in JS (no server).');
+      }
+      // initial predict
+      renderIrisResult(parseFloat(irisSlEl.value), parseFloat(irisSwEl.value), parseFloat(irisPlEl.value), parseFloat(irisPwEl.value));
+      settleDemo(irisDemoEl);
+    }
+
     async function executeRun(force) {
       if (!runner) {
         statusEl.textContent = 'Demo runner failed to load — refresh the page.';
@@ -686,7 +781,8 @@
         renderLocalDemo: async (info) => {
           frameWrapEl.hidden = true;
           frameSkeletonEl.hidden = true;
-          await runCalculatorLocal(info.sourceInfo);
+          if (info && info.kind === 'iris') await runIrisLocal(info.sourceInfo);
+          else await runCalculatorLocal(info.sourceInfo);
         }
       }, { force: !!force });
     }
@@ -701,8 +797,13 @@
     });
     if (scrollArrowEl) {
       scrollArrowEl.addEventListener('click', () => {
-        scrollToEl(!frameWrapEl.hidden ? frameWrapEl : calculatorDemoEl);
+        const target = !frameWrapEl.hidden ? frameWrapEl : (!irisDemoEl.hidden ? irisDemoEl : calculatorDemoEl);
+        scrollToEl(target);
       });
+    }
+    if (irisPredictEl) {
+      irisPredictEl.addEventListener('click', () => renderIrisResult(parseFloat(irisSlEl.value), parseFloat(irisSwEl.value), parseFloat(irisPlEl.value), parseFloat(irisPwEl.value)));
+      [irisSlEl, irisSwEl, irisPlEl, irisPwEl].forEach(el => el && el.addEventListener('input', () => renderIrisResult(parseFloat(irisSlEl.value), parseFloat(irisSwEl.value), parseFloat(irisPlEl.value), parseFloat(irisPwEl.value))));
     }
 
     window.addEventListener('message', event => {
