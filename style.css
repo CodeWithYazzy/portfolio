@@ -1194,6 +1194,24 @@ a:focus-visible{outline:2px solid var(--blue);outline-offset:2px;border-radius:2
 [data-theme="dark"] #backToTop{background:#E6E8EB;color:#0F1115;box-shadow:0 12px 32px rgba(0,0,0,.45)}
 [data-theme="dark"] #backToTop:hover{background:#F1F3F5}
 [data-theme="dark"] .about-why{background:var(--soft);border-color:var(--line)}
+[data-theme="dark"] .info span{color:#E6E8EB !important}
+[data-theme="dark"] .info b{color:#9AA0A8 !important}
+[data-theme="dark"] .info i{color:#B0BCC8 !important}
+[data-theme="dark"] .info{color:var(--text)}
+[data-theme="dark"] .skill-group-head h4{color:#E6E8EB}
+[data-theme="dark"] .drive-card h4{color:#F1F3F5}
+[data-theme="dark"] .drive-card p{color:var(--muted)}
+[data-theme="dark"] .drive-text h3{color:#F1F3F5}
+[data-theme="dark"] .drive-text p{color:var(--muted)}
+[data-theme="dark"] .lab-card h4{color:#F1F3F5}
+[data-theme="dark"] .lab-card p{color:var(--muted)}
+[data-theme="dark"] .ach-card h4{color:#F1F3F5}
+[data-theme="dark"] .ach-card p{color:var(--muted)}
+[data-theme="dark"] .flagship-main h2{color:#F1F3F5}
+[data-theme="dark"] .flagship-side-body h5{color:#B0BCC8}
+[data-theme="dark"] .about-why h3{color:#F1F3F5}
+[data-theme="dark"] .about-skills-head h3{color:#F1F3F5}
+[data-theme="dark"] .about-achievements-head h3{color:#F1F3F5}
 [data-theme="dark"] body::before{opacity:.04; mix-blend-mode:normal}
 
 /* ── DIVIDER UTILITY ── */
