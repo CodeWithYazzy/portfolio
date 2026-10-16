@@ -1,0 +1,286 @@
+/* Layout for the existing demo runner; shared visual tokens are in style.css. */
+.demo-main .desc {
+  max-width: 740px;
+}
+.hero-img {
+  width: 100%;
+  max-height: 360px;
+  object-fit: cover;
+  margin: 24px 0;
+  border-radius: 20px;
+}
+.details-grid,
+.engineering-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+  margin: 24px 0;
+}
+.detail-card,
+.eng-card {
+  padding: 20px;
+  border: 1px solid var(--line);
+}
+.detail-card p,
+.eng-card p {
+  font-size: 13px;
+}
+.metrics-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
+  gap: 12px;
+}
+.metric-card {
+  border: 1px solid var(--line);
+  padding: 20px;
+  text-align: center;
+}
+.metric-card strong {
+  font-size: 24px;
+}
+.metric-card span,
+.metric-card small {
+  display: block;
+  color: var(--muted);
+  font-size: 12px;
+}
+.card {
+  padding: 30px;
+  margin-top: 32px;
+  border: 1px solid var(--line);
+}
+.card h2 {
+  margin-bottom: 12px;
+}
+.card > p {
+  margin-bottom: 20px;
+  font-size: 14px;
+}
+.actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.status {
+  margin-top: 20px;
+  font-size: 13px;
+}
+.calculator-demo,
+.iris-demo {
+  margin-top: 20px;
+  padding: 20px;
+  background: var(--canvas);
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  scroll-margin-top: 100px;
+}
+.calculator-display {
+  width: 100%;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+  font: 600 28px var(--font-mono);
+  text-align: right;
+}
+.calculator-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 10px;
+  margin-top: 14px;
+}
+.calculator-grid button {
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  transition: opacity 0.2s;
+}
+.calculator-grid button:hover {
+  opacity: 0.75;
+}
+.iris-header {
+  margin-bottom: 18px;
+  font-size: 13px;
+  font-weight: 500;
+}
+.iris-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+.iris-grid label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-size: 12px;
+  color: var(--muted);
+}
+.iris-grid input {
+  padding: 12px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  font-size: 16px;
+}
+.iris-result {
+  min-height: 64px;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 18px;
+  margin-top: 18px;
+}
+.iris-probs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+.iris-probs span {
+  font-size: 11px;
+  padding: 6px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+.steps {
+  list-style: none;
+  margin: 20px 0;
+  padding: 0;
+}
+.steps li {
+  position: relative;
+  padding-left: 22px;
+  font-size: 12px;
+  margin-top: 6px;
+}
+.steps li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 7px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--muted);
+}
+.steps li.done::before {
+  background: var(--blue);
+}
+.steps li.error {
+  color: var(--error);
+}
+.frame-wrap {
+  position: relative;
+  margin-top: 20px;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  overflow: hidden;
+  scroll-margin-top: 100px;
+}
+.frame-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
+  padding: 12px;
+  background: var(--canvas);
+  font-size: 11px;
+}
+.frame-badge {
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 9px;
+}
+.demo-frame {
+  width: 100%;
+  height: min(68vh, 600px);
+  border: 0;
+  display: block;
+  background: #fff;
+}
+.frame-skeleton {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  font-size: 13px;
+  color: var(--muted);
+}
+.spinner {
+  width: 24px;
+  height: 24px;
+  border: 2px solid var(--line);
+  border-top-color: var(--blue);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.error-panel,
+.note-panel {
+  margin-top: 20px;
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--blue);
+  border-radius: 12px;
+  padding: 20px;
+  background: var(--canvas);
+}
+.error-panel h3,
+.note-panel h3 {
+  font-size: 17px;
+  margin-bottom: 12px;
+}
+.panel-detail {
+  white-space: pre-line;
+  font-size: 13px;
+  overflow-wrap: anywhere;
+}
+.panel-actions {
+  margin-top: 16px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+.panel-actions a,
+.panel-actions button,
+.panel-link {
+  display: inline-flex;
+  align-items: center;
+  padding: 10px 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 12px;
+  min-height: 44px;
+}
+.source-meta {
+  font-size: 12px;
+  margin-top: 18px;
+}
+.source-meta code {
+  padding: 3px 6px;
+  border-radius: 4px;
+  font-size: 11px;
+}
+.scroll-arrow {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 44px;
+  height: 44px;
+  border: 0;
+  border-radius: 50%;
+  z-index: 10;
+}
+@media (max-width: 640px) {
+  .details-grid,
+  .engineering-grid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 520px) {
+  .actions > * {
+    width: 100%;
+  }
+}

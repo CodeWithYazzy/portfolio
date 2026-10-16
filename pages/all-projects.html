@@ -1,92 +1,244 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="All AI, Machine Learning, Deep Learning, and Python projects by Yasir Javed Khan.">
-<link rel="canonical" href="https://yasirlab.in/pages/all-projects">
-<meta name="theme-color" content="#0B1220">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/assets/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="/assets/favicon.png">
-<title>All Projects — Yasir Javed Khan</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://unpkg.com">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@700;800&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
-<script>!function(){try{var t=localStorage.getItem("theme");if(!t)t=matchMedia("(prefers-color-scheme:dark)").matches?"dark":"light";document.documentElement.setAttribute("data-theme",t)}catch(e){}}();</script>
-<script src="https://unpkg.com/lucide@0.469.0"></script>
-<link rel="stylesheet" href="../style.css">
-<style>
-  header{position:sticky;top:0;background:rgba(255,255,255,.86);backdrop-filter:blur(16px) saturate(180%);-webkit-backdrop-filter:blur(16px) saturate(180%);border-bottom:1px solid #E6EAF0;z-index:10}
-  .header-inner{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center;min-height:68px;gap:16px}
-  .logo{width:36px;height:36px;background:#0B1220;color:#fff;font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:13px;display:grid;place-items:center;border-radius:9px;letter-spacing:-.02em}
-  .back-pill{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border:1px solid #E6EAF0;border-radius:999px;background:#fff;font-size:13px;font-weight:600;color:#0B1220;transition:background .15s,border-color .15s,color .15s}
-  .back-pill:hover{background:#0B1220;border-color:#0B1220;color:#fff}
-  .eyebrow{color:#8A95A8;font-family:'JetBrains Mono',monospace;font-weight:600;letter-spacing:.14em;font-size:10.5px;display:inline-flex;align-items:center;gap:10px;text-transform:uppercase}
-  .eyebrow span{width:28px;height:1px;background:#D8DEEB;display:inline-block}
-  [data-theme="dark"] header{background:rgba(15,17,21,.86);border-color:#252D3A}
-  [data-theme="dark"] .header-inner span{color:#E6E8EB}
-  [data-theme="dark"] .logo{background:#E6E8EB;color:#0F1115}
-  [data-theme="dark"] .back-pill{background:transparent;border-color:#252D3A;color:#E6E8EB}
-  [data-theme="dark"] .back-pill:hover{background:#E6E8EB;color:#0F1115;border-color:#E6E8EB}
-  [data-theme="dark"] .eyebrow{color:#7A818C}
-  [data-theme="dark"] .eyebrow span{background:#252D3A}
-  [data-theme="dark"] #projects{background:var(--paper)}
-  [data-theme="dark"] #projects h2{color:#F1F3F5}
-  [data-theme="dark"] #projects .section-desc{color:#9AA0A8}
-  [data-theme="dark"] footer{background:var(--paper);border-color:var(--line) !important}
-</style>
-</head>
-<body>
-<header>
-  <div class="header-inner">
-    <a href="../index.html" class="logo" aria-label="Home">YL</a>
-    <span style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;font-size:14px;letter-spacing:-.02em;">All Projects</span>
-    <a href="../index.html" class="back-pill">← Back to Portfolio</a>
-  </div>
-</header>
-
-<section id="projects" style="padding-top:40px;padding-bottom:64px;background:var(--paper);">
-  <div class="container">
-    <div class="section-head" style="margin-bottom:12px">
-      <div>
-        <p class="eyebrow" style="margin-bottom:10px;display:inline-flex;">COMPLETE COLLECTION <span></span></p>
-        <h2 style="font-family:'Plus Jakarta Sans',sans-serif;font-weight:800;letter-spacing:-.035em;line-height:.95;font-size:clamp(30px,4vw,40px);color:var(--text)">All projects <span style="color:var(--blue)">in one place</span></h2>
-        <p class="section-desc" style="color:var(--muted);font-size:15px;max-width:560px;margin-top:10px;line-height:1.7;">Explore AI/ML models, deep learning pipelines, and data tools. Open any card to view its project preview. The catalog holds 15 builds — grouped for the full archive view.</p>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Work — YasirLab 2.0</title>
+    <meta
+      name="description"
+      content="Explore YasirLab’s web demos, data exercises, and AI/ML scaffolds. Search and filter the collection, with project scope and limitations clearly labeled."
+    />
+    <meta name="theme-color" content="#f5f5f7" />
+    <link rel="canonical" href="https://yasirlab.in/pages/all-projects" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Work — YasirLab 2.0" />
+    <meta
+      property="og:description"
+      content="Explore YasirLab’s web demos, data exercises, and AI/ML scaffolds. Search and filter the collection, with project scope and limitations clearly labeled."
+    />
+    <meta property="og:url" content="https://yasirlab.in/pages/all-projects" />
+    <meta
+      property="og:image"
+      content="https://yasirlab.in/assets/social-card.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="YasirLab 2.0 — Curiosity. In progress."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="../assets/logo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="../assets/favicon.png" />
+    <script src="../theme.js"></script>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header id="navbar" class="site-header">
+      <div class="container nav-inner">
+        <a class="brand" href="../index.html"
+          ><span class="brand-mark" aria-hidden="true">y<span>.</span></span
+          ><span
+            >Yasir<span class="brand-light">Lab</span
+            ><span class="version">2.0</span></span
+          ></a
+        >
+        <nav class="desktop-nav" aria-label="Primary">
+          <a href="../index.html#home">Overview</a
+          ><a href="../index.html#projects">Work</a
+          ><a href="../index.html#lab">Lab</a
+          ><a href="../index.html#about">About</a
+          ><a href="../index.html#contact">Contact</a>
+        </nav>
+        <div class="nav-actions">
+          <button
+            class="icon-button theme-toggle"
+            type="button"
+            aria-label="Switch to dark mode"
+            aria-pressed="false"
+          >
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M20.9 13.1A9 9 0 0 1 10.9 3.1 9 9 0 1 0 20.9 13.1Z"
+              /></svg
+            ><svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+              />
+            </svg></button
+          ><button
+            id="hamburger"
+            class="icon-button"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 8h16M4 16h16" />
+            </svg>
+          </button>
+        </div>
       </div>
-    </div>
-    <div class="projects-grid" id="projectsGrid"></div>
-  </div>
-</section>
-
-<footer>
-  <div class="container footer-inner">
-    <div class="footer-brand"><strong>Yasir Javed Khan</strong> — Machine Learning Engineer</div>
-    <div class="footer-links">
-      <a href="https://github.com/CodeWithYazzy" target="_blank" rel="noopener noreferrer">GitHub</a>
-      <a href="https://x.com/codewithyazzy" target="_blank" rel="noopener noreferrer" aria-label="X (formerly Twitter)"><svg viewBox="0 0 24 24" width="14" height="14" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817-5.963 6.817H1.684l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg> X</a>
-      <a href="mailto:codewithyazzy@gmail.com">Email</a>
-    </div>
-    <div class="footer-copy">© <span id="year"></span> Yasir Javed Khan — Build → Experiment → Evaluate → Deploy.</div>
-  </div>
-</footer>
-
-<div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-
-<!-- Project Modal -->
-<div id="modal" class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle" aria-hidden="true">
-  <div class="modal-content">
-    <button id="modalClose" type="button" aria-label="Close dialog"><i data-lucide="x"></i></button>
-    <h3 id="modalTitle"></h3>
-    <p id="modalDesc">Open the project preview or browse the GitHub profile.</p>
-    <div style="margin-top:16px;display:flex;gap:12px">
-      <a href="#" id="modalDemo" target="_blank" rel="noopener noreferrer" class="btn-primary btn-sm" data-demo>Open Demo <i data-lucide="external-link" style="width:14px;height:14px"></i></a>
-      <a href="#" id="modalGithub" target="_blank" rel="noopener noreferrer" class="btn-outline btn-sm" data-github>GitHub Profile <i data-lucide="github" style="width:14px;height:14px"></i></a>
-    </div>
-  </div>
-</div>
-
-<script src="../script.js"></script>
-</body>
+      <nav id="mobileMenu" aria-label="Mobile primary" hidden>
+        <a href="../index.html#home">Overview</a
+        ><a href="../index.html#projects">Work</a
+        ><a href="../index.html#lab">Lab</a
+        ><a href="../index.html#about">About</a
+        ><a href="../index.html#contact">Contact</a>
+      </nav>
+    </header>
+    <main id="main-content" class="archive-main" tabindex="-1">
+      <section class="section">
+        <div class="container">
+          <a href="../index.html#projects" class="text-link"
+            >← Back to selected work</a
+          >
+          <div class="archive-heading">
+            <p class="eyebrow">THE COLLECTION</p>
+            <h1>Work in<br /><span class="muted">all its stages.</span></h1>
+            <p class="large-copy">
+              From browser demos to first experiments. A collection of things
+              I’m making and learning from.
+            </p>
+          </div>
+          <div class="gallery-toolbar">
+            <div class="filter-group" role="group" aria-label="Filter projects">
+              <button type="button" data-filter="All" aria-pressed="true">
+                All work</button
+              ><button
+                type="button"
+                data-filter="Machine learning"
+                aria-pressed="false"
+              >
+                Machine learning</button
+              ><button type="button" data-filter="Data" aria-pressed="false">
+                Data</button
+              ><button type="button" data-filter="Web" aria-pressed="false">
+                Web
+              </button>
+            </div>
+            <label class="search-field"
+              ><span class="sr-only">Search projects</span
+              ><svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="10.5" cy="10.5" r="6.5" />
+                <path d="m16 16 5 5" /></svg
+              ><input
+                id="projectSearch"
+                type="search"
+                placeholder="Find a project"
+                autocomplete="off"
+            /></label>
+          </div>
+          <p
+            id="projectCount"
+            class="result-count"
+            role="status"
+            aria-live="polite"
+          ></p>
+          <h2 class="sr-only">Project collection</h2>
+          <div id="projectsGrid" class="projects-grid"></div>
+          <div id="projectEmpty" class="empty-state" hidden>
+            <h2>No matches. A new possibility?</h2>
+            <p>Try another term or reset the collection.</p>
+            <button id="resetFilters" class="button secondary" type="button">
+              Reset filters
+            </button>
+          </div>
+          <noscript
+            ><p>
+              JavaScript enables search and the gallery.
+              <a
+                class="text-link"
+                href="https://github.com/CodeWithYazzy/projects"
+                >Browse the complete source collection on GitHub
+                <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 19 19 5M5 5h14v14" /></svg
+              ></a></p
+          ></noscript>
+          <div class="collection-note">
+            <span class="note-symbol" aria-hidden="true">↳</span>
+            <p>
+              “Scaffold” means an early structure without a complete training or
+              evaluation workflow. “Learning project” means an educational
+              exercise, often with toy or synthetic data. Illustrations are
+              visual studies, not product screenshots.
+            </p>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-top">
+          <a class="brand" href="../index.html"
+            ><span class="brand-mark" aria-hidden="true">y<span>.</span></span
+            ><span
+              >Yasir<span class="brand-light">Lab</span
+              ><span class="version">2.0</span></span
+            ></a
+          >
+          <p>A personal practice.<br />An open laboratory.</p>
+          <a
+            class="text-link"
+            href="https://github.com/CodeWithYazzy"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Follow the work
+            <span aria-hidden="true"
+              ><svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 19 19 5M5 5h14v14" /></svg></span
+          ></a>
+        </div>
+        <div class="footer-bottom">
+          <span>© <span id="year">2026</span> Yasir Javed Khan</span
+          ><span>Made with curiosity. Built for the web.</span
+          ><a href="mailto:codewithyazzy@gmail.com"
+            >Say hello
+            <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 19 19 5M5 5h14v14" /></svg
+          ></a>
+        </div>
+      </div>
+    </footer>
+    <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <dialog
+      id="projectModal"
+      aria-labelledby="modalTitle"
+      aria-describedby="modalDesc"
+    >
+      <div class="dialog-content">
+        <button
+          type="button"
+          class="icon-button dialog-close"
+          aria-label="Close project details"
+        >
+          ×
+        </button>
+        <p class="eyebrow" id="modalStatus"></p>
+        <h2 id="modalTitle"></h2>
+        <p id="modalDesc"></p>
+        <div class="detail-note">
+          <h3>What to know</h3>
+          <p id="modalLimitations"></p>
+        </div>
+        <div class="button-row">
+          <a id="modalDemo" class="button primary" href="demo.html"
+            >Explore project <span aria-hidden="true">→</span></a
+          ><a
+            id="modalGithub"
+            class="button secondary"
+            href="https://github.com/CodeWithYazzy"
+            target="_blank"
+            rel="noopener noreferrer"
+            >View source
+            <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 19 19 5M5 5h14v14" /></svg
+          ></a>
+        </div>
+      </div>
+    </dialog>
+    <script src="../assets/projects.js"></script>
+    <script src="../script.js"></script>
+  </body>
 </html>

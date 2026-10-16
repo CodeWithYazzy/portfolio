@@ -1,50 +1,138 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Page not found — YasirLab</title>
-<meta name="robots" content="noindex">
-<meta name="theme-color" content="#0B3D91">
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="icon" href="/assets/favicon.png" type="image/png">
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Plus+Jakarta+Sans:wght@700&display=swap" rel="stylesheet">
-<style>
-:root{--blue:#0B3D91;--text:#0F172A;--muted:#475569;--border:#E5EAF6;--light:#F6F8FF}
-*{margin:0;padding:0;box-sizing:border-box}
-body{font-family:'Inter',system-ui,sans-serif;color:var(--text);background:#fff;line-height:1.6;min-height:100vh;display:flex;flex-direction:column}
-a{color:var(--blue);text-decoration:none}
-a:hover{text-decoration:underline}
-header{border-bottom:1px solid var(--border);padding:12px 0}
-.header-inner{max-width:900px;margin:0 auto;padding:0 24px;display:flex;justify-content:space-between;align-items:center}
-.logo{background:var(--blue);color:#fff;font-weight:800;font-size:13px;padding:6px 8px;border-radius:4px;text-decoration:none}
-main{flex:1;display:grid;place-items:center;padding:48px 24px;text-align:center}
-.card{max-width:520px;border:1px solid var(--border);border-radius:10px;padding:32px;background:#fff;box-shadow:0 8px 24px rgba(15,23,42,.06)}
-h1{font-family:'Plus Jakarta Sans',sans-serif;font-size:32px;line-height:1.1;margin:0}
-p{color:var(--muted);margin-top:10px}
-.actions{margin-top:20px;display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-.btn{padding:10px 16px;border-radius:6px;font-weight:600;font-size:14px;border:1px solid var(--blue);display:inline-flex;gap:6px;align-items:center}
-.btn-primary{background:var(--blue);color:#fff}
-.btn-outline{color:var(--blue);background:#fff}
-</style>
-</head>
-<body>
-<header>
-  <div class="header-inner">
-    <a href="/" class="logo">YJ</a>
-    <a href="/" style="font-weight:600;font-size:13px;color:var(--blue)">← Back to YasirLab</a>
-  </div>
-</header>
-<main>
-  <div class="card">
-    <h1>404 — Page not found</h1>
-    <p>The page you’re looking for doesn’t exist or was moved. Check the URL or return to the portfolio.</p>
-    <div class="actions">
-      <a href="/" class="btn btn-primary">Go to homepage</a>
-      <a href="/pages/all-projects" class="btn btn-outline">View all projects</a>
-    </div>
-    <p style="margin-top:16px;font-size:12px;color:var(--muted)">yasirlab.in · Build → Experiment → Evaluate → Deploy</p>
-  </div>
-</main>
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Page not found — YasirLab</title>
+    <meta
+      name="description"
+      content="This page could not be found. Return to YasirLab or explore the project collection."
+    />
+    <meta name="theme-color" content="#f5f5f7" />
+    <link rel="canonical" href="https://yasirlab.in/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Page not found — YasirLab" />
+    <meta
+      property="og:description"
+      content="This page could not be found. Return to YasirLab or explore the project collection."
+    />
+    <meta property="og:url" content="https://yasirlab.in/" />
+    <meta
+      property="og:image"
+      content="https://yasirlab.in/assets/social-card.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="YasirLab 2.0 — Curiosity. In progress."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/favicon.png" />
+    <script src="theme.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <meta name="robots" content="noindex" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header id="navbar" class="site-header">
+      <div class="container nav-inner">
+        <a class="brand" href="index.html"
+          ><span class="brand-mark" aria-hidden="true">y<span>.</span></span
+          ><span
+            >Yasir<span class="brand-light">Lab</span
+            ><span class="version">2.0</span></span
+          ></a
+        >
+        <nav class="desktop-nav" aria-label="Primary">
+          <a href="index.html#home">Overview</a
+          ><a href="index.html#projects">Work</a><a href="index.html#lab">Lab</a
+          ><a href="index.html#about">About</a
+          ><a href="index.html#contact">Contact</a>
+        </nav>
+        <div class="nav-actions">
+          <button
+            class="icon-button theme-toggle"
+            type="button"
+            aria-label="Switch to dark mode"
+            aria-pressed="false"
+          >
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path
+                d="M20.9 13.1A9 9 0 0 1 10.9 3.1 9 9 0 1 0 20.9 13.1Z"
+              /></svg
+            ><svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+              />
+            </svg></button
+          ><button
+            id="hamburger"
+            class="icon-button"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 8h16M4 16h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav id="mobileMenu" aria-label="Mobile primary" hidden>
+        <a href="index.html#home">Overview</a
+        ><a href="index.html#projects">Work</a><a href="index.html#lab">Lab</a
+        ><a href="index.html#about">About</a
+        ><a href="index.html#contact">Contact</a>
+      </nav>
+    </header>
+    <main id="main-content" class="not-found container" tabindex="-1">
+      <p class="eyebrow">404 / A SMALL DETOUR</p>
+      <h1>Nothing here.<br /><span class="muted">Plenty to explore.</span></h1>
+      <p>The page may have moved, or the link may be incomplete.</p>
+      <div class="button-row">
+        <a href="/" class="button primary">Back to the lab →</a
+        ><a href="/pages/all-projects.html" class="button secondary"
+          >Explore the work</a
+        >
+      </div>
+    </main>
+    <footer class="site-footer">
+      <div class="container">
+        <div class="footer-top">
+          <a class="brand" href="index.html"
+            ><span class="brand-mark" aria-hidden="true">y<span>.</span></span
+            ><span
+              >Yasir<span class="brand-light">Lab</span
+              ><span class="version">2.0</span></span
+            ></a
+          >
+          <p>A personal practice.<br />An open laboratory.</p>
+          <a
+            class="text-link"
+            href="https://github.com/CodeWithYazzy"
+            target="_blank"
+            rel="noopener noreferrer"
+            >Follow the work
+            <span aria-hidden="true"
+              ><svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+                <path d="M5 19 19 5M5 5h14v14" /></svg></span
+          ></a>
+        </div>
+        <div class="footer-bottom">
+          <span>© <span id="year">2026</span> Yasir Javed Khan</span
+          ><span>Made with curiosity. Built for the web.</span
+          ><a href="mailto:codewithyazzy@gmail.com"
+            >Say hello
+            <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M5 19 19 5M5 5h14v14" /></svg
+          ></a>
+        </div>
+      </div>
+    </footer>
+    <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
+    <script src="assets/projects.js"></script>
+    <script src="script.js"></script>
+  </body>
 </html>
