@@ -11,7 +11,7 @@ cd /workspace/portfolio  # or your local checkout
 python3 -m http.server 8765 --bind 127.0.0.1
 ```
 
-Open `index.html`, `pages/all-projects.html`, or `pages/demo.html?project=Iris%20Flower%20Classifier` through that server. The explicit `.html` links also work on basic static hosts. Vercel's existing clean URLs remain supported. Opening files directly supports the bundled catalog and local demos, but HTTP is the recommended workflow.
+Open `index.html`, `pages/all-projects.html`, or `pages/demo.html?project=Iris%20Flower%20Classifier` through that server. The explicit `.html` links also work on basic static hosts. Vercel's existing clean URLs remain supported. The bundled catalog is designed to support direct file browsing too, but this cloud browser prohibits `file://` navigation; use HTTP for the verified workflow.
 
 ## Structure
 

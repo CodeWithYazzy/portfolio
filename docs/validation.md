@@ -25,7 +25,7 @@ Passing checks:
 - Calculator precedence, parentheses/powers, divide-by-zero feedback, and rejection of executable input.
 - Iris examples for all three species and invalid-input feedback.
 - Bundled browser demos with external traffic blocked.
-- GitHub runner static-HTML preparation and sandbox execution using explicit fixtures; Python projects show an honest runtime requirement. These are **mocked integration tests**, not live GitHub API tests.
+- GitHub runner static-HTML preparation and sandbox execution using explicit fixtures; Python projects show an honest runtime requirement. These are **mocked integration tests**, not live GitHub API tests. A targeted rerun also verifies that Python files under `tests/` and `tools/` do not misclassify this static site, while an actual Python runtime manifest still requires Python.
 - No horizontal overflow at 320, 390, 768, and 1440 pixels on the homepage, collection, Iris page, and 404 page.
 - One main landmark and one H1 per page, metadata, canonical URLs, and honest Person structured data.
 - Core page content and direct email remain available without JavaScript; the draft form cannot accidentally submit a GET request.
@@ -65,6 +65,10 @@ The illustrations in the application are original decorative visual studies. The
 | Project collection | [Gallery](screenshots/gallery-light-desktop.png) |
 | Running Iris example | [Demo](screenshots/iris-light-desktop.png) |
 
-## External limits
+## GitHub and live-browser limits
 
-The environment permits Git operations through its existing GitHub proxy, but currently denies `api.github.com` with a proxy HTTP 403. Live GitHub-backed previews and pull-request creation need that domain applied in environment settings. The local demos and all development checks above require no credentials or live GitHub API. The saved domain requirement already includes `api.github.com`; no token values are needed in chat.
+The connected account successfully pushed `redesign/yasirlab-2` and created [PR #1](https://github.com/CodeWithYazzy/portfolio/pull/1). The PR is open, targets `main`, and has not been merged. Read-only GitHub API requests from the shell returned HTTP 200 after initial egress denials resolved.
+
+A live source-preview request from managed Chromium fails with `net::ERR_CERT_AUTHORITY_INVALID` against the environment's proxy certificate. The shell trusts the supplied proxy CA and receives a valid GitHub JSON response with `Access-Control-Allow-Origin: *`; Chromium's separate trust store does not. This is an environment trust limitation, not a demonstrated website failure. Live browser-to-GitHub previews remain unverified. Local browser examples, fixture-based runner tests, and GitHub CLI operations pass.
+
+An optional attempt to add the platform-provided proxy CA to Chromium's persistent user trust store was rejected by automatic approval review because it broadens future TLS trust without specific authorization. No persistent browser trust change was made, and verification was never disabled. The optional live-browser check can remain blocked, or the owner can explicitly authorize that trust-store change separately.

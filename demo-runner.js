@@ -281,7 +281,7 @@
     }
 
     if (set.has('requirements.txt') || set.has('pyproject.toml') || set.has('setup.py') ||
-        set.has('Pipfile') || paths.some(p => p.toLowerCase().endsWith('.py'))) {
+        set.has('Pipfile') || paths.some(p => p.toLowerCase().endsWith('.py') && !/^(tests?|tools|scripts)\//i.test(p))) {
       return { type: 'E', label: 'Python project', framework: 'python' };
     }
 

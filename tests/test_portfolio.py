@@ -207,6 +207,11 @@ class PortfolioTests(unittest.TestCase):
 
     def test_runner_static_sandbox_and_python_unavailable_fixture(self):
         # Explicit fixtures, not claims about live GitHub availability.
+        self.goto('/pages/demo.html?project=Portfolio%20Website')
+        detected = self.page.evaluate('GithubDemoRunner.detectProjectType(["index.html", "tools/sync-catalog.py", "tests/test_portfolio.py"])')
+        self.assertEqual(detected['type'], 'A', 'Python test/tooling files must not turn a static website into a Python application')
+        detected = self.page.evaluate('GithubDemoRunner.detectProjectType(["index.html", "requirements.txt", "app.py"])')
+        self.assertEqual(detected['type'], 'E', 'A real Python runtime manifest still requires Python')
         self.context.unroute('https://**/*')
         self.context.route('https://api.github.com/**', lambda route: route.fulfill(json={'tree':[{'path':'index.html','type':'blob'}]}))
         self.context.route('https://raw.githubusercontent.com/**', lambda route: route.fulfill(body='<h1>Fixture</h1><button onclick="this.textContent=\'It works\'">Run fixture</button>',content_type='text/html'))
