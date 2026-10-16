@@ -281,7 +281,7 @@
     }
 
     if (set.has('requirements.txt') || set.has('pyproject.toml') || set.has('setup.py') ||
-        set.has('Pipfile') || paths.some(p => p.toLowerCase().endsWith('.py'))) {
+        set.has('Pipfile') || paths.some(p => p.toLowerCase().endsWith('.py') && !/^(tests?|tools|scripts)\//i.test(p))) {
       return { type: 'E', label: 'Python project', framework: 'python' };
     }
 
@@ -663,67 +663,14 @@
 
       const repoInfo = parseGithubUrl(github);
 
-      // Instant local preview (Calculator): works fully offline, no backend needed.
-      // GitHub source verification happens opportunistically and never blocks.
-      if (projectConfig.localDemo === 'calculator') {
-        safeHooks.onStep('Preparing local preview…');
-        let sourceInfo = null;
-        if (repoInfo) {
-          const target = repoInfo.filePath;
-          try {
-            const branch = repoInfo.branch || await getDefaultBranch(repoInfo.owner, repoInfo.repo, { force });
-            if (target) {
-              const src = await fetchGithubFile(repoInfo.owner, repoInfo.repo, branch, normalizeDir(repoInfo.subdir) + target, { force });
-              sourceInfo = {
-                path: target,
-                lines: src.text.split('\n').length,
-                bytes: src.bytes.length,
-                gui: /import\s+tkinter|from\s+tkinter/i.test(src.text),
-                url: `https://github.com/${repoInfo.owner}/${repoInfo.repo}/blob/${branch}/${normalizeDir(repoInfo.subdir)}${target}`
-              };
-            }
-          } catch (err) {
-            console.warn('[demo-runner] GitHub source verification skipped (offline or unreachable):', err.message);
-          }
-        }
-        safeHooks.renderLocalDemo({ reason: repoInfo ? 'configured-repo' : 'no-repo', sourceInfo });
+      // Bundled examples run immediately, including offline. Source links stay available.
+      // Do not wait for optional GitHub verification before showing a local example.
+      if (['calculator', 'iris'].includes(projectConfig.localDemo)) {
+        safeHooks.onStep('Preparing browser example…');
+        await safeHooks.renderLocalDemo({ kind: projectConfig.localDemo, sourceInfo: null });
         safeHooks.completeStep();
-        safeHooks.onReady('Local demo ready — expressions are evaluated securely in your browser.');
-        return { status: 'local-demo', sourceInfo };
-      }
-
-      if (projectConfig.localDemo === 'iris') {
-        safeHooks.onStep('Preparing local preview…');
-        let sourceInfo = null;
-        if (repoInfo) {
-          try {
-            const branch = repoInfo.branch || await getDefaultBranch(repoInfo.owner, repoInfo.repo, { force });
-            const base = normalizeDir(repoInfo.subdir);
-            // Try primary model file, fallback to README
-            let src = null;
-            let path = base + 'src/train.py';
-            try { src = await fetchGithubFile(repoInfo.owner, repoInfo.repo, branch, path, { force }); } catch (e) { src = null; }
-            if (!src) {
-              path = base + 'README.md';
-              try { src = await fetchGithubFile(repoInfo.owner, repoInfo.repo, branch, path, { force }); } catch (e2) { src = null; }
-            }
-            if (src) {
-              sourceInfo = {
-                path: path,
-                lines: src.text.split('\n').length,
-                bytes: src.bytes.length,
-                model: /LogisticRegression|StandardScaler/i.test(src.text),
-                url: `https://github.com/${repoInfo.owner}/${repoInfo.repo}/blob/${branch}/${path}`
-              };
-            }
-          } catch (err) {
-            console.warn('[demo-runner] GitHub source verification skipped (offline or unreachable):', err.message);
-          }
-        }
-        safeHooks.renderLocalDemo({ reason: repoInfo ? 'configured-repo' : 'no-repo', sourceInfo, kind: 'iris' });
-        safeHooks.completeStep();
-        safeHooks.onReady('Iris demo ready — same StandardScaler + LogisticRegression pipeline running in your browser.');
-        return { status: 'local-demo', sourceInfo };
+        safeHooks.onReady('Browser example ready — all computation runs locally.');
+        return { status: 'local-demo', sourceInfo: null };
       }
 
       // No repository configured at all.

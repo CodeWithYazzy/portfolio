@@ -1,5 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="YasirLab logo">
-  <rect width="64" height="64" rx="14" fill="#0B3D91"/>
-  <text x="32" y="41" font-family="Plus Jakarta Sans, Inter, Helvetica, Arial, sans-serif" font-size="24" font-weight="800" fill="#FFFFFF" text-anchor="middle" letter-spacing="-0.02em">YL</text>
-  <circle cx="48" cy="14" r="3.5" fill="#60A5FA" stroke="#FFFFFF" stroke-width="1.25"/>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64"><rect width="64" height="64" rx="16" fill="#1d1d1f"/><path d="m18 18 11 24m13-24L27 51" fill="none" stroke="#fff" stroke-width="6" stroke-linecap="round"/><circle cx="47" cy="44" r="4" fill="#75b8ff"/></svg>

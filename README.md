@@ -1,67 +1,64 @@
-# YasirLab — Machine Learning Engineering Laboratory
+# YasirLab 2.0
 
-> **yasirlab.in** — premium personal portfolio on the surface, AI/ML engineering lab underneath. 4 destinations, 15 builds, zero fake demos.
+A personal developer portfolio, an AI/ML learning laboratory, and an evolving independent technology identity for Yasir Javed Khan.
 
-![Status](https://img.shields.io/badge/Status-Live-brightgreen) ![Stack](https://img.shields.io/badge/Stack-HTML%20%7C%20CSS%20%7C%20JS-blue) ![License](https://img.shields.io/badge/License-MIT-green)
-
----
-
-## Live
-
-**https://yasirlab.in** — auto-deployed via Vercel from `main`.
-
----
-
-## Structure — 4 nav
-
-**Home · About · Projects · Contact** — everything else lives inside.
-
-- **Home** — hero (Yasir Javed Khan • ML Developer • AI Systems Builder) + compact flagship + lab teaser + workflow mini + stats bar
-- **About** — `About` + `Why I Build` + `Skills (7 groups, 26 tech)` + `Workflow Build→Iterate` + `Achievements (5)` as editorial subsections
-- **Projects** — flagship `iris-classifier` (97% held-out) + **ML Lab 6 experiments** (CNN vs Transfer, Evaluation, Hyperparams, Transformers, Data, Optimization — modals `Hypothesis→Conclusion`) + 15 project grid + GitHub/demo links
-- **Contact** — email `codewithyazzy@gmail.com`, GitHub, X, form (mailto)
-
-Design: Figma-inspired editorial, ink/blue, Plus Jakarta Sans + JetBrains Mono, 104px whitespace, hand-crafted irregularity, no AI-template look.
-
----
+The site uses semantic HTML, CSS, and vanilla JavaScript. No application dependencies, package manager, framework, or build step are required. Fonts and icons use system typography and local SVGs; core functionality works without third-party CDNs.
 
 ## Run locally
 
-No build step — just open `index.html` or:
-
-```powershell
-python -m http.server 8765
-# http://localhost:8765
-# /pages/all-projects.html
-# /pages/demo.html?project=Iris%20Flower%20Classifier
+```bash
+cd /workspace/portfolio  # or your local checkout
+python3 -m http.server 8765 --bind 127.0.0.1
 ```
 
-- `assets/projects.json` — 15 projects, `localDemo: iris/calculator` for browser demos
-- `script.js` — fallback catalog for `file://`, project rendering, lab modals, nav observer mapped to 4 nav
-- `demo-runner.js` — **real GitHub fetch** (`api.github.com` + `raw.githubusercontent.com`), static rewrite to `data:` URLs, sandboxed iframe, honest `Python required` for true Python projects
+Open `index.html`, `pages/all-projects.html`, or `pages/demo.html?project=Iris%20Flower%20Classifier` through that server. The explicit `.html` links also work on basic static hosts. Vercel's existing clean URLs remain supported. The bundled catalog is designed to support direct file browsing too, but this cloud browser prohibits `file://` navigation; use HTTP for the verified workflow.
 
-Calculator & Iris run **in-browser** via safe `evaluateLocally()` / `StandardScaler+LR` JS — no server needed.
+## Structure
 
----
+- `index.html`: overview, selected work, six lab concepts, about, and contact.
+- `pages/all-projects.html`: searchable collection with category filters and project details.
+- `pages/demo.html`, `demo-page.js`, `demo.css`: preview interface and existing calculator/Iris implementation.
+- `demo-runner.js`: GitHub source inspection, project-type detection, and sandboxed static previews. Python and server projects display their runtime requirements rather than simulated output.
+- `style.css`: shared light/dark tokens, layout, components, and reduced-motion behavior.
+- `theme.js`: pre-paint system/stored theme selection; `script.js` handles persistence and interactive components.
+- `assets/projects.json`: authoritative project content. Run `python3 tools/sync-catalog.py` after edits to regenerate `assets/projects.js`, the offline fallback.
+- `assets/*-study.svg`: original decorative illustrations, explicitly distinguished from product screenshots.
+- `tests/test_portfolio.py`: automated browser, accessibility, responsive, and interaction regressions.
+- `docs/`: content audit, validation results, and screenshots for review.
 
-## Projects — CodeWithYazzy/projects
+## Content standards
 
-Monorepo `https://github.com/CodeWithYazzy/projects` — each folder real, runnable:
+Label each item as a browser demo, learning project, scaffold, or website. Describe synthetic and toy datasets explicitly. Record limitations alongside source links. The lab cards are **proposed concepts, not completed experiments**. No awards, years of experience, employment titles, or model-performance figures are claimed without supporting evidence. See [the content audit](docs/content-audit.md).
 
-`iris-classifier` · `sales-dashboard` · `pytorch-image-classifier` · `house-price-predictor` · `portfolio-website` · `sentiment-analysis` · `numpy-explorer` · `matplotlib-visualizer` · `pytorch-chatbot` · `heart-disease-predictor` · `customer-segmentation` · `handwritten-digit-classifier` · `stock-predictor` · `ai-assistant` · `calculator-app`
+The calculator uses a recursive-descent parser in the browser, without `eval`. Iris uses the fixed coefficients already bundled with the site. Neither local example needs a Python API or GitHub access. Other source previews may use `api.github.com` and `raw.githubusercontent.com`, subject to GitHub availability and unauthenticated API limits.
 
-See that repo’s `README.md` for catalog table + per-project quick starts.
+The contact form validates fields and opens a `mailto:` draft. Nothing is transmitted to a form service, and the page preserves entered text if an email app is unavailable. Copy email uses the Clipboard API where supported.
 
----
+## Validate
 
-## Deploy
+Python 3, Chromium, and Playwright Python are required for the browser suite. Axe-core is used as a test tool only. For example, install test tools outside the checkout:
 
 ```bash
-git push origin main  # Vercel auto-builds yasirlab.in
+python3 -m venv /tmp/yasirlab-test-env
+/tmp/yasirlab-test-env/bin/pip install playwright==1.55.0
+npm install --prefix /tmp/yasirlab-checks --cache /tmp/yasirlab-npm-cache --no-save --package-lock=false axe-core@4.10.3
+YASIRLAB_AXE_PATH=/tmp/yasirlab-checks/node_modules/axe-core/axe.min.js \
+  /tmp/yasirlab-test-env/bin/python -m unittest discover -s tests -v
 ```
 
-`vercel.json` — `cleanUrls`, `HSTS`, `CSP` (`script-src 'self' https://unpkg.com`, `connect-src api.github.com`).
+The cloud environment already provides Python Playwright and `/usr/bin/chromium`, so its tests can use `python3` directly. Set `CHROMIUM_PATH` for another browser binary. The suite starts its own loopback server. It explicitly mocks GitHub for runner tests and blocks external requests elsewhere; it does not claim live GitHub integrations are verified.
 
----
+```bash
+node --check theme.js
+node --check script.js
+node --check demo-page.js
+node --check demo-runner.js
+python3 tools/sync-catalog.py
+git diff --check
+```
 
-© Yasir Javed Khan — Build → Experiment → Evaluate → Deploy → Iterate
+Tests cover mobile navigation, native-dialog focus, theme preference and persistence, filters/search, email draft encoding, calculator errors, Iris predictions, offline catalog fallback, responsive overflow, semantic SEO metadata, and axe audits. Automated accessibility checks are supplemented with keyboard and visual review; they do not replace testing with assistive technology.
+
+## Deployment
+
+The existing `vercel.json` remains in place. This redesign is developed on `redesign/yasirlab-2` for pull-request review. Merging to `main` can trigger the repository's existing production deployment; do so only with the owner's approval.
