@@ -2,7 +2,7 @@
 window.PROJECT_CATALOG = [
   {
     "name": "Iris Flower Classifier",
-    "image": "assets/iris-classifier.webp",
+    "image": "assets/iris-study.svg",
     "technologies": [
       "Python",
       "scikit-learn",
@@ -25,7 +25,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "Sales Data Dashboard",
-    "image": "assets/sales-dashboard.webp",
+    "image": "assets/data-study.svg",
     "technologies": [
       "Python",
       "Pandas",
@@ -44,7 +44,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "PyTorch Image Classifier",
-    "image": "assets/pytorch-classifier.webp",
+    "image": "assets/model-study.svg",
     "technologies": [
       "PyTorch",
       "CNN",
@@ -63,7 +63,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "House Price Predictor",
-    "image": "assets/house-price-predictor.webp",
+    "image": "assets/model-study.svg",
     "technologies": [
       "Python",
       "scikit-learn",
@@ -82,7 +82,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "Portfolio Website",
-    "image": "assets/portfolio-website.webp",
+    "image": "assets/web-study.svg",
     "technologies": [
       "HTML",
       "CSS",
@@ -93,7 +93,7 @@ window.PROJECT_CATALOG = [
     "category": "Web",
     "description": "The site you are exploring: a personal portfolio, learning laboratory, and independent technology identity.",
     "approach": "Semantic HTML, responsive CSS, and vanilla JavaScript with browser demos.",
-    "limitations": "A static site. Contact uses your email app; there is no submission server.",
+    "limitations": "A personal portfolio and learning lab. Contact delivery requires configured server-side providers; browser demos are learning examples, not production services.",
     "metrics": [],
     "results": "No performance claim is made here. Inspect the source and reproduce an evaluation for your use case.",
     "featured": true,
@@ -101,7 +101,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "Sentiment Analysis Tool",
-    "image": "assets/sentiment-analysis.webp",
+    "image": "assets/model-study.svg",
     "technologies": [
       "Python",
       "scikit-learn",
@@ -120,11 +120,10 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "Numpy Data Explorer",
-    "image": "assets/numpy-explorer.webp",
+    "image": "assets/data-study.svg",
     "technologies": [
-      "Numpy",
-      "Pandas",
-      "Advanced Python"
+      "Python",
+      "NumPy"
     ],
     "github": "https://github.com/CodeWithYazzy/projects/tree/main/numpy-explorer",
     "status": "Learning project",
@@ -138,7 +137,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "Matplotlib Visualizer",
-    "image": "assets/matplotlib-visualizer.webp",
+    "image": "assets/data-study.svg",
     "technologies": [
       "Matplotlib",
       "Pandas",
@@ -156,7 +155,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "PyTorch Chatbot",
-    "image": "assets/pytorch-chatbot.webp",
+    "image": "assets/model-study.svg",
     "technologies": [
       "PyTorch",
       "NLP",
@@ -174,7 +173,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "Heart Disease Predictor",
-    "image": "assets/heart-disease-predictor.webp",
+    "image": "assets/model-study.svg",
     "technologies": [
       "Machine Learning",
       "scikit-learn",
@@ -192,7 +191,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "Customer Segmentation",
-    "image": "assets/customer-segmentation.webp",
+    "image": "assets/model-study.svg",
     "technologies": [
       "Python",
       "scikit-learn",
@@ -210,7 +209,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "Handwritten Digit Classifier",
-    "image": "assets/digit-classifier.webp",
+    "image": "assets/model-study.svg",
     "technologies": [
       "PyTorch",
       "CNN",
@@ -229,7 +228,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "Stock Price Predictor",
-    "image": "assets/stock-predictor.webp",
+    "image": "assets/data-study.svg",
     "technologies": [
       "Python",
       "Pandas",
@@ -247,12 +246,10 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "AI Assistant",
-    "image": "assets/ai-assistant.webp",
+    "image": "assets/model-study.svg",
     "technologies": [
       "Python",
-      "LLMs",
-      "RAG",
-      "Deep Learning"
+      "Hash-based retrieval"
     ],
     "github": "https://github.com/CodeWithYazzy/projects/tree/main/ai-assistant",
     "status": "Scaffold",
@@ -266,7 +263,7 @@ window.PROJECT_CATALOG = [
   },
   {
     "name": "Calculator App",
-    "image": "assets/calculator-app.webp",
+    "image": "assets/calculator-study.svg",
     "technologies": [
       "JavaScript",
       "HTML",

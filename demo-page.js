@@ -215,9 +215,6 @@ function renderProject(project) {
 
   if (verificationBannerEl) {
     verificationBannerEl.hidden = true;
-    try {
-      lucide.createIcons();
-    } catch (e) {}
   }
 }
 
@@ -436,7 +433,7 @@ function renderDeployedFrame(url) {
 }
 
 // Safe arithmetic evaluator — recursive descent, NO eval()/Function().
-// Mirrors server.py rules: + - * / % ^, parentheses, unary +/-, size guards.
+// Supports + - * / % ^, parentheses and unary signs, with bounded input.
 function evaluateLocally(rawExpression) {
   let source = String(rawExpression || "")
     .replace(/×/g, "*")
@@ -444,8 +441,7 @@ function evaluateLocally(rawExpression) {
     .replace(/−/g, "-")
     .trim();
   if (!source) throw new Error("Enter a valid expression.");
-  source = source.replace(/[+\-*/%^.\s]+$/, "");
-  if (!source) throw new Error("Enter a valid expression.");
+  if (source.length > 256) throw new Error("Expression is too long.");
 
   const tokens = source.match(/\d*\.?\d+|[+\-*/%^()]/g);
   if (!tokens || tokens.join("") !== source.replace(/\s+/g, "")) {
@@ -565,8 +561,9 @@ function predictIris(sl, sw, pl, pw) {
 }
 
 function renderIrisResult(sl, sw, pl, pw) {
-  if ([sl, sw, pl, pw].some((v) => !Number.isFinite(v) || v <= 0)) {
-    irisResultEl.textContent = "Enter four positive, finite measurements.";
+  if ([sl, sw, pl, pw].some((v) => !Number.isFinite(v) || v <= 0 || v > 100)) {
+    irisResultEl.textContent =
+      "Enter four positive, finite measurements up to 100 cm.";
     return;
   }
   const { label, probs } = predictIris(sl, sw, pl, pw);
@@ -580,15 +577,12 @@ function renderIrisResult(sl, sw, pl, pw) {
     const s = document.createElement("span");
     s.textContent = `${IRIS_LABELS[i]} ${(pr * 100).toFixed(1)}%`;
     if (IRIS_LABELS[i] === label)
-      (s.style.background = "#0B1220"),
+      ((s.style.background = "#0B1220"),
         (s.style.color = "#fff"),
-        (s.style.borderColor = "#0B1220");
+        (s.style.borderColor = "#0B1220"));
     p.appendChild(s);
   });
   irisResultEl.append(strong, p);
-  try {
-    lucide.createIcons();
-  } catch (e) {}
 }
 
 async function runIrisLocal(sourceInfo) {
@@ -716,6 +710,7 @@ if (scrollArrowEl) {
 );
 
 window.addEventListener("message", (event) => {
+  if (event.source !== demoFrameEl.contentWindow) return;
   const data = event.data;
   if (!data || data.__ghDemoFrame !== true) return;
   if (data.type === "error")

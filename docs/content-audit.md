@@ -26,3 +26,8 @@ The linked `CodeWithYazzy/projects` source was also inspected at commit [`2ff4ad
 | Professional and aggregate claims | Unverified years, capabilities, deployments and job titles | Replaced by a personal learning practice; structured data omits job title |
 
 The browser demo's probabilities remain visible because they are computed from the bundled model; these are labeled as model outputs rather than test accuracy. Proposed lab methods use conditional language and always state that no experiment has been run. The site does not claim credentials, commercial clients, clinical usefulness, or completed research.
+
+
+## Premium/security follow-up
+
+The current contact form now has a server-side delivery implementation, disabled pending provider configuration and authorized real-email testing; previous mailto-only notes describe the earlier revision. AI Assistant technology tags now match the hash-based retrieval scaffold, and NumPy tags no longer imply advanced expertise. The 15 project entries and six unrun concepts are preserved. See `contact-setup.md` and `component-audit.md`.

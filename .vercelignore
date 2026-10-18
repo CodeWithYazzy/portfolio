@@ -1,0 +1,12 @@
+.git
+.env*
+*.pem
+*.key
+*.p12
+*.pfx
+*.log
+node_modules
+docs
+tests
+__pycache__
+public

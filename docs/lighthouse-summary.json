@@ -1,26 +1,26 @@
 {
+  "environment": "Local packaged preview, Chromium headless, Lighthouse12.8.2; uncompressed loopback HTTP; not production field data",
+  "contact": "Disabled; no provider calls or real email",
   "mobile": {
-    "lighthouse_version": "12.8.2",
     "scores": {
-      "performance": 99,
+      "performance": 95,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "largest_contentful_paint": "1.8\u00a0s",
-    "cumulative_layout_shift": "0",
-    "scope": "Local Python static server, homepage; default Lighthouse simulated device/throttling for this mode."
+    "LCP": "2.9\u00a0s",
+    "CLS": "0",
+    "TBT": "0\u00a0ms"
   },
   "desktop": {
-    "lighthouse_version": "12.8.2",
     "scores": {
       "performance": 100,
       "accessibility": 100,
       "best-practices": 100,
       "seo": 100
     },
-    "largest_contentful_paint": "0.5\u00a0s",
-    "cumulative_layout_shift": "0",
-    "scope": "Local Python static server, homepage; default Lighthouse simulated device/throttling for this mode."
+    "LCP": "0.6\u00a0s",
+    "CLS": "0",
+    "TBT": "0\u00a0ms"
   }
 }

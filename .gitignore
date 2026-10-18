@@ -13,3 +13,13 @@ server.py
 .opencode/
 __pycache__/
 *.pyc
+public/
+.vercel/
+*.p12
+*.pfx
+*.sqlite*
+*.bak
+*.zip
+coverage/
+playwright-report/
+test-results/
