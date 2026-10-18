@@ -2,8 +2,13 @@
   "projects": [
     {
       "name": "Iris Flower Classifier",
-      "image": "assets/iris-classifier.webp",
-      "technologies": ["Python", "scikit-learn", "Pandas", "Model Evaluation"],
+      "image": "assets/iris-study.svg",
+      "technologies": [
+        "Python",
+        "scikit-learn",
+        "Pandas",
+        "Model Evaluation"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/iris-classifier",
       "localDemo": "iris",
       "status": "Browser demo",
@@ -20,8 +25,13 @@
     },
     {
       "name": "Sales Data Dashboard",
-      "image": "assets/sales-dashboard.webp",
-      "technologies": ["Python", "Pandas", "Matplotlib", "EDA"],
+      "image": "assets/data-study.svg",
+      "technologies": [
+        "Python",
+        "Pandas",
+        "Matplotlib",
+        "EDA"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/sales-dashboard",
       "status": "Learning project",
       "category": "Data",
@@ -34,8 +44,13 @@
     },
     {
       "name": "PyTorch Image Classifier",
-      "image": "assets/pytorch-classifier.webp",
-      "technologies": ["PyTorch", "CNN", "Python", "Computer Vision"],
+      "image": "assets/model-study.svg",
+      "technologies": [
+        "PyTorch",
+        "CNN",
+        "Python",
+        "Computer Vision"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/pytorch-image-classifier",
       "status": "Scaffold",
       "category": "Machine learning",
@@ -48,7 +63,7 @@
     },
     {
       "name": "House Price Predictor",
-      "image": "assets/house-price-predictor.webp",
+      "image": "assets/model-study.svg",
       "technologies": [
         "Python",
         "scikit-learn",
@@ -67,14 +82,18 @@
     },
     {
       "name": "Portfolio Website",
-      "image": "assets/portfolio-website.webp",
-      "technologies": ["HTML", "CSS", "JavaScript"],
+      "image": "assets/web-study.svg",
+      "technologies": [
+        "HTML",
+        "CSS",
+        "JavaScript"
+      ],
       "github": "https://github.com/CodeWithYazzy/portfolio",
       "status": "Website",
       "category": "Web",
       "description": "The site you are exploring: a personal portfolio, learning laboratory, and independent technology identity.",
       "approach": "Semantic HTML, responsive CSS, and vanilla JavaScript with browser demos.",
-      "limitations": "A static site. Contact uses your email app; there is no submission server.",
+      "limitations": "A personal portfolio and learning lab. Contact delivery requires configured server-side providers; browser demos are learning examples, not production services.",
       "metrics": [],
       "results": "No performance claim is made here. Inspect the source and reproduce an evaluation for your use case.",
       "featured": true,
@@ -82,8 +101,13 @@
     },
     {
       "name": "Sentiment Analysis Tool",
-      "image": "assets/sentiment-analysis.webp",
-      "technologies": ["Python", "scikit-learn", "NLP", "Model Evaluation"],
+      "image": "assets/model-study.svg",
+      "technologies": [
+        "Python",
+        "scikit-learn",
+        "NLP",
+        "Model Evaluation"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/sentiment-analysis",
       "status": "Learning project",
       "category": "Machine learning",
@@ -96,8 +120,11 @@
     },
     {
       "name": "Numpy Data Explorer",
-      "image": "assets/numpy-explorer.webp",
-      "technologies": ["Numpy", "Pandas", "Advanced Python"],
+      "image": "assets/data-study.svg",
+      "technologies": [
+        "Python",
+        "NumPy"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/numpy-explorer",
       "status": "Learning project",
       "category": "Data",
@@ -110,8 +137,12 @@
     },
     {
       "name": "Matplotlib Visualizer",
-      "image": "assets/matplotlib-visualizer.webp",
-      "technologies": ["Matplotlib", "Pandas", "Python"],
+      "image": "assets/data-study.svg",
+      "technologies": [
+        "Matplotlib",
+        "Pandas",
+        "Python"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/matplotlib-visualizer",
       "status": "Learning project",
       "category": "Data",
@@ -124,8 +155,12 @@
     },
     {
       "name": "PyTorch Chatbot",
-      "image": "assets/pytorch-chatbot.webp",
-      "technologies": ["PyTorch", "NLP", "Deep Learning"],
+      "image": "assets/model-study.svg",
+      "technologies": [
+        "PyTorch",
+        "NLP",
+        "Deep Learning"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/pytorch-chatbot",
       "status": "Scaffold",
       "category": "Machine learning",
@@ -138,8 +173,12 @@
     },
     {
       "name": "Heart Disease Predictor",
-      "image": "assets/heart-disease-predictor.webp",
-      "technologies": ["Machine Learning", "scikit-learn", "Pandas"],
+      "image": "assets/model-study.svg",
+      "technologies": [
+        "Machine Learning",
+        "scikit-learn",
+        "Pandas"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/heart-disease-predictor",
       "status": "Learning project",
       "category": "Machine learning",
@@ -152,8 +191,12 @@
     },
     {
       "name": "Customer Segmentation",
-      "image": "assets/customer-segmentation.webp",
-      "technologies": ["Python", "scikit-learn", "Clustering"],
+      "image": "assets/model-study.svg",
+      "technologies": [
+        "Python",
+        "scikit-learn",
+        "Clustering"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/customer-segmentation",
       "status": "Learning project",
       "category": "Machine learning",
@@ -166,12 +209,17 @@
     },
     {
       "name": "Handwritten Digit Classifier",
-      "image": "assets/digit-classifier.webp",
-      "technologies": ["PyTorch", "CNN", "Python", "Computer Vision"],
+      "image": "assets/model-study.svg",
+      "technologies": [
+        "PyTorch",
+        "CNN",
+        "Python",
+        "Computer Vision"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/handwritten-digit-classifier",
       "status": "Scaffold",
       "category": "Machine learning",
-      "description": "A PyTorch CNN architecture for 28\u00d728 grayscale inputs and ten output classes.",
+      "description": "A PyTorch CNN architecture for 28×28 grayscale inputs and ten output classes.",
       "approach": "The repository defines a DigitCNN model class.",
       "limitations": "No dataset loading, trained weights, training loop, or test score is included.",
       "metrics": [],
@@ -180,8 +228,12 @@
     },
     {
       "name": "Stock Price Predictor",
-      "image": "assets/stock-predictor.webp",
-      "technologies": ["Python", "Pandas", "Time Series"],
+      "image": "assets/data-study.svg",
+      "technologies": [
+        "Python",
+        "Pandas",
+        "Time Series"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/stock-predictor",
       "status": "Learning project",
       "category": "Data",
@@ -194,8 +246,11 @@
     },
     {
       "name": "AI Assistant",
-      "image": "assets/ai-assistant.webp",
-      "technologies": ["Python", "LLMs", "RAG", "Deep Learning"],
+      "image": "assets/model-study.svg",
+      "technologies": [
+        "Python",
+        "Hash-based retrieval"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/ai-assistant",
       "status": "Scaffold",
       "category": "Machine learning",
@@ -208,8 +263,12 @@
     },
     {
       "name": "Calculator App",
-      "image": "assets/calculator-app.webp",
-      "technologies": ["JavaScript", "HTML", "CSS"],
+      "image": "assets/calculator-study.svg",
+      "technologies": [
+        "JavaScript",
+        "HTML",
+        "CSS"
+      ],
       "github": "https://github.com/CodeWithYazzy/projects/tree/main/calculator-app",
       "localDemo": "calculator",
       "status": "Browser demo",

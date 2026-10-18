@@ -245,7 +245,7 @@
         </div>
         <div id="irisDemo" class="iris-demo" hidden>
           <div class="iris-header">
-            <i data-lucide="flower-2" style="width: 16px; height: 16px"></i>
+            <span aria-hidden="true">✳</span>
             Iris — browser inference (bundled StandardScaler → Logistic
             Regression example)
           </div>
@@ -315,7 +315,7 @@
             id="demoFrame"
             class="demo-frame"
             title="Live project preview"
-            sandbox="allow-scripts allow-forms allow-popups allow-modals"
+            sandbox="allow-scripts"
           ></iframe>
           <div id="frameSkeleton" class="frame-skeleton" hidden>
             <div class="spinner"></div>
@@ -370,6 +370,7 @@
     </button>
     <script src="../assets/projects.js"></script>
     <script src="../script.js"></script>
+    <script src="../motion.js"></script>
     <script src="../demo-runner.js"></script>
     <script src="../demo-page.js"></script>
   </body>

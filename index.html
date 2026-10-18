@@ -32,7 +32,15 @@
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="assets/favicon.png" />
     <script src="theme.js"></script>
+    <link
+      rel="preload"
+      href="assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
     <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="contact.css" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
@@ -101,81 +109,72 @@
     </header>
     <main id="main-content" tabindex="-1">
       <section id="home" class="hero">
-        <div class="container hero-grid">
-          <div class="hero-copy">
-            <p class="release">
-              <span class="status-dot" aria-hidden="true"></span> A personal
-              lab. An evolving practice.
-            </p>
-            <h1>Curiosity.<br /><span>In progress.</span></h1>
-            <p class="hero-description">
-              I’m Yasir. I’m learning to turn ideas into useful software — one
-              small build, experiment, and better question at a time.
-            </p>
-            <div class="button-row">
-              <a class="button primary" href="#projects"
-                >Explore the work
-                <span aria-hidden="true"
-                  ><svg
-                    class="arrow-icon"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 19 19 5M5 5h14v14" /></svg></span></a
-              ><a class="text-link" href="#lab"
-                >Step inside the lab <span aria-hidden="true">→</span></a
-              >
-            </div>
-            <p class="hero-footnote">
-              PERSONAL PORTFOLIO &nbsp; / &nbsp; AI & ML LAB &nbsp; / &nbsp;
-              INDEPENDENT IDEAS
-            </p>
-          </div>
-          <a
-            class="hero-study"
-            href="pages/demo.html?project=Iris%20Flower%20Classifier"
-            ><div class="study-top">
-              <span class="mono">STUDY 001</span
-              ><span class="study-label">From the laboratory</span>
-            </div>
-            <img
-              src="assets/iris-study.svg"
-              alt=""
-              width="560"
-              height="420"
-              fetchpriority="high" />
-            <div class="study-bottom">
-              <div>
-                <span class="eyebrow"
-                  >A SMALL EXPLORATION IN CLASSIFICATION</span
-                >
-                <h2>Patterns, meet petals.</h2>
-                <p>Iris · an interactive browser demo</p>
-              </div>
-              <span class="round-arrow" aria-hidden="true"
-                ><svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" /></svg
-              ></span></div
-          ></a>
-        </div>
         <div class="container">
+          <div class="hero-kicker">
+            <p class="eyebrow">INDEPENDENT MIND. OPEN NOTEBOOK.</p>
+            <span class="mono">YASIRLAB / VOL. 02</span>
+          </div>
+          <div class="hero-grid">
+            <div class="hero-copy">
+              <h1>
+                <span class="headline-line">Curiosity.</span>
+                <span class="headline-line headline-secondary"
+                  >In progress.</span
+                >
+              </h1>
+              <p class="hero-description">
+                I’m Yasir. I build for the web, explore machine learning, and
+                follow the questions in between.
+              </p>
+              <div class="button-row">
+                <a class="button primary" href="#projects"
+                  >Explore the work <span aria-hidden="true">↗</span></a
+                ><a class="text-link" href="#lab"
+                  >Inside the lab <span aria-hidden="true">→</span></a
+                >
+              </div>
+              <p class="hero-footnote">
+                <span class="status-dot" aria-hidden="true"></span> LEARNING IN
+                PUBLIC. ONE BUILD AT A TIME.
+              </p>
+            </div>
+            <figure class="hero-visual" aria-labelledby="iteration-caption">
+              <div class="sculpture-grid" aria-hidden="true"></div>
+              <img
+                class="iteration-art"
+                src="assets/iteration-study.svg"
+                alt=""
+                width="720"
+                height="580"
+                fetchpriority="high"
+              />
+              <span class="visual-coordinate coordinate-top" aria-hidden="true"
+                >FIG. 001 — ITERATION</span
+              >
+              <span class="visual-coordinate coordinate-side" aria-hidden="true"
+                >IDEA → BUILD → LEARN ↻</span
+              >
+              <figcaption id="iteration-caption">
+                <span class="visual-dot" aria-hidden="true"></span> An
+                open-ended practice.<span
+                  >Original computational illustration</span
+                >
+              </figcaption>
+            </figure>
+          </div>
           <div class="intro-strip">
             <p>
-              Ideas are a starting point.<br /><strong
-                >Making them is how I learn.</strong
+              Small steps. Open questions.<br /><strong
+                >A little further, every time.</strong
               >
             </p>
             <a href="#projects"
-              ><span class="strip-number">01</span> Build something small
-              <span aria-hidden="true"
-                ><svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" /></svg></span></a
+              ><span class="strip-number">01 / BUILD</span> Things you can
+              explore <span aria-hidden="true">↗</span></a
             ><a href="#lab"
-              ><span class="strip-number">02</span> Ask a better question
-              <span aria-hidden="true"
-                ><svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" /></svg></span
-            ></a>
+              ><span class="strip-number">02 / QUESTION</span> Ideas still
+              taking shape <span aria-hidden="true">↗</span></a
+            >
           </div>
         </div>
       </section>
@@ -236,12 +235,16 @@
           </div>
         </div>
       </section>
-      <section id="lab" class="section lab-section">
+      <section id="lab" class="section lab-section" data-story>
         <div class="container">
           <div class="section-heading">
             <div>
               <p class="eyebrow">02 / THE LABORATORY</p>
-              <h2>Room for<br /><span class="muted">“what if?”</span></h2>
+              <h2>
+                Beyond the build.<br /><span class="muted"
+                  >Into the unknown.</span
+                >
+              </h2>
             </div>
             <div class="section-aside">
               <p>
@@ -253,11 +256,17 @@
           </div>
           <div class="lab-layout">
             <div class="lab-intro">
-              <svg class="lab-glyph" viewBox="0 0 100 100" aria-hidden="true">
-                <g fill="none" stroke="currentColor" stroke-width="7">
-                  <path d="M50 5v90M5 50h90M18 18l64 64M18 82l64-64" />
-                </g>
-              </svg>
+              <div class="lab-visual" aria-hidden="true">
+                <div class="lab-orbit orbit-one"></div>
+                <div class="lab-orbit orbit-two"></div>
+                <div class="lab-orbit orbit-three"></div>
+                <div class="lab-core">y<span>.</span></div>
+                <span class="lab-signal signal-one"></span
+                ><span class="lab-signal signal-two"></span
+                ><span class="lab-visual-label"
+                  >A QUESTION IS A BEGINNING.</span
+                >
+              </div>
               <h3>Start with a question.<br />Leave with a next step.</h3>
               <p>
                 Open a concept to see the hypothesis, a possible method, and
@@ -371,7 +380,9 @@
           <div class="about-grid">
             <div class="about-copy">
               <h2>
-                Hi, I’m Yasir.<br /><span class="muted">Always a student.</span>
+                A person first.<br /><span class="muted"
+                  >A work in progress.</span
+                >
               </h2>
               <p class="large-copy">
                 YasirLab is where I connect the things I’m curious about:
@@ -456,130 +467,247 @@
           </div>
         </div>
       </section>
-      <section id="contact" class="section contact-section">
+      <section
+        id="contact"
+        class="section contact-section"
+        aria-labelledby="contactHeading"
+      >
         <div class="container contact-grid">
-          <div>
-            <p class="eyebrow">04 / LET’S CONNECT</p>
-            <h2>
-              Good things start<br />with <span class="muted">a hello.</span>
+          <div class="contact-intro">
+            <p class="eyebrow">04 / OPEN A CONVERSATION</p>
+            <h2 id="contactHeading">
+              An idea.<br />A question.<br /><span class="muted">A hello.</span>
             </h2>
             <p class="large-copy">
-              A project idea, a useful resource, or a question you’re working
-              through. I’d like to hear it.
+              The best part of building in public is the conversation. Share
+              what you’re exploring. I’d like to hear it.
             </p>
-            <a class="contact-email" href="mailto:codewithyazzy@gmail.com"
-              >codewithyazzy@gmail.com
-              <span aria-hidden="true"
-                ><svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" /></svg></span
-            ></a>
-            <div class="contact-links">
-              <button id="copyEmail" type="button" class="text-link">
-                Copy email
-                <span aria-hidden="true"
-                  ><svg
+            <div class="contact-direct">
+              <p class="contact-caption">PREFER EMAIL?</p>
+              <a class="contact-email" href="mailto:codewithyazzy@gmail.com"
+                >codewithyazzy@gmail.com
+                <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M5 19 19 5M5 5h14v14" />
+                </svg>
+              </a>
+              <div class="contact-links">
+                <button id="copyEmail" type="button" class="text-link">
+                  Copy email
+                  <svg
                     class="arrow-icon"
                     viewBox="0 0 24 24"
                     aria-hidden="true"
                   >
                     <rect x="8" y="8" width="12" height="12" rx="2" />
-                    <path d="M15 4H6a2 2 0 0 0-2 2v9" /></svg
-                ></span></button
-              ><a
-                class="text-link"
-                href="https://github.com/CodeWithYazzy"
-                target="_blank"
-                rel="noopener noreferrer"
-                >GitHub
-                <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" /></svg></a
-              ><a
-                class="text-link"
-                href="https://x.com/codewithyazzy"
-                target="_blank"
-                rel="noopener noreferrer"
-                >X
-                <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" /></svg
-              ></a>
+                    <path d="M15 4H6a2 2 0 0 0-2 2v9" />
+                  </svg>
+                </button>
+                <a
+                  class="text-link"
+                  href="https://github.com/CodeWithYazzy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >GitHub
+                  <svg
+                    class="arrow-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 19 19 5M5 5h14v14" /></svg
+                ></a>
+                <a
+                  class="text-link"
+                  href="https://x.com/codewithyazzy"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  >X
+                  <svg
+                    class="arrow-icon"
+                    viewBox="0 0 24 24"
+                    aria-hidden="true"
+                  >
+                    <path d="M5 19 19 5M5 5h14v14" /></svg
+                ></a>
+              </div>
             </div>
           </div>
-          <noscript><p>The draft form needs JavaScript. You can email me using the address above.</p></noscript>
-          <form id="contactForm" class="contact-form" novalidate>
-            <h3>Leave a little context.</h3>
+          <form
+            id="contactForm"
+            class="contact-form"
+            method="post"
+            action="/api/contact"
+            novalidate
+            aria-labelledby="contactFormHeading"
+            data-state="loading"
+          >
+            <div class="contact-form-heading">
+              <span class="contact-envelope" aria-hidden="true"
+                ><svg viewBox="0 0 24 24">
+                  <rect x="3" y="5" width="18" height="14" rx="3" />
+                  <path d="m4 7 8 6 8-6" /></svg
+              ></span>
+              <p class="contact-caption">A NOTE TO YASIR</p>
+            </div>
+            <h3 id="contactFormHeading">Leave a little context.</h3>
             <p class="form-note" id="contactHelp">
-              This opens your email app with a draft. Nothing is sent or stored
-              by this website.
+              Send a message here, without opening an email app.
             </p>
-            <div class="row2">
-              <div class="field">
-                <label for="name">Your name</label
-                ><input
-                  id="name"
-                  name="name"
-                  autocomplete="name"
-                  required
-                  maxlength="100"
-                /><span class="field-error" id="nameError"></span>
+            <noscript
+              ><p class="contact-availability">
+                This form needs JavaScript. You can still use the email address
+                alongside it.
+              </p></noscript
+            >
+            <p
+              id="contactAvailability"
+              class="contact-availability"
+              role="status"
+            >
+              Checking message availability…
+            </p>
+            <fieldset id="contactFields">
+              <legend class="sr-only">Your message</legend>
+              <div class="row2">
+                <div class="field">
+                  <label for="name">Your name</label>
+                  <input
+                    id="name"
+                    name="name"
+                    autocomplete="name"
+                    required
+                    minlength="2"
+                    maxlength="80"
+                    aria-describedby="nameError"
+                    placeholder="How should I call you?"
+                  />
+                  <span class="field-error" id="nameError"></span>
+                </div>
+                <div class="field">
+                  <label for="email">Email address</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    inputmode="email"
+                    autocomplete="email"
+                    required
+                    maxlength="254"
+                    aria-describedby="emailError"
+                    placeholder="you@example.com"
+                  />
+                  <span class="field-error" id="emailError"></span>
+                </div>
               </div>
               <div class="field">
-                <label for="email">Email address</label
-                ><input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autocomplete="email"
+                <label for="subject">Subject</label>
+                <input
+                  id="subject"
+                  name="subject"
                   required
-                  maxlength="254"
-                /><span class="field-error" id="emailError"></span>
+                  minlength="3"
+                  maxlength="120"
+                  aria-describedby="subjectError"
+                  placeholder="A project, a question, an idea…"
+                />
+                <span class="field-error" id="subjectError"></span>
               </div>
-            </div>
-            <div class="field">
-              <label for="subject">What’s on your mind?</label
-              ><input
-                id="subject"
-                name="subject"
-                placeholder="A project, a question, an idea…"
-                required
-                maxlength="160"
-              /><span class="field-error" id="subjectError"></span>
-            </div>
-            <div class="field">
-              <label for="message">Your message</label
-              ><textarea
-                id="message"
-                name="message"
-                rows="4"
-                required
-                minlength="10"
-                maxlength="3000"
-              ></textarea
-              ><span class="field-error" id="messageError"></span>
+              <div class="field">
+                <label for="message"
+                  >Your message
+                  <span class="field-optional">20–5,000 characters</span></label
+                >
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  required
+                  minlength="20"
+                  maxlength="5000"
+                  aria-describedby="messageError"
+                  placeholder="What are you thinking about?"
+                ></textarea>
+                <span class="field-error" id="messageError"></span>
+              </div>
+              <div class="contact-trap" aria-hidden="true" inert>
+                <label for="contactWebsite">Leave this field empty</label>
+                <input
+                  id="contactWebsite"
+                  name="website"
+                  type="text"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </div>
+              <div
+                id="contactVerification"
+                class="contact-verification"
+                role="group"
+                aria-label="Spam verification"
+              ></div>
+              <p id="verificationStatus" class="contact-verification-note"></p>
+              <button
+                type="submit"
+                disabled
+                class="button primary contact-submit"
+                aria-describedby="contactHelp formStatus"
+              >
+                <span class="contact-submit-label">Send message</span>
+                <span class="contact-spinner" aria-hidden="true"></span>
+                <svg
+                  class="arrow-icon contact-submit-arrow"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14m-6-6 6 6-6 6" />
+                </svg>
+              </button>
+            </fieldset>
+            <div
+              id="contactSuccess"
+              class="contact-success"
+              tabindex="-1"
+              hidden
+            >
+              <span class="contact-success-mark" aria-hidden="true"
+                ><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></svg
+              ></span>
+              <h4>Message accepted.</h4>
+              <p>
+                Your note was accepted for delivery. Thanks for starting a
+                conversation.
+              </p>
+              <button id="contactAgain" type="button" class="text-link">
+                Write another message <span aria-hidden="true">↗</span>
+              </button>
             </div>
             <p
               id="formStatus"
               class="form-status"
               role="status"
               aria-live="polite"
+              aria-atomic="true"
             ></p>
-            <button
-              type="submit"
-              disabled
-              class="button primary"
-              aria-describedby="contactHelp"
-            >
-              Prepare email
-              <span aria-hidden="true"
-                ><svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" /></svg
-              ></span>
-            </button>
+            <p class="contact-privacy">
+              Your details are used to reply. Spam protection by Cloudflare;
+              email delivery by Resend. Messages are not saved in this browser.
+              Spam protection loads when you use the form.
+            </p>
           </form>
         </div>
       </section>
     </main>
     <footer class="site-footer">
       <div class="container">
+        <div class="footer-statement">
+          <p class="eyebrow">THE NEXT CHAPTER IS STILL OPEN.</p>
+          <p>Keep asking.<br /><span>Keep making.</span></p>
+          <a
+            href="#contact"
+            class="footer-connect"
+            aria-label="Start a conversation"
+            >↗</a
+          >
+        </div>
         <div class="footer-top">
           <a class="brand" href="index.html"
             ><span class="brand-mark" aria-hidden="true">y<span>.</span></span
@@ -673,5 +801,7 @@
     </dialog>
     <script src="assets/projects.js"></script>
     <script src="script.js"></script>
+    <script src="motion.js"></script>
+    <script src="contact.js"></script>
   </body>
 </html>

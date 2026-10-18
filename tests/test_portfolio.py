@@ -153,31 +153,91 @@ class PortfolioTests(unittest.TestCase):
         self.page.set_viewport_size({'width': 1000, 'height': 900})
         self.assertFalse(self.page.locator('#mobileMenu').is_visible())
 
-    def test_contact_validation_email_draft_preserves_message(self):
+    def mock_contact(self, response_status=200, response_body=None):
+        for pattern in ["**/api/contact-config", "**/api/contact", "https://challenges.cloudflare.com/**"]:
+            self.context.unroute(pattern)
+        self.context.route('**/api/contact-config', lambda route: route.fulfill(json={'enabled': True, 'siteKey': 'test-public-key'}))
+        self.context.route('https://challenges.cloudflare.com/**', lambda route: route.fulfill(content_type='application/javascript', body="window.turnstile={render:(el,o)=>{window.testChallenge=o;setTimeout(()=>o.callback('mock-token'),10);return 'mock-widget'},reset:()=>setTimeout(()=>window.testChallenge.callback('fresh-mock-token'),10)}"))
+        self.submissions = []
+        def submit(route):
+            self.submissions.append(route.request.post_data_json)
+            route.fulfill(status=response_status, json=response_body or {'ok':True})
+        self.context.route('**/api/contact', submit)
+
+    def fill_contact(self):
+        for field,value in {'name':'A visitor','email':'visitor@example.com','subject':'A project question','message':'Please tell me more about the project learning goals.'}.items():
+            self.page.locator('#'+field).fill(value)
+
+    def test_contact_validation_submission_and_success_mocked(self):
+        self.mock_contact()
         self.goto('/#contact')
         self.page.locator('#contactForm button[type=submit]').click()
-        self.assertEqual(self.page.locator('[aria-invalid="true"]').count(), 4)
+        self.assertEqual(self.page.locator('[aria-invalid="true"]').count(),4)
+        self.audit_axe()
         self.assertTrue(self.page.locator('#name').evaluate('(e)=>e===document.activeElement'))
-        self.page.locator('#name').fill('A visitor')
-        self.page.locator('#email').fill('invalid')
-        self.page.locator('#subject').fill('A & B?')
-        self.page.locator('#message').fill('Hi')
+        self.fill_contact()
         self.page.locator('#contactForm button[type=submit]').click()
-        self.assertIn('valid email', self.page.locator('#emailError').inner_text())
-        self.assertIn('10 characters', self.page.locator('#messageError').inner_text())
-        self.page.locator('#email').fill('visitor@example.com')
-        self.page.locator('#message').fill('A useful project idea to discuss.')
-        cdp = self.context.new_cdp_session(self.page)
-        cdp.send('Page.enable')
-        navigations = []
-        cdp.on('Page.windowOpen', lambda event: navigations.append(event['url']))
+        self.page.locator('#contactSuccess').wait_for(state='visible')
+        self.assertEqual(len(self.submissions),1)
+        self.assertEqual(self.submissions[0]['email'],'visitor@example.com')
+        self.assertTrue(self.submissions[0]['idempotencyKey'])
+        self.assertEqual(self.page.locator('#message').input_value(),'')
+        self.assertIn('accepted for delivery',self.page.locator('#formStatus').inner_text())
+        self.audit_axe()
+        self.page.locator('#contactAgain').click()
+        self.assertTrue(self.page.locator('#name').is_visible())
+
+    def test_contact_errors_preserve_input_and_retry_identity_mocked(self):
+        for status in [400,403,409,429,503]:
+            with self.subTest(status=status):
+                self.mock_contact(status, {'ok':False})
+                self.goto('/?case='+str(status)+'#contact');self.fill_contact()
+                self.page.locator('#contactForm button[type=submit]').click()
+                self.page.wait_for_function('document.querySelector("#contactForm").dataset.state === "error"')
+                self.assertIn('learning goals',self.page.locator('#message').input_value())
+                self.assertFalse(self.page.locator('#contactForm button[type=submit]').is_disabled())
+                key=self.submissions[-1]['idempotencyKey']
+                self.page.locator('#contactForm button[type=submit]').click()
+                self.page.wait_for_function('document.querySelector("#contactForm").dataset.state === "error"')
+                self.assertEqual(self.submissions[-1]['idempotencyKey'],key)
+                self.assertFalse(self.page.locator('#contactSuccess').is_visible())
+
+    def test_contact_disabled_without_server_configuration(self):
+        self.context.route('**/api/contact-config',lambda route:route.fulfill(json={'enabled':False}))
+        self.goto('/#contact')
+        self.assertTrue(self.page.locator('#contactForm button[type=submit]').is_disabled())
+        self.assertIn('isn’t available yet',self.page.locator('#contactAvailability').inner_text())
+        self.assertTrue(self.page.locator('.contact-email').is_visible())
+
+    def test_contact_duplicate_clicks_send_once_mocked(self):
+        self.mock_contact()
+        self.goto('/#contact');self.fill_contact()
+        self.page.evaluate("document.querySelector('#contactForm').requestSubmit();document.querySelector('#contactForm').requestSubmit()")
+        self.page.locator('#contactSuccess').wait_for(state='visible')
+        self.assertEqual(len(self.submissions),1)
+
+    def test_contact_loading_network_failure_and_safe_retry_mocked(self):
+        self.mock_contact()
+        self.context.unroute('**/api/contact')
+        pending=[]
+        self.context.route('**/api/contact',lambda route:pending.append(route))
+        self.goto('/#contact');self.fill_contact()
         self.page.locator('#contactForm button[type=submit]').click()
-        self.page.wait_for_timeout(200)
-        draft = next(url for url in navigations if url.startswith('mailto:'))
-        self.assertIn('subject=A%20%26%20B%3F', draft)
-        self.assertIn('visitor@example.com', unquote(draft))
-        self.assertEqual(self.page.locator('#message').input_value(), 'A useful project idea to discuss.')
-        self.assertIn('Finish sending', self.page.locator('#formStatus').inner_text())
+        self.page.wait_for_timeout(100)
+        self.assertEqual(len(pending),1)
+        self.assertEqual(self.page.locator('#contactForm').get_attribute('aria-busy'),'true')
+        self.assertTrue(self.page.locator('#contactForm button[type=submit]').is_disabled())
+        first=pending[0].request.post_data_json
+        pending[0].abort()
+        self.page.wait_for_function('document.querySelector("#contactForm").dataset.state === "error"')
+        self.assertIn('may have been accepted',self.page.locator('#formStatus').inner_text())
+        self.assertIn('learning goals',self.page.locator('#message').input_value())
+        self.page.locator('#contactForm button[type=submit]').click()
+        self.page.wait_for_timeout(100)
+        self.assertEqual(len(pending),2)
+        self.assertEqual(pending[1].request.post_data_json['idempotencyKey'],first['idempotencyKey'])
+        pending[1].fulfill(json={'ok':True})
+        self.page.locator('#contactSuccess').wait_for(state='visible')
 
     def test_calculator_arithmetic_and_error_handling_offline(self):
         self.goto('/pages/demo.html?project=Calculator%20App')
@@ -191,6 +251,8 @@ class PortfolioTests(unittest.TestCase):
             self.page.locator(f'[data-calc="{key}"]').click()
         self.assertIn('Cannot divide by zero', self.page.locator('#status').inner_text())
         self.assertEqual(self.page.evaluate('evaluateLocally("(2+3)^2")'), 25)
+        for expression in ['2+', '(' * 300, '2^999']:
+            self.assertTrue(self.page.evaluate('(v)=>{try{evaluateLocally(v);return false}catch{return true}}',expression))
         self.assertEqual(self.page.evaluate('(()=>{try{evaluateLocally("alert(1)")}catch(e){return e.message}})()'), 'Enter a valid expression.')
 
     def test_iris_three_species_and_invalid_input_offline(self):
@@ -202,6 +264,8 @@ class PortfolioTests(unittest.TestCase):
             for field,value in zip(['Sl','Sw','Pl','Pw'],values):
                 self.page.locator('#iris'+field).fill(str(value))
             self.assertIn(species, self.page.locator('#irisResult').inner_text())
+        self.page.locator('#irisSl').fill('1e308')
+        self.assertNotIn('NaN', self.page.locator('#irisResult').inner_text())
         self.page.locator('#irisSl').fill('')
         self.assertIn('four positive', self.page.locator('#irisResult').inner_text())
 
@@ -227,6 +291,48 @@ class PortfolioTests(unittest.TestCase):
         self.page.locator('#errorPanel').wait_for(state='visible')
         self.assertIn('Python required', self.page.locator('#errorPanel').inner_text())
 
+    def test_motion_and_reduced_motion(self):
+        self.page.emulate_media(reduced_motion='no-preference')
+        self.goto()
+        self.page.wait_for_timeout(1100)
+        first=self.page.locator('.iteration-art').evaluate('(e)=>getComputedStyle(e).transform')
+        self.page.evaluate('window.scrollTo({top:250,behavior:"instant"})')
+        self.page.wait_for_timeout(100)
+        self.assertNotEqual(first,self.page.locator('.iteration-art').evaluate('(e)=>getComputedStyle(e).transform'))
+        self.assertIn('is-scrolled',self.page.locator('.site-header').get_attribute('class'))
+        self.page.emulate_media(reduced_motion='reduce')
+        self.page.wait_for_timeout(100)
+        self.assertEqual(self.page.locator('.iteration-art').evaluate('(e)=>e.style.transform'),'')
+        self.assertEqual(self.page.locator('.headline-line').first.evaluate('(e)=>getComputedStyle(e).animationName'),'none')
+
+    def test_csp_sandbox_nested_dependencies_and_isolation(self):
+        config=json.loads((ROOT/'vercel.json').read_text())
+        policy=config['headers'][1]['headers'][0]['value']
+        def with_policy(route):
+            response=route.fetch()
+            route.fulfill(response=response,headers={**response.headers,'content-security-policy':policy})
+        self.context.route('**/pages/demo.html?*',with_policy)
+        fixture={
+            'index.html': '<link rel="stylesheet" href="css/main.css"><h1>Fixture</h1><button onclick="this.textContent=\'It works\'">Run fixture</button><script src="main.js"></script>',
+            'css/main.css': '@import "nested.css";h1{background-image:url(../pixel.svg)}',
+            'css/nested.css': '@import "main.css";h1{color:rgb(10,20,30)}',
+            'pixel.svg': '<svg xmlns="http://www.w3.org/2000/svg"/>',
+            'main.js': "document.body.dataset.script='ran';try{parent.document.body.dataset.escaped='yes'}catch{document.body.dataset.isolated='yes'}"
+        }
+        self.context.route('https://api.github.com/**',lambda route:route.fulfill(json={'tree':[{'path':p,'type':'blob'} for p in fixture]}))
+        self.context.route('https://raw.githubusercontent.com/**',lambda route:route.fulfill(body=fixture.get(route.request.url.split('/main/',1)[-1],'')))
+        self.goto('/pages/demo.html?project=Portfolio%20Website')
+        self.page.locator('#runDemo').click()
+        frame=self.page.frame_locator('#demoFrame')
+        frame.get_by_role('button',name='Run fixture').click()
+        self.assertEqual(frame.get_by_role('button').inner_text(),'It works')
+        self.assertEqual(frame.locator('body').get_attribute('data-script'),'ran')
+        self.assertEqual(frame.locator('body').get_attribute('data-isolated'),'yes')
+        self.assertIsNone(self.page.locator('body').get_attribute('data-escaped'))
+        self.assertEqual(frame.locator('h1').evaluate('(e)=>getComputedStyle(e).color'),'rgb(10, 20, 30)')
+        self.assertIn('data:image/svg+xml',frame.locator('h1').evaluate('(e)=>getComputedStyle(e).backgroundImage'))
+        self.assertEqual(self.page.locator('#demoFrame').get_attribute('sandbox'),'allow-scripts')
+
     def test_bundled_catalog_fallback_when_json_unavailable(self):
         self.context.route('**/assets/projects.json', lambda route: route.abort())
         self.goto('/pages/all-projects.html')
@@ -248,7 +354,7 @@ class PortfolioTests(unittest.TestCase):
         self.page.locator('#calculatorDemo').wait_for(state='visible')
 
     def test_responsive_layouts_and_seo(self):
-        for width in [320,390,768,1440]:
+        for width in [320,375,390,768,1024,1440,1920]:
             self.page.set_viewport_size({'width':width,'height':900})
             for path in ['/', '/pages/all-projects.html', '/pages/demo.html?project=Iris%20Flower%20Classifier','/404.html']:
                 with self.subTest(width=width,path=path):

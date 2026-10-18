@@ -1,74 +1,64 @@
-# YasirLab 2.0 validation
+# Validation — premium/security follow-up
 
-Validated in the cloud workspace with Python 3.12, Node 24, system Chromium, Playwright Python, axe-core 4.10.3, and Lighthouse 12.8.2. These results describe local testing, not a production deployment or a guarantee of field performance.
+Local verification on 18 October 2026, using Chromium 154, Python Playwright, Node 24, axe-core 4.10.3 and Lighthouse 12.8.2. Results describe this branch, **not a production deployment**.
 
-## Browser suite
+## Automated results
 
-```text
-YASIRLAB_AXE_PATH=/tmp/yasirlab-checks/node_modules/axe-core/axe.min.js \
-  python3 -m unittest discover -s tests -v
+- **31 Node tests passed**: 24 contact/security/provider-mock tests, 5 runner URL/path/download tests, 2 deployment isolation/CSP tests.
+- Main browser run: **20 methods, 19 passed, 1 skipped**, 72.367 seconds. The final expanded contact subset is tested separately and adds one loading/network retry regression (five contact methods total, all passed in 13.000 seconds), bringing coverage to 21 distinct browser methods.
+- **27 axe audit states, zero violations**: 25 page/theme/dialog/demo states plus invalid-contact and accepted-contact states. Tags: WCAG 2A, 2AA, 2.1AA and best practices.
+- Responsive matrix: 320, 375, 390, 768, 1024, 1440 and 1920 CSS pixels across home, gallery, demo and 404. No horizontal document overflow.
+- 82 internal HTML asset/link references resolve; SVGs parse; all runtime/server/tool JavaScript syntax checks pass; `git diff --check` passes.
+- Actual packaged HTTP checks: disabled config returns `{enabled:false}`, contact POST returns 503, and `.env`, `.git/config`, server helper, test, deployment config and deep-missing paths return 404. These are local preview checks, not Vercel production evidence.
 
-Ran 15 tests in 52.250s
-OK (skipped=1)
-```
+The single skipped test is direct `file://` navigation, prohibited by managed Chromium (`ERR_BLOCKED_BY_ADMINISTRATOR`). HTTP catalog fallback is tested separately and passes. Contact provider, Turnstile and GitHub fixture traffic is explicitly mocked. No real email is sent by any test.
 
-**14 passed, 1 skipped, 0 failures.** The skip is direct `file://` navigation, which this managed Chromium rejects with `ERR_BLOCKED_BY_ADMINISTRATOR`. The same bundled-catalog fallback is verified over HTTP with the JSON request deliberately blocked.
-
-Passing checks:
-
-- All 15 catalog entries, category filtering, search, empty state, and reset.
-- Project dialog keyboard focus containment, Escape close, focus return, and preview navigation.
-- All six concept dialogs, explicitly unrun, including keyboard focus return.
-- Initial system theme, system preference changes before explicit selection, persistence across reloads/pages, cross-tab updates, and storage-denied fallback.
-- Mobile disclosure navigation with keyboard, Escape, anchor navigation, and desktop resize.
-- Contact validation, field error associations, correctly encoded `mailto:` draft, and preserving the entered message when a separate email draft opens.
-- Calculator precedence, parentheses/powers, divide-by-zero feedback, and rejection of executable input.
-- Iris examples for all three species and invalid-input feedback.
-- Bundled browser demos with external traffic blocked.
-- GitHub runner static-HTML preparation and sandbox execution using explicit fixtures; Python projects show an honest runtime requirement. These are **mocked integration tests**, not live GitHub API tests. A targeted rerun also verifies that Python files under `tests/` and `tools/` do not misclassify this static site, while an actual Python runtime manifest still requires Python.
-- No horizontal overflow at 320, 390, 768, and 1440 pixels on the homepage, collection, Iris page, and 404 page.
-- One main landmark and one H1 per page, metadata, canonical URLs, and honest Person structured data.
-- Core page content and direct email remain available without JavaScript; the draft form cannot accidentally submit a GET request.
-- No unexpected JavaScript page errors in passing tests.
-
-Axe audits report **zero violations** for WCAG 2 A/AA, WCAG 2.1 AA, and best-practice checks across the four pages in both themes at mobile and desktop widths, plus open project/lab dialogs and running calculator/Iris examples (25 audited states). The Lighthouse audit also checks accessible-name/visible-label agreement. Keyboard focus and representative desktop/mobile screenshots were reviewed manually. A real screen reader, Safari/WebKit, and physical devices have not been tested.
+Coverage includes mobile menu/anchors/escape/resize, persistent/system/cross-tab theme behavior, unavailable localStorage, filters/search/empty reset, six lab notes, project dialog focus containment/restoration, no-JavaScript content, calculator operator precedence/errors/oversized input, three Iris species and invalid inputs, gallery offline fallback, SEO semantics, scroll-linked transforms and dynamic reduced-motion switching. Contact coverage includes validation, loading/disabled buttons, duplicate clicks, accepted feedback, server errors, network ambiguity, preserving text and retry idempotency. Preview tests verify nested CSS/image resolution, circular imports, actual code execution under configured CSP and inability to access the parent document.
 
 ## Lighthouse
 
-| Local homepage audit | Performance | Accessibility | Best practices | SEO | LCP | CLS |
-| --- | ---: | ---: | ---: | ---: | ---: | ---: |
-| Mobile, simulated throttling | 99 | 100 | 100 | 100 | 1.8 s | 0 |
-| Desktop preset | 100 | 100 | 100 | 100 | 0.5 s | 0 |
+Measured on the loopback packaged preview, with the real disabled API and configured headers. The local preview serves uncompressed assets. Production caching, compression, network and devices will change results; these are lab measurements, not Core Web Vitals field data.
 
-See [the machine-readable summary](lighthouse-summary.json). Commands used `--only-categories=performance,accessibility,best-practices,seo`, Chromium with `--headless --no-sandbox --disable-dev-shm-usage`, and the desktop run added `--preset=desktop`. Lighthouse notes that the plain Python server does not compress text or provide long-lived asset caching; deployment behavior depends on the host. Existing Vercel configuration is unchanged and has not been deployed by this work.
+| Preset | Performance | Accessibility | Best practices | SEO | LCP | CLS | TBT |
+| --- | ---: | ---: | ---: | ---: | --- | --- | --- |
+| Mobile |95|100|100|100|2.9s|0|0ms|
+| Desktop |100|100|100|100|0.6s|0|0ms|
 
-## Static checks
+The mobile LCP remains above the 2.5 s “good” threshold under this simulated preset; no universal performance guarantee is claimed. Font preload,22 KB self-hosted subset, explicit image dimensions, lazy below-fold images, no animation library, no idle render loop, mobile parallax suppression and removal of unused assets limit cost. Detailed score summary: [lighthouse-summary.json](lighthouse-summary.json).
 
-- All four JavaScript entry points pass `node --check`.
-- `git diff --check` passes.
-- All internal HTML asset/link references resolve; SVG assets parse successfully.
-- The catalog fallback regenerates deterministically with `python3 tools/sync-catalog.py`.
-- HTTP requests for the homepage, gallery, preview, catalog, scripts, social image, robots file, and sitemap succeed.
+## Visual evidence
 
-## Review screenshots
+Fresh **before** and **after** screenshots include light/dark at 1440 desktop,768 tablet and 390 mobile, both viewport and full-page captures. The after set also covers project, laboratory, contact, gallery and Iris views. Actual browser screenshots were inspected, and the tablet sculpture crop was corrected. Contact screenshots show its honest unconfigured state.
 
-The illustrations in the application are original decorative visual studies. The images below are actual Chromium screenshots of this implementation.
+- [Before, desktop light](screenshots/before/home-light-desktop.png)
+- [After, desktop light](screenshots/after/home-light-desktop.png)
+- [After, desktop dark](screenshots/after/home-dark-desktop.png)
+- [After, mobile light](screenshots/after/home-light-mobile.png)
+- [After, mobile dark](screenshots/after/home-dark-mobile.png)
+- [After, tablet](screenshots/after/home-light-tablet.png)
+- [Full homepage](screenshots/after/home-light-desktop-full.png)
+- [Gallery](screenshots/after/gallery-light-desktop.png)
+- [Iris demo](screenshots/after/iris-light-desktop.png)
 
-| View | Screenshot |
-| --- | --- |
-| Desktop, light | [Homepage](screenshots/home-light-desktop.png) |
-| Desktop, dark | [Homepage](screenshots/home-dark-desktop.png) |
-| Entire homepage | [Full page](screenshots/home-light-full.png) |
-| Mobile, light | [Full page](screenshots/home-light-mobile.png) |
-| Mobile, dark | [Homepage](screenshots/home-dark-mobile.png) |
-| Mobile menu | [Navigation](screenshots/mobile-navigation.png) |
-| Project collection | [Gallery](screenshots/gallery-light-desktop.png) |
-| Running Iris example | [Demo](screenshots/iris-light-desktop.png) |
+## Reproduce
 
-## GitHub and live-browser limits
+```sh
+node tools/build-static.js
+node tools/preview.js
+# In another terminal:
+node --test tests/*.test.js
+YASIRLAB_AXE_PATH=/path/to/axe.min.js python 3 -m unittest discover -s tests -v
+python 3 tools/capture-review.py
+CHROME_PATH=/usr/bin/chromium /path/to/lighthouse http://127.0.0.1:8766/ \
+  --chrome-flags='--headless --no-sandbox --disable-dev-shm-usage' \
+  --only-categories=performance,accessibility,best-practices,seo --output=json
+# Add --preset=desktop for the desktop measurement.
+```
 
-The connected account successfully pushed `redesign/yasirlab-2` and created [PR #1](https://github.com/CodeWithYazzy/portfolio/pull/1). The PR is open, targets `main`, and has not been merged. Read-only GitHub API requests from the shell returned HTTP 200 after initial egress denials resolved.
+Run `node tools/update-csp.js` whenever the inline JSON-LD formatting/content changes. The deployment test catches stale hashes. `tools/preview.js` is a loopback-only development server, not a production server.
 
-A live source-preview request from managed Chromium fails with `net::ERR_CERT_AUTHORITY_INVALID` against the environment's proxy certificate. The shell trusts the supplied proxy CA and receives a valid GitHub JSON response with `Access-Control-Allow-Origin: *`; Chromium's separate trust store does not. This is an environment trust limitation, not a demonstrated website failure. Live browser-to-GitHub previews remain unverified. Local browser examples, fixture-based runner tests, and GitHub CLI operations pass.
+## Limits and next acceptance steps
 
-An optional attempt to add the platform-provided proxy CA to Chromium's persistent user trust store was rejected by automatic approval review because it broadens future TLS trust without specific authorization. No persistent browser trust change was made, and verification was never disabled. The optional live-browser check can remain blocked, or the owner can explicitly authorize that trust-store change separately.
+No real Resend/Turnstile/Upstash integration or inbox-delivery acceptance was performed. Real provider configuration and authorization for one test email are required; see [contact setup](contact-setup.md). Production public-path/header checks are blocked by environment egress; Vercel account settings and GitHub protection settings cannot be inspected with current access. See [security audit](security-audit.md).
+
+Actual Safari, physical mobile hardware, real screen readers, provider outages and measured 60FPS interactions are not verified by these tests. Automated accessibility checks and Chromium keyboard review do not establish complete WCAG conformance. A Vercel preview build must confirm function bundling, headers, configured origin/hostname behavior and provider delivery before any approved production release. No merge or production deployment was performed.

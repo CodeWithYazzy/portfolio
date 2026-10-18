@@ -19,7 +19,7 @@
     root.dataset.theme = theme;
     $('meta[name="theme-color"]')?.setAttribute(
       "content",
-      theme === "dark" ? "#111113" : "#f5f5f7",
+      theme === "dark" ? "#111316" : "#faf9f6",
     );
     $$(".theme-toggle").forEach((button) => {
       button.setAttribute("aria-pressed", String(theme === "dark"));
@@ -135,68 +135,23 @@
       toast("Copy is unavailable here. Use the email address above.");
     }
   });
-  const form = $("#contactForm");
-  if (form) {
-    form.querySelector('button[type="submit"]').disabled = false;
-    const fields = ["name", "email", "subject", "message"].map((id) =>
-      $("#" + id),
-    );
-    function error(field, message) {
-      $("#" + field.id + "Error").textContent = message;
-      if (message) {
-        field.setAttribute("aria-invalid", "true");
-        field.setAttribute("aria-describedby", field.id + "Error");
-      } else {
-        field.removeAttribute("aria-invalid");
-        field.removeAttribute("aria-describedby");
-      }
-    }
-    fields.forEach((field) =>
-      field.addEventListener("input", () => error(field, "")),
-    );
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      let firstInvalid;
-      fields.forEach((field) => {
-        let message = "";
-        if (!field.value.trim())
-          message = `Please enter ${field.id === "name" ? "your name" : field.id === "subject" ? "a subject" : field.id === "message" ? "a message" : "your email address"}.`;
-        else if (field.id === "email" && field.validity.typeMismatch)
-          message = "Please enter a valid email address.";
-        else if (field.id === "message" && field.value.trim().length < 10)
-          message = "Please write at least 10 characters.";
-        error(field, message);
-        if (message && !firstInvalid) firstInvalid = field;
-      });
-      const status = $("#formStatus");
-      if (firstInvalid) {
-        status.textContent = "Please check the highlighted fields.";
-        firstInvalid.focus();
-        return;
-      }
-      const subject = $("#subject").value.trim();
-      const body = `Name: ${$("#name").value.trim()}\nEmail: ${$("#email").value.trim()}\n\n${$("#message").value.trim()}`;
-      const href = `mailto:codewithyazzy@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      status.textContent =
-        "Your email draft is ready. Finish sending it in your email app. Your message stays here if the app does not open.";
-      const draft = document.createElement('a');
-      draft.href = href;
-      draft.target = '_blank';
-      draft.rel = 'noopener noreferrer';
-      document.body.append(draft);
-      draft.click();
-      draft.remove();
-    });
-  }
-
   // Native dialogs provide focus containment, Escape handling, and focus restoration.
   $$("dialog").forEach((dialog) => {
-    dialog.addEventListener('keydown', event => {
-      if (event.key !== 'Tab') return;
-      const focusable = $$('button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled])', dialog).filter(el => el.getClientRects().length);
-      const first = focusable[0], last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
+    dialog.addEventListener("keydown", (event) => {
+      if (event.key !== "Tab") return;
+      const focusable = $$(
+        "button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled])",
+        dialog,
+      ).filter((el) => el.getClientRects().length);
+      const first = focusable[0],
+        last = focusable[focusable.length - 1];
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault();
+        last.focus();
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault();
+        first.focus();
+      }
     });
     $(".dialog-close", dialog)?.addEventListener("click", () => dialog.close());
     dialog.addEventListener("click", (event) => {

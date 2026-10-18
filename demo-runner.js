@@ -20,6 +20,7 @@
     maxImportDepth: 5,
     maxSubPages: 12,
     maxAnchorHtmlBytes: 2 * 1024 * 1024,
+    maxMetadataBytes: 2 * 1024 * 1024,
     fetchTimeoutMs: 20000
   };
 
@@ -57,13 +58,39 @@
     return { title: 'Unexpected error', detail: String((err && err.message) || err) };
   }
 
-  async function ghFetch(url) {
+  async function ghFetch(url, maxBytes = LIMITS.maxMetadataBytes) {
     const controller = new AbortController();
     const timer = setTimeout(() => controller.abort(), LIMITS.fetchTimeoutMs);
-    let res;
     try {
-      res = await fetch(url, { signal: controller.signal, headers: GH_HEADERS });
+      const res = await fetch(url, { signal: controller.signal, headers: GH_HEADERS, credentials: 'omit', referrerPolicy: 'no-referrer' });
+      if (!res.ok) {
+        if (res.status === 404) throw new DemoError('NOT_FOUND', 'Not found on GitHub', 'The public repository, branch, or file could not be found.');
+        if (res.status === 403 || res.status === 429) throw new DemoError('RATE_LIMIT', 'GitHub request unavailable', 'GitHub may have rate limited this request. Wait before trying again.');
+        throw new DemoError('HTTP_' + res.status, `GitHub returned HTTP ${res.status}`, 'Try again later or open the source on GitHub.');
+      }
+      if (Number(res.headers.get('Content-Length')) > maxBytes) {
+        controller.abort();
+        throw new DemoError('FILE_TOO_LARGE', 'Response too large to load', 'This response exceeds the browser preview size limit.');
+      }
+      const reader = res.body.getReader();
+      const chunks = [];
+      let size = 0;
+      while (true) {
+        const { done, value } = await reader.read();
+        if (done) break;
+        size += value.byteLength;
+        if (size > maxBytes) {
+          await reader.cancel();
+          throw new DemoError('FILE_TOO_LARGE', 'Response too large to load', 'This response exceeds the browser preview size limit.');
+        }
+        chunks.push(value);
+      }
+      const bytes = new Uint8Array(size);
+      let offset = 0;
+      for (const chunk of chunks) { bytes.set(chunk, offset); offset += chunk.byteLength; }
+      return { bytes, json: () => JSON.parse(new TextDecoder().decode(bytes)) };
     } catch (err) {
+      if (err instanceof DemoError) throw err;
       if (err && err.name === 'AbortError') {
         throw new DemoError('TIMEOUT', 'Request timed out',
           `GitHub did not respond in time.\n\nURL: ${url}`);
@@ -73,30 +100,19 @@
     } finally {
       clearTimeout(timer);
     }
-    if (!res.ok) {
-      if (res.status === 404) {
-        throw new DemoError('NOT_FOUND', 'Not found on GitHub',
-          `HTTP 404 — the repository, branch or file does not exist or is private.\n\nURL: ${url}`);
-      }
-      if (res.status === 403) {
-        const remaining = res.headers.get('X-RateLimit-Remaining');
-        throw new DemoError('RATE_LIMIT', 'GitHub API rate limit reached',
-          `HTTP 403 — unauthenticated GitHub requests are limited to 60 per hour per IP.${remaining ? ` Remaining this hour: ${remaining}.` : ''}\nWait a few minutes, then press "Run Demo" again (reloading the page also clears the cache).`);
-      }
-      throw new DemoError('HTTP_' + res.status, `GitHub returned HTTP ${res.status}`, `URL: ${url}`);
-    }
-    return res;
   }
 
   // ------------------------------------------
   // Cache (metadata / tree / files)
   // ------------------------------------------
   const cache = { repo: new Map(), tree: new Map(), file: new Map() };
+  let cachedFileBytes = 0;
 
   function clearCache() {
     cache.repo.clear();
     cache.tree.clear();
     cache.file.clear();
+    cachedFileBytes = 0;
   }
 
   // ------------------------------------------
@@ -109,12 +125,16 @@
     } catch (e) {
       return null;
     }
-    if (!/(^|\.)github\.com$/i.test(parsed.hostname)) return null;
-    const segments = parsed.pathname.split('/').filter(Boolean).map(decodeURIComponent);
+    if (parsed.protocol !== 'https:' || !['github.com', 'www.github.com'].includes(parsed.hostname.toLowerCase()) || parsed.username || parsed.password || parsed.port) return null;
+    let segments;
+    try { segments = parsed.pathname.split('/').filter(Boolean).map(decodeURIComponent); } catch (_) { return null; }
+    if (segments.some(part => !part || /[\\/\u0000-\u0020\u007f]/.test(part) || part === '.' || part === '..')) return null;
     if (segments.length < 2) return null;
     const owner = segments[0];
     const repo = segments[1].replace(/\.git$/i, '');
-    if (!owner || !repo) return null;
+    if (!validRepo(owner, repo)) return null;
+    if (segments.length > 2 && !['tree', 'blob'].includes(segments[2])) return null;
+    if (segments.length === 3) return null;
     let branch = null;
     let subdir = '';
     let filePath = '';
@@ -125,6 +145,23 @@
       else filePath = rest.join('/');
     }
     return { owner, repo, branch, subdir: subdir.replace(/\/+$/, ''), filePath };
+  }
+
+  function validRepo(owner, repo) {
+    return /^[a-z0-9][a-z0-9-]{0,38}$/i.test(owner) && /^[a-z0-9_.-]{1,100}$/i.test(repo) && repo !== '.' && repo !== '..';
+  }
+
+  function assertGithubPath(owner, repo, branch, path = '') {
+    if (!validRepo(owner, repo) || (branch !== undefined && (!branch || /[\u0000-\u0020\u007f\\?#]/.test(branch) || branch.split('/').some(p => !p || p === '.' || p === '..'))) || /[\u0000-\u001f\u007f\\?#]/.test(path) || path.split('/').some(p => p === '.' || p === '..')) {
+      throw new DemoError('INVALID_PATH', 'Invalid GitHub location', 'Use a public HTTPS GitHub repository and a path within that repository.');
+    }
+  }
+
+  function safeHttpsUrl(value) {
+    try {
+      const url = new URL(String(value));
+      return url.protocol === 'https:' && !url.username && !url.password ? url.href : '';
+    } catch (_) { return ''; }
   }
 
   function normalizeDir(p) {
@@ -138,18 +175,21 @@
   }
 
   function resolvePath(baseDir, relative) {
-    const combined = normalizeDir(baseDir) + String(relative).replace(/\\/g, '/');
+    let ref;
+    try { ref = decodeURIComponent(String(relative).split(/[?#]/)[0]); } catch (_) { return ''; }
+    if (/[\\\u0000-\u001f\u007f]/.test(ref)) return '';
+    const combined = (ref.startsWith('/') ? '' : normalizeDir(baseDir)) + ref;
     const out = [];
     for (const part of combined.split('/')) {
       if (!part || part === '.') continue;
-      if (part === '..') { out.pop(); continue; }
+      if (part === '..') { if (!out.length) return ''; out.pop(); continue; }
       out.push(part);
     }
     return out.join('/');
   }
 
   function isExternal(ref) {
-    return !ref || /^(https?:)?\/\//i.test(ref) || /^(data|blob|mailto|tel|javascript|#|about):/i.test(ref);
+    return !ref || /^(?:[a-z][a-z0-9+.-]*:|\/\/|#)/i.test(ref.trim());
   }
 
   function scopePaths(paths, subdir) {
@@ -188,11 +228,13 @@
   // GitHub API functions
   // ------------------------------------------
   async function fetchGithubRepo(owner, repo, options = {}) {
+    assertGithubPath(owner, repo);
     const key = `${owner}/${repo}`;
     if (!options.force && cache.repo.has(key)) return cache.repo.get(key);
     const res = await ghFetch(`${API_BASE}/repos/${encodeURIComponent(owner)}/${encodeURIComponent(repo)}`);
     const data = await res.json();
     cache.repo.set(key, data);
+    if (cache.repo.size > 20) cache.repo.delete(cache.repo.keys().next().value);
     return data;
   }
 
@@ -210,6 +252,7 @@
   }
 
   async function getRepoTree(owner, repo, branch, options = {}) {
+    assertGithubPath(owner, repo, branch);
     const key = `${owner}/${repo}@${branch}`;
     if (!options.force && cache.tree.has(key)) return cache.tree.get(key);
     const encodedBranch = String(branch).split('/').map(encodeURIComponent).join('/');
@@ -219,16 +262,18 @@
       throw new DemoError('TRUNCATED', 'Repository too large',
         'The repository file tree is too large for GitHub to enumerate in one request, so the demo runner cannot safely inspect it.');
     }
-    const paths = (data.tree || []).filter(node => node.type === 'blob').map(node => node.path);
+    const paths = (Array.isArray(data.tree) ? data.tree : []).filter(node => node.type === 'blob' && typeof node.path === 'string').map(node => node.path);
     if (paths.length > LIMITS.maxFiles) {
       throw new DemoError('TOO_MANY_FILES', 'Repository has too many files',
         `This repository contains ${paths.length} files; the in-browser runner inspects at most ${LIMITS.maxFiles}.`);
     }
     cache.tree.set(key, paths);
+    if (cache.tree.size > 20) cache.tree.delete(cache.tree.keys().next().value);
     return paths;
   }
 
   async function fetchGithubFile(owner, repo, branch, filePath, options = {}) {
+    assertGithubPath(owner, repo, branch, filePath);
     const binary = !!options.binary;
     const key = `${owner}/${repo}@${branch}/${filePath}:${binary ? 'b' : 't'}`;
     if (!options.force && cache.file.has(key)) return cache.file.get(key);
@@ -239,14 +284,22 @@
       String(branch).split('/').map(encodeURIComponent).join('/'),
       filePath.split('/').map(encodeURIComponent).join('/')
     ].join('/');
-    const res = await ghFetch(url);
-    const buffer = new Uint8Array(await res.arrayBuffer());
+    const res = await ghFetch(url, Math.min(options.maxBytes || LIMITS.maxFileBytes, LIMITS.maxFileBytes));
+    const buffer = res.bytes;
     if (buffer.length > LIMITS.maxFileBytes) {
       throw new DemoError('FILE_TOO_LARGE', 'File too large to load',
         `${filePath} is ${(buffer.length / 1048576).toFixed(1)} MB; the in-browser limit is ${Math.round(LIMITS.maxFileBytes / 1048576)} MB.`);
     }
     const entry = { bytes: buffer, text: binary ? null : new TextDecoder('utf-8').decode(buffer) };
+    if (cache.file.has(key)) cachedFileBytes -= cache.file.get(key).bytes.length;
+    cache.file.delete(key);
+    while (cache.file.size && cachedFileBytes + buffer.length > LIMITS.maxTotalBytes) {
+      const oldest = cache.file.keys().next().value;
+      cachedFileBytes -= cache.file.get(oldest).bytes.length;
+      cache.file.delete(oldest);
+    }
     cache.file.set(key, entry);
+    cachedFileBytes += buffer.length;
     return entry;
   }
 
@@ -307,22 +360,31 @@
   // ------------------------------------------
   // CSS rewriting: @import inlining + url(...) -> data URLs
   // ------------------------------------------
-  function rewriteCss(cssText, cssDir, ctx) {
+  function rewriteCss(cssText, cssDir, ctx, imports = []) {
+    if (imports.length > LIMITS.maxImportDepth) {
+      throw new DemoError('IMPORT_DEPTH', 'Stylesheets nested too deeply', 'The preview limits nested stylesheet imports.');
+    }
     let result = cssText.replace(
       /@import\s+(?:url\(\s*)?(['"]?)([^'")\s]+)\1\s*\)?[^;]*;/gi,
       (match, quote, target) => {
         if (isExternal(target)) return match;
         const importPath = resolvePath(cssDir, target);
+        if (imports.includes(importPath)) {
+          ctx.warnings.push(`Circular stylesheet import omitted: ${importPath}`);
+          return '';
+        }
         const imported = ctx.fs.get(importPath);
         if (!imported) {
           ctx.warnings.push(`CSS @import target not preloaded: ${importPath}`);
           return match;
         }
-        return rewriteCss(imported.text, dirname(importPath), ctx);
+        const content = rewriteCss(imported.text, dirname(importPath), ctx, [...imports, importPath]);
+        const condition = match.replace(/^@import\s+(?:url\(\s*)?(['"]?)[^'")\s]+\1\s*\)?/i, '').replace(/;$/, '').trim();
+        return condition ? `@media ${condition}{${content}}` : content;
       }
     );
     result = result.replace(/url\(\s*(['"]?)([^'")]+)\1\s*\)/gi, (match, quote, target) => {
-      const trimmed = target.trim().split('#')[0];
+      const trimmed = target.trim();
       if (isExternal(trimmed)) return match;
       const assetPath = resolvePath(cssDir, trimmed);
       const entry = ctx.fs.get(assetPath);
@@ -330,7 +392,8 @@
         ctx.missing.push(assetPath);
         return match;
       }
-      return `url("${dataUrlFor(entry, assetPath)}")`;
+      const fragment = trimmed.includes('#') ? '#' + trimmed.split('#').slice(1).join('#') : '';
+      return `url("${dataUrlFor(entry, assetPath)}${fragment}")`;
     });
     return result;
   }
@@ -366,7 +429,7 @@
   // ------------------------------------------
   // Sandboxed-frame bootstrap: storage stubs + error reporting to parent
   // ------------------------------------------
-  const SANDBOX_SHIM = `<script id="__ghDemoSandboxShim">(function(){
+  const SANDBOX_SHIM = `(function(){
   function memoryStore(){var m=new Map();return{getItem:function(k){return m.has(k)?m.get(k):null},setItem:function(k,v){m.set(k,String(v))},removeItem:function(k){m.delete(k)},clear:function(){m.clear()},key:function(i){return Array.from(m.keys())[i]||null},get length(){return m.size}};}
   try{window.localStorage.getItem('__probe');}catch(e){
     try{Object.defineProperty(window,'localStorage',{value:memoryStore(),configurable:true});}catch(e2){}
@@ -378,13 +441,20 @@
   window.addEventListener('unhandledrejection',function(e){
     try{parent.postMessage({__ghDemoFrame:true,type:'rejection',message:String(e.reason)},'*');}catch(err){}
   });
-})();<\/script>`;
+})();`;
 
-  function injectShim(html) {
-    if (/<head[^>]*>/i.test(html)) {
-      return html.replace(/<head[^>]*>/i, match => match + SANDBOX_SHIM);
+  const PREVIEW_POLICY = "default-src 'none'; script-src data:; style-src 'unsafe-inline' data:; img-src data:; font-src data:; media-src data:; connect-src 'none'; frame-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'";
+
+  function dependencyRefs(text, filePath) {
+    const refs = [];
+    const pattern = /\.(?:m?js)$/i.test(filePath)
+      ? /(?:\b(?:import|export)\b[^;'"\n]*?\bfrom\s*|\bimport\s*(?:\(\s*)?)(['"])([^'"]+)\1/g
+      : /(?:@import\s+(?:url\(\s*)?|url\(\s*)(['"]?)([^'")\s]+)\1/g;
+    for (const match of text.matchAll(pattern)) {
+      const target = match[2];
+      if (!isExternal(target) && (!/\.(?:m?js)$/i.test(filePath) || /^(\.{1,2}\/|\/)/.test(target))) refs.push(resolvePath(dirname(filePath), target));
     }
-    return html.replace(/<html[^>]*>/i, match => match + SANDBOX_SHIM);
+    return [...new Set(refs)].filter(Boolean);
   }
 
   // Collect every local reference from a parsed document.
@@ -404,6 +474,9 @@
       }
     }
     for (const script of Array.from(doc.querySelectorAll('script[src]'))) pushRef(script.getAttribute('src'), assets);
+    for (const style of doc.querySelectorAll('style')) assets.push(...dependencyRefs(style.textContent || '', pageDir + 'inline.css'));
+    for (const node of doc.querySelectorAll('[style]')) assets.push(...dependencyRefs(node.getAttribute('style') || '', pageDir + 'inline.css'));
+    for (const script of doc.querySelectorAll('script:not([src])')) assets.push(...dependencyRefs(script.textContent || '', pageDir + 'inline.js'));
     for (const el of Array.from(doc.querySelectorAll('img[src], source[src], video[src], video[poster], audio[src], track[src], embed[src], object[data], input[type="image"][src]'))) {
       for (const attr of ['src', 'poster', 'data']) pushRef(el.getAttribute(attr), assets);
     }
@@ -415,7 +488,7 @@
     for (const anchor of Array.from(doc.querySelectorAll('a[href]'))) {
       const href = anchor.getAttribute('href') || '';
       const clean = href.trim().split('#')[0];
-      if (!clean || isExternal(clean) || !/\.html?$/i.test(clean)) continue;
+      if (!clean || isExternal(clean) || !/\.html?(?:\?|$)/i.test(clean)) continue;
       pages.push(resolvePath(pageDir, clean));
     }
     return { assets: [...new Set(assets)], pages: [...new Set(pages)] };
@@ -424,8 +497,9 @@
   // Rewrite an HTML document: inline CSS/JS, convert assets to data URLs.
   function processHtml(htmlText, entryPath, ctx) {
     const doc = new DOMParser().parseFromString(htmlText, 'text/html');
-    const baseEl = doc.querySelector('base');
-    if (baseEl) baseEl.remove();
+    doc.querySelectorAll('base, meta[http-equiv]').forEach(node => {
+      if (node.tagName === 'BASE' || /^(refresh|content-security-policy)$/i.test(node.getAttribute('http-equiv') || '')) node.remove();
+    });
     const pageDir = dirname(entryPath);
 
     for (const link of Array.from(doc.querySelectorAll('link[href]'))) {
@@ -448,21 +522,29 @@
     for (const styleEl of Array.from(doc.querySelectorAll('style:not([data-from])'))) {
       styleEl.textContent = rewriteCss(styleEl.textContent || '', pageDir, ctx);
     }
+    for (const node of doc.querySelectorAll('[style]')) node.setAttribute('style', rewriteCss(node.getAttribute('style') || '', pageDir, ctx));
 
-    for (const script of Array.from(doc.querySelectorAll('script[src]'))) {
+    for (const script of Array.from(doc.querySelectorAll('script'))) {
       const src = script.getAttribute('src') || '';
-      if (!src || isExternal(src)) continue;
-      const scriptPath = resolvePath(pageDir, src);
-      const entry = ctx.fs.get(scriptPath);
-      if (!entry) { ctx.missing.push(scriptPath); continue; }
+      const type = (script.getAttribute('type') || '').toLowerCase();
+      if (type && !['module', 'text/javascript', 'application/javascript'].includes(type)) continue;
+      if (src && isExternal(src)) {
+        ctx.warnings.push('External scripts are disabled in the isolated preview.');
+        script.remove();
+        continue;
+      }
+      const scriptPath = src ? resolvePath(pageDir, src) : entryPath;
+      const entry = src ? ctx.fs.get(scriptPath) : { text: script.textContent || '' };
+      if (!entry) { ctx.missing.push(scriptPath); script.remove(); continue; }
       const replacement = doc.createElement('script');
       for (const attr of Array.from(script.attributes)) {
-        if (attr.name !== 'src') replacement.setAttribute(attr.name, attr.value);
+        if (!['src', 'integrity', 'crossorigin'].includes(attr.name)) replacement.setAttribute(attr.name, attr.value);
       }
       const isModule = (replacement.getAttribute('type') || '').toLowerCase() === 'module';
-      replacement.textContent = isModule
+      const code = isModule
         ? transformModuleSource(entry.text, dirname(scriptPath), ctx, 0)
-        : entry.text.replace(/<\/script/gi, '<\\/script');
+        : entry.text;
+      replacement.setAttribute('src', `data:text/javascript;charset=utf-8;base64,${utf8ToBase64(code)}`);
       script.replaceWith(replacement);
     }
 
@@ -492,13 +574,37 @@
     for (const anchor of Array.from(doc.querySelectorAll('a[href]'))) {
       const href = anchor.getAttribute('href') || '';
       const clean = href.trim().split('#')[0];
-      if (!clean || isExternal(clean) || !/\.html?$/i.test(clean)) continue;
+      if (!clean || isExternal(clean) || !/\.html?(?:\?|$)/i.test(clean)) continue;
       const rendered = ctx.subPagesRendered.get(resolvePath(pageDir, clean));
       if (rendered && rendered.length <= LIMITS.maxAnchorHtmlBytes) {
         anchor.setAttribute('href', `data:text/html;charset=utf-8;base64,${utf8ToBase64(rendered)}`);
       }
     }
 
+    const eventBindings = [];
+    let handlerId = 0;
+    for (const node of doc.querySelectorAll('*')) {
+      for (const attr of Array.from(node.attributes)) {
+        if (!/^on[a-z]+$/i.test(attr.name)) continue;
+        const id = '__preview_event_' + handlerId++;
+        node.setAttribute(id, '');
+        node.removeAttribute(attr.name);
+        eventBindings.push(`document.querySelector('[${id}]').addEventListener(${JSON.stringify(attr.name.slice(2).toLowerCase())}, function(event){if((function(event){${attr.value}\n}).call(this,event)===false){event.preventDefault();}});`);
+      }
+    }
+    if (eventBindings.length) {
+      const handlers = doc.createElement('script');
+      handlers.src = `data:text/javascript;charset=utf-8;base64,${utf8ToBase64(eventBindings.join('\n'))}`;
+      doc.body.append(handlers);
+    }
+    const shim = doc.createElement('script');
+    shim.id = '__ghDemoSandboxShim';
+    shim.src = `data:text/javascript;charset=utf-8;base64,${utf8ToBase64(SANDBOX_SHIM)}`;
+    doc.head.prepend(shim);
+    const policy = doc.createElement('meta');
+    policy.httpEquiv = 'Content-Security-Policy';
+    policy.content = PREVIEW_POLICY;
+    doc.head.prepend(policy);
     return '<!DOCTYPE html>\n' + doc.documentElement.outerHTML;
   }
 
@@ -551,7 +657,9 @@
           `Exceeded the in-browser limit of ${LIMITS.maxFiles} files.`);
       }
       const asBinary = BINARY_EXT.has(extOf(filePath));
-      const entry = await fetchGithubFile(owner, repo, branch, remotePath(filePath), { binary: asBinary, force });
+      const remainingBytes = LIMITS.maxTotalBytes - ctx.totalBytes;
+      if (remainingBytes <= 0) throw new DemoError('TOO_LARGE', 'Project too large to run in-browser', 'The preview has reached its total download limit.');
+      const entry = await fetchGithubFile(owner, repo, branch, remotePath(filePath), { binary: asBinary, force, maxBytes: remainingBytes });
       ctx.totalBytes += entry.bytes.length;
       if (ctx.totalBytes > LIMITS.maxTotalBytes) {
         throw new DemoError('TOO_LARGE', 'Project too large to run in-browser',
@@ -587,6 +695,23 @@
       }
     }
 
+    // Follow local stylesheet/module imports and CSS asset references. The old
+    // loader fetched only direct HTML references, leaving nested assets broken.
+    const dependencyQueue = [...ctx.fs.keys()].map(path => ({ path, depth: 0 }));
+    const visitedDependencies = new Set();
+    while (dependencyQueue.length) {
+      const { path, depth } = dependencyQueue.shift();
+      if (visitedDependencies.has(path) || !/\.(?:css|m?js)$/i.test(path)) continue;
+      visitedDependencies.add(path);
+      const entry = ctx.fs.get(path);
+      for (const dependency of dependencyRefs(entry.text || '', path)) {
+        if (visitedDependencies.has(dependency)) continue;
+        if (depth >= LIMITS.maxImportDepth) throw new DemoError('IMPORT_DEPTH', 'Imports nested too deeply', 'The preview limits nested stylesheet and module imports.');
+        const loaded = await loadIntoFs(dependency, false);
+        if (loaded) dependencyQueue.push({ path: dependency, depth: depth + 1 });
+      }
+    }
+
     // Render linked pages first so index anchors can embed them.
     for (const pagePath of ctx.linkedPages.slice(0, LIMITS.maxSubPages)) {
       if (!ctx.fs.has(pagePath)) continue;
@@ -596,7 +721,7 @@
         ctx.warnings.push(`Linked page skipped (${pagePath}): ${err.message}`);
       }
     }
-    const html = injectShim(processHtml(ctx.fs.get(indexPath).text, indexPath, ctx));
+    const html = processHtml(ctx.fs.get(indexPath).text, indexPath, ctx);
 
     if (ctx.warnings.length) console.warn('[demo-runner] Rewriting warnings:', ctx.warnings.slice(0, 20));
     if (ctx.missing.length) console.info('[demo-runner] Referenced files not found in repository:', ctx.missing.slice(0, 20));
@@ -648,8 +773,7 @@
 
     const force = !!options.force;
     const github = projectConfig.github || '';
-    const demoUrl = /^https?:\/\//i.test(String(projectConfig.demoUrl || ''))
-      ? projectConfig.demoUrl : '';
+    const demoUrl = safeHttpsUrl(projectConfig.demoUrl || '');
 
     try {
       // Priority 1: existing live deployment.
@@ -679,7 +803,7 @@
         safeHooks.onUnavailable({
           title: 'Demo unavailable',
           detail: 'No public GitHub repository is linked for this project yet, so there is no source code to inspect or run.\n\nAdd the real repository URL to this project’s configuration ("github" field) to enable live inspection.',
-          actions: [{ label: 'Open GitHub profile ↗', href: github || 'https://github.com/codewithyazzy' }]
+          actions: [{ label: 'Open GitHub profile ↗', href: 'https://github.com/CodeWithYazzy' }]
         });
         return { status: 'unavailable', reason: 'no-repository' };
       }
@@ -740,7 +864,7 @@
         }
         const buildPlan = await buildProject({ owner, repo, branch });
         safeHooks.failStep();
-        if (buildPlan.supported && buildPlan.url) {
+        if (buildPlan.supported && safeHttpsUrl(buildPlan.url)) {
           safeHooks.onNotice('Build service connected — serving generated output.');
           safeHooks.renderDeployed(buildPlan.url);
           safeHooks.onReady('Demo Ready — freshly built from source.');
@@ -814,6 +938,7 @@
     friendlyError,
     clearCache,
     parseGithubUrl,
+    safeHttpsUrl,
     fetchGithubRepo,
     getDefaultBranch,
     getRepoTree,
