@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Visualization Lab — Yasir Javed Khan</title>
+    <meta
+      name="description"
+      content="Interactive, from-scratch experiments in neural networks, gradient descent, and k-means clustering."
+    />
+    <meta name="theme-color" content="#fbfbfd" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="canonical" href="https://yasirlab.in/visualize" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Visualization Lab — Yasir Javed Khan" />
+    <meta
+      property="og:description"
+      content="Three small experiments for seeing how models learn. Every result is computed in your browser."
+    />
+    <meta property="og:url" content="https://yasirlab.in/visualize" />
+    <meta
+      property="og:image"
+      content="https://yasirlab.in/assets/social-card.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="Yasir Javed Khan — exploring AI, data, and machine learning"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="assets/favicon.png" />
+    <script src="theme.js"></script>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body id="top">
+    <a class="skip-link" href="#main-content">Skip to content</a>
+    <header id="navbar" class="site-header">
+      <div class="container nav-inner">
+        <a class="brand" href="index.html" aria-label="Yasir Javed Khan — home">
+          Yasir Javed Khan
+        </a>
+        <nav class="desktop-nav" aria-label="Primary">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Projects</a>
+          <a href="visualize.html" aria-current="page">Visualize</a>
+          <a href="contact.html">Contact</a>
+        </nav>
+        <div class="nav-actions">
+          <button
+            class="icon-button theme-toggle"
+            type="button"
+            aria-label="Switch to dark mode"
+            aria-pressed="false"
+          >
+            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.9 13.1A9 9 0 0 1 10.9 3.1 9 9 0 1 0 20.9 13.1Z" />
+            </svg>
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+              />
+            </svg>
+          </button>
+          <button
+            id="hamburger"
+            class="icon-button menu-toggle"
+            type="button"
+            aria-label="Open menu"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 8h16M4 16h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile primary" hidden>
+        <div class="container">
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Projects</a>
+          <a href="visualize.html" aria-current="page">Visualize</a>
+          <a href="contact.html">Contact</a>
+        </div>
+      </nav>
+    </header>
+
+    <main id="main-content" tabindex="-1">
+      <div class="page visualize-page">
+        <header class="container lab-page-heading">
+          <p class="kicker">AI Visualization Lab</p>
+          <h1>Visualize</h1>
+          <p class="lead">
+            Three small experiments for seeing how models learn. Change the
+            controls; every result is computed in your browser.
+          </p>
+        </header>
+
+        <noscript>
+          <div class="container">
+            <p class="noscript-note">
+              The experiments need JavaScript. Enable it in your browser to run
+              the visualizations.
+            </p>
+          </div>
+        </noscript>
+
+        <section
+          id="neural-network"
+          class="container lab"
+          aria-labelledby="nn-title"
+        >
+          <div class="lab-heading">
+            <div>
+              <h2 id="nn-title">Neural Network Playground</h2>
+              <p class="lab-intro">
+                A two-input network learns to separate two classes. The
+                background is its current prediction; the markers are the
+                training data.
+              </p>
+            </div>
+            <span class="lab-tag">2 → H → 1</span>
+          </div>
+
+          <div class="lab-stage">
+            <div class="stage-bar">
+              <span>Prediction surface</span>
+              <span class="stage-legend">
+                <span><span class="marker marker-a" aria-hidden="true"></span>Class A</span>
+                <span><span class="marker marker-b" aria-hidden="true"></span>Class B</span>
+              </span>
+            </div>
+            <div class="canvas-wrap">
+              <canvas
+                id="nnCanvas"
+                class="lab-canvas"
+                role="img"
+                aria-label="Decision boundary plot. Training has not started."
+              ></canvas>
+            </div>
+          </div>
+
+          <div class="lab-lower">
+            <div class="lab-controls">
+              <label class="control" for="nnDataset">
+                <span class="control-label">Dataset</span>
+                <select id="nnDataset">
+                  <option value="ring">Ring</option>
+                  <option value="xor">XOR</option>
+                </select>
+              </label>
+              <label class="control" for="nnLr">
+                <span class="control-label">
+                  Learning rate
+                  <output id="nnLrValue" for="nnLr">0.80</output>
+                </span>
+                <input
+                  id="nnLr"
+                  type="range"
+                  min="0.01"
+                  max="1"
+                  step="0.01"
+                  value="0.8"
+                />
+              </label>
+              <label class="control" for="nnUnits">
+                <span class="control-label">
+                  Hidden units
+                  <output id="nnUnitsValue" for="nnUnits">6</output>
+                </span>
+                <input
+                  id="nnUnits"
+                  type="range"
+                  min="2"
+                  max="6"
+                  step="1"
+                  value="6"
+                />
+              </label>
+              <label class="control" for="nnNoise">
+                <span class="control-label">
+                  Label noise
+                  <output id="nnNoiseValue" for="nnNoise">8%</output>
+                </span>
+                <input
+                  id="nnNoise"
+                  type="range"
+                  min="0"
+                  max="0.25"
+                  step="0.01"
+                  value="0.08"
+                />
+              </label>
+              <div class="lab-buttons">
+                <button
+                  id="nnRun"
+                  class="button primary"
+                  type="button"
+                  aria-pressed="false"
+                >
+                  Train
+                </button>
+                <button id="nnStep" class="button secondary" type="button">
+                  Step 10
+                </button>
+                <button id="nnReset" class="button ghost" type="button">
+                  Reset
+                </button>
+                <button id="nnNewData" class="button ghost" type="button">
+                  New data
+                </button>
+              </div>
+            </div>
+
+            <div class="lab-notes">
+              <p id="nnStatus" class="lab-status">
+                Epoch 0 · Loss 0.69 · Accuracy 50%
+              </p>
+              <p class="lab-explain">
+                A 2→H→1 network with tanh hidden units and a sigmoid output,
+                trained by full-batch gradient descent to minimize binary
+                cross-entropy. More hidden units add capacity; more label noise
+                makes the boundary less certain.
+              </p>
+            </div>
+          </div>
+          <p id="nnAnnounce" class="sr-only" aria-live="polite"></p>
+        </section>
+
+        <section
+          id="gradient-descent"
+          class="container lab"
+          aria-labelledby="gd-title"
+        >
+          <div class="lab-heading">
+            <div>
+              <h2 id="gd-title">Gradient Descent Simulator</h2>
+              <p class="lab-intro">
+                Gradient descent updates a point by moving it against the slope.
+                Watch it settle into a minimum, or overshoot.
+              </p>
+            </div>
+            <span class="lab-tag">x ← x − η f′(x)</span>
+          </div>
+
+          <div class="lab-stage">
+            <div class="stage-bar">
+              <span>Loss surface</span>
+              <span class="stage-legend">Current point · tangent · path</span>
+            </div>
+            <div class="canvas-wrap">
+              <canvas
+                id="gdCanvas"
+                class="lab-canvas"
+                role="img"
+                aria-label="Gradient descent plot of a convex loss curve. The point has not moved yet."
+              ></canvas>
+            </div>
+          </div>
+
+          <div class="lab-lower">
+            <div class="lab-controls">
+              <label class="control" for="gdFunction">
+                <span class="control-label">Function</span>
+                <select id="gdFunction">
+                  <option value="bowl">Bowl (one minimum)</option>
+                  <option value="double">Double well (two minima)</option>
+                </select>
+              </label>
+              <label class="control" for="gdLr">
+                <span class="control-label">
+                  Learning rate
+                  <output id="gdLrValue" for="gdLr">0.10</output>
+                </span>
+                <input
+                  id="gdLr"
+                  type="range"
+                  min="0.01"
+                  max="0.5"
+                  step="0.01"
+                  value="0.1"
+                />
+              </label>
+              <label class="control" for="gdStart">
+                <span class="control-label">
+                  Starting x
+                  <output id="gdStartValue" for="gdStart">−2.0</output>
+                </span>
+                <input
+                  id="gdStart"
+                  type="range"
+                  min="-2.2"
+                  max="2.2"
+                  step="0.1"
+                  value="-2"
+                />
+              </label>
+              <div class="lab-buttons">
+                <button
+                  id="gdRun"
+                  class="button primary"
+                  type="button"
+                  aria-pressed="false"
+                >
+                  Run
+                </button>
+                <button id="gdStep" class="button secondary" type="button">
+                  Step
+                </button>
+                <button id="gdReset" class="button ghost" type="button">
+                  Reset
+                </button>
+              </div>
+            </div>
+
+            <div class="lab-notes">
+              <p id="gdStatus" class="lab-status">
+                x = −2.00 · f(x) = 8.54 · slope = −4.76 · Step 0
+              </p>
+              <p class="lab-explain">
+                The update rule is x ← x − learning rate × f′(x). The bowl has
+                one minimum. The double well has two, so the starting point
+                matters; start at zero and the point sits on the hilltop. When
+                the learning rate is too high, it can overshoot or diverge.
+              </p>
+            </div>
+          </div>
+          <p id="gdAnnounce" class="sr-only" aria-live="polite"></p>
+        </section>
+
+        <section id="k-means" class="container lab" aria-labelledby="km-title">
+          <div class="lab-heading">
+            <div>
+              <h2 id="km-title">K-Means Clustering</h2>
+              <p class="lab-intro">
+                K-means alternates between assigning points to the nearest
+                centroid and moving each centroid to the center of its group.
+              </p>
+            </div>
+            <span class="lab-tag">Lloyd iterations</span>
+          </div>
+
+          <div class="lab-stage">
+            <div class="stage-bar">
+              <span>Cluster assignments</span>
+              <span class="stage-legend">Markers show cluster membership</span>
+            </div>
+            <div class="canvas-wrap">
+              <canvas
+                id="kmCanvas"
+                class="lab-canvas"
+                role="img"
+                aria-label="Cluster plot with 90 points and 3 initial centroids. No iterations have run."
+              ></canvas>
+            </div>
+          </div>
+
+          <div class="lab-lower">
+            <div class="lab-controls">
+              <label class="control" for="kmK">
+                <span class="control-label">
+                  Clusters
+                  <output id="kmKValue" for="kmK">3</output>
+                </span>
+                <input
+                  id="kmK"
+                  type="range"
+                  min="2"
+                  max="5"
+                  step="1"
+                  value="3"
+                />
+              </label>
+              <label class="control" for="kmPoints">
+                <span class="control-label">
+                  Points
+                  <output id="kmPointsValue" for="kmPoints">90</output>
+                </span>
+                <input
+                  id="kmPoints"
+                  type="range"
+                  min="40"
+                  max="160"
+                  step="10"
+                  value="90"
+                />
+              </label>
+              <div class="lab-buttons">
+                <button
+                  id="kmRun"
+                  class="button primary"
+                  type="button"
+                  aria-pressed="false"
+                >
+                  Run
+                </button>
+                <button id="kmStep" class="button secondary" type="button">
+                  Step
+                </button>
+                <button id="kmReset" class="button ghost" type="button">
+                  Reset
+                </button>
+                <button id="kmNewData" class="button ghost" type="button">
+                  New data
+                </button>
+              </div>
+            </div>
+
+            <div class="lab-notes">
+              <p id="kmStatus" class="lab-status">
+                Iteration 0 · Inertia 0.0 · 3 clusters
+              </p>
+              <div
+                id="kmLegend"
+                class="cluster-legend"
+                role="group"
+                aria-label="Cluster counts"
+              ></div>
+              <p class="lab-explain">
+                Each step assigns every point to its nearest centroid, then
+                moves each centroid to the mean of its points. Inertia is the
+                sum of squared distances to the nearest centroid; lower is
+                tighter. K-means finds geometric groups, not meaning.
+              </p>
+            </div>
+          </div>
+          <p id="kmAnnounce" class="sr-only" aria-live="polite"></p>
+        </section>
+      </div>
+    </main>
+
+    <footer class="site-footer">
+      <div class="container footer-inner">
+        <div class="footer-copy">
+          <a class="footer-brand" href="index.html">Yasir Javed Khan</a>
+          <p>AI, data science, and machine learning.</p>
+        </div>
+        <div class="footer-links">
+          <a href="mailto:codewithyazzy@gmail.com">Email</a>
+          <a
+            href="https://github.com/CodeWithYazzy"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          >
+          <a
+            href="https://x.com/codewithyazzy"
+            target="_blank"
+            rel="noopener noreferrer"
+            >X</a
+          >
+        </div>
+        <p class="footer-year">
+          © <span id="year"></span> Yasir Javed Khan
+        </p>
+      </div>
+    </footer>
+
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="main.js" defer></script>
+    <script src="canvas-utils.js" defer></script>
+    <script src="neural-network.js" defer></script>
+    <script src="gradient-descent.js" defer></script>
+    <script src="k-means.js" defer></script>
+  </body>
+</html>

@@ -1,29 +1,65 @@
 # Content audit
 
-The portfolio checkout, project catalog, demo controller, arithmetic parser, Iris coefficients, and GitHub preview runner were reviewed before this redesign. The linked [`CodeWithYazzy/projects`](https://github.com/CodeWithYazzy/projects) source was inspected at commit [`2ff4ad16030c7b9dd298d2c2a273df4b7759a1a1`](https://github.com/CodeWithYazzy/projects/tree/2ff4ad16030c7b9dd298d2c2a273df4b7759a1a1). That inspection establishes what code exists, not that the separate Python projects have been trained or evaluated.
+Last reviewed: 2026-10-22
 
-| Item | Evidence in the inspected source | Presentation on the site |
-| --- | --- | --- |
-| Iris | Dataset split, scaler/logistic pipeline, and training/evaluation modules; this site bundles fixed coefficients | Working browser inference; probabilities are labeled model output, not accuracy |
-| Calculator | Desktop Tkinter program; an independent browser parser lives in this site | Working browser demo, clearly separate from the Python program |
-| Portfolio | This repository contains the real static site | Linked from the project index and used as its own preview |
-| Sales dashboard | Generated 90-day dataset and a Matplotlib export | Synthetic-data learning exercise |
-| Image classifier | CNN definition and one CIFAR-10 batch forward pass | Scaffold; no training, checkpoint, or evaluation claim |
-| House prices | Generated 200-row housing table and regression pipeline | Synthetic-data learning exercise |
-| Sentiment | Six sentences repeated 20 times, then split | Toy exercise; duplicate leakage is stated, with no generalization claim |
-| NumPy explorer | Seeded random table and summary statistics | Synthetic-data learning exercise |
-| Matplotlib | Three chart exports from sample or generated inputs | Introductory chart exercise |
-| PyTorch chatbot | Tiny vocabulary and a GRU forward pass | Scaffold; no conversational product or training claim |
-| Heart disease folder | Actually calls `load_breast_cancer` | Dataset mismatch stated; not presented as a heart-disease or clinical model |
-| Customer segmentation | K-Means on generated spend and visit features | Synthetic-data learning exercise |
-| Digit classifier | CNN class only | Architecture scaffold; no trained digit-recognizer claim |
-| Stock predictor | Generated price-like series with previous-value regression | Synthetic-data baseline; no market-forecasting claim |
-| AI assistant | Hash-distance ranking of three strings | Retrieval sketch; no embeddings, LLM, or answer-generation claim |
-| Former lab concepts | Six proposed experiments with unfilled results | Removed from the public page rather than presented as work |
-| Contact form and modal layers | Not part of a static portfolio's core job | Replaced by a direct email link and copy button |
-| Awards and certifications | No supporting artifacts in this checkout | Not claimed |
-| Professional and aggregate claims | No supporting evidence for years, job titles, or deployment figures | Removed; structured data describes a person without a job title |
+This audit records what the site publishes, where it came from, and what was deliberately removed. The governing rule for this redesign was: if a personal detail was not confirmed, it does not appear.
 
-Project copy was shortened to say what each item is, what it uses, and whether it is finished. The former "YasirLab 2.0" identity and all proposed-lab language were removed. The portrait is derived from the owner's existing photograph. The social card was rebuilt around the current name and statement.
+## Confirmed personal content
 
-The browser Iris demo keeps its probabilities visible because they are computed from the bundled model. The site makes no claim about test accuracy, credentials, commercial clients, clinical usefulness, or completed research.
+The following details are published:
+
+| Detail | Where it appears |
+| --- | --- |
+| Name: Yasir Javed Khan | Header, home, About, footer, page titles, structured data |
+| Location: Mumbai, India | About, home page metadata, structured data |
+| Interests: AI, data science, machine learning | Home, About, footer, structured data |
+| Portrait | About (`assets/portrait.webp`) |
+| Email: `codewithyazzy@gmail.com` | Contact, footer, copy button |
+| GitHub: `https://github.com/CodeWithYazzy` | About, Contact, footer |
+| X: `https://x.com/codewithyazzy` | About, Contact, footer |
+
+No other personal facts are asserted.
+
+## Not published
+
+The redesign does not include education, employment, job title, student status, years of experience, a skills list, certifications, awards, achievements, project metrics, testimonials, or client work. These were not confirmed for publication.
+
+The previous copy described a “student and developer” and listed Python, data, and machine-learning project work. That copy was removed rather than rephrased.
+
+## Projects
+
+The previous site contained 15 project entries, a catalog, filter/search pages, demo pages, and project images. Those entries were not verified work and have been removed from the working site. The current Projects page says:
+
+> Projects coming soon.
+>
+> I haven’t published any projects yet. When there’s something real to show, it will appear here.
+
+There are no placeholder case studies, invented outcomes, fake screenshots, or links that imply a project exists.
+
+## Visualization lab
+
+The three experiments are real programs, not recordings or static mockups:
+
+- **Neural Network Playground** generates synthetic ring or XOR data, trains a small classifier with full-batch gradient descent, and recomputes the prediction surface from the current weights. The generated data is not presented as a real dataset.
+- **Gradient Descent Simulator** evaluates known mathematical functions and their derivatives. The path, tangent, loss, and convergence message come from those calculations.
+- **K-Means Clustering** generates synthetic two-dimensional points and runs Lloyd iterations. Inertia and cluster counts are computed from the current assignments.
+
+The explanations state the algorithms and their limits. K-means is explicitly described as finding geometric groups, not meaning. The neural network is presented as a small interactive experiment, not a production classifier.
+
+## Contact
+
+Only the confirmed email address and two confirmed profiles are linked. The page has no contact form, no third-party form service, and no unverified social accounts. The footer repeats the same three destinations.
+
+## Removed material
+
+The following were removed from the working tree and remain available in Git history:
+
+- The 15-project catalog, project records, category filters, search, and archive pages.
+- The Iris classifier demo, calculator demo, demo runner, and preview sandbox.
+- Project screenshots and decorative “study” assets for the removed work.
+- The old catalog synchronization tool and generated catalog fallback.
+- Unverified claims about education, work, skills, and project outcomes.
+
+## Maintenance rule
+
+Before adding a personal detail or a project, confirm it with the site owner and record the confirmation in this file. Do not fill empty sections with plausible copy.

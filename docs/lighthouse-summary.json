@@ -1,26 +1,50 @@
 {
-  "mobile": {
-    "lighthouse_version": "12.8.2",
-    "scores": {
-      "performance": 100,
-      "accessibility": 100,
-      "best-practices": 100,
-      "seo": 100
+  "lighthouse_version": "12.8.2",
+  "scope": "Local Python static server. Lighthouse simulated mobile and desktop presets. Four runs: home and visualization lab.",
+  "runs": {
+    "home_mobile": {
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "largest_contentful_paint": "1.2 s",
+      "cumulative_layout_shift": "0",
+      "total_blocking_time": "0 ms"
     },
-    "largest_contentful_paint": "1.3\u00a0s",
-    "cumulative_layout_shift": "0",
-    "scope": "Local Python static server, homepage; default Lighthouse simulated device/throttling for this mode."
-  },
-  "desktop": {
-    "lighthouse_version": "12.8.2",
-    "scores": {
-      "performance": 100,
-      "accessibility": 100,
-      "best-practices": 100,
-      "seo": 100
+    "home_desktop": {
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "largest_contentful_paint": "0.3 s",
+      "cumulative_layout_shift": "0",
+      "total_blocking_time": "0 ms"
     },
-    "largest_contentful_paint": "0.3\u00a0s",
-    "cumulative_layout_shift": "0",
-    "scope": "Local Python static server, homepage; Lighthouse desktop preset."
+    "visualize_mobile": {
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "largest_contentful_paint": "1.7 s",
+      "cumulative_layout_shift": "0",
+      "total_blocking_time": "10 ms"
+    },
+    "visualize_desktop": {
+      "scores": {
+        "performance": 100,
+        "accessibility": 100,
+        "best-practices": 100,
+        "seo": 100
+      },
+      "largest_contentful_paint": "0.4 s",
+      "cumulative_layout_shift": "0",
+      "total_blocking_time": "0 ms"
+    }
   }
 }

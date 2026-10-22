@@ -3,25 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Yasir Javed Khan — Developer in Mumbai</title>
+    <title>Yasir Javed Khan — AI, Data Science &amp; Machine Learning</title>
     <meta
       name="description"
-      content="Yasir Javed Khan is a student and developer in Mumbai, building small web tools and machine-learning projects with Python, data, and JavaScript."
+      content="Yasir Javed Khan explores AI, data science, and machine learning through small interactive experiments in the browser."
     />
     <meta name="theme-color" content="#fbfbfd" />
+    <meta name="color-scheme" content="light dark" />
     <link rel="canonical" href="https://yasirlab.in/" />
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Yasir Javed Khan — Developer in Mumbai" />
+    <meta
+      property="og:title"
+      content="Yasir Javed Khan — AI, Data Science &amp; Machine Learning"
+    />
     <meta
       property="og:description"
-      content="Small web tools and machine-learning projects, built while learning. Some finished, some in progress."
+      content="Interactive experiments in neural networks, optimization, and clustering."
     />
     <meta property="og:url" content="https://yasirlab.in/" />
     <meta
       property="og:image"
       content="https://yasirlab.in/assets/social-card.png"
     />
-    <meta property="og:image:alt" content="Yasir Javed Khan — Developer in Mumbai" />
+    <meta
+      property="og:image:alt"
+      content="Yasir Javed Khan — exploring AI, data, and machine learning"
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="assets/favicon.png" />
@@ -39,10 +46,9 @@
           "addressCountry": "IN"
         },
         "knowsAbout": [
-          "Python",
-          "Data analysis",
-          "Machine learning",
-          "Web development"
+          "Artificial intelligence",
+          "Data science",
+          "Machine learning"
         ],
         "sameAs": [
           "https://github.com/CodeWithYazzy",
@@ -55,11 +61,15 @@
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header id="navbar" class="site-header">
       <div class="container nav-inner">
-        <a class="brand" href="index.html">Yasir Javed Khan</a>
+        <a class="brand" href="index.html" aria-label="Yasir Javed Khan — home">
+          Yasir Javed Khan
+        </a>
         <nav class="desktop-nav" aria-label="Primary">
-          <a href="#work">Work</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="index.html" aria-current="page">Home</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Projects</a>
+          <a href="visualize.html">Visualize</a>
+          <a href="contact.html">Contact</a>
         </nav>
         <div class="nav-actions">
           <button
@@ -80,7 +90,7 @@
           </button>
           <button
             id="hamburger"
-            class="icon-button"
+            class="icon-button menu-toggle"
             type="button"
             aria-label="Open menu"
             aria-expanded="false"
@@ -92,11 +102,13 @@
           </button>
         </div>
       </div>
-      <nav id="mobileMenu" aria-label="Mobile primary" hidden>
+      <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile primary" hidden>
         <div class="container">
-          <a href="#work">Work</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
+          <a href="index.html" aria-current="page">Home</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Projects</a>
+          <a href="visualize.html">Visualize</a>
+          <a href="contact.html">Contact</a>
         </div>
       </nav>
     </header>
@@ -105,309 +117,147 @@
       <section class="hero" aria-labelledby="intro-title">
         <div class="container hero-grid">
           <div class="hero-copy">
-            <p class="hero-meta">Mumbai, India</p>
+            <p class="kicker hero-kicker">
+              <span class="status-dot" aria-hidden="true"></span>
+              AI · Data Science · Machine Learning
+            </p>
             <h1 id="intro-title">Yasir Javed Khan</h1>
             <p class="lead hero-lede">
-              I build small tools to understand how things work.
+              I’m interested in AI, data science, and machine learning — and in
+              making how they work easier to see.
             </p>
             <p class="hero-description">
-              I’m a student learning Python, data, and machine learning by
-              making real projects. Some are finished. Others are still in
-              progress. Both are here.
+              This site is a small lab: interactive experiments in neural
+              networks, optimization, and clustering, built from scratch in the
+              browser.
             </p>
             <div class="button-row">
-              <a class="button primary" href="#work">See the work</a>
-              <a class="text-link" href="#about">
-                More about me
-                <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m9 5 7 7-7 7" />
-                </svg>
+              <a class="button primary" href="visualize.html">
+                Explore Visualizations
               </a>
+              <a class="button secondary" href="about.html">About Me</a>
             </div>
           </div>
 
-          <div class="hero-demo">
-            <div class="demo-head">
-              <h2>Iris classifier</h2>
-              <span>Live demo</span>
+          <div class="network-card">
+            <div class="card-bar">
+              <span>Neural network</span>
+              <span class="card-bar-note">Interactive</span>
             </div>
-            <div class="demo-controls">
-              <div class="demo-control">
-                <label for="demoSl">
-                  <span>Sepal length</span>
-                  <output id="demoSlOut" for="demoSl">5.1 cm</output>
-                </label>
-                <input
-                  id="demoSl"
-                  type="range"
-                  min="4.3"
-                  max="7.9"
-                  step="0.1"
-                  value="5.1"
-                />
-              </div>
-              <div class="demo-control">
-                <label for="demoSw">
-                  <span>Sepal width</span>
-                  <output id="demoSwOut" for="demoSw">3.5 cm</output>
-                </label>
-                <input
-                  id="demoSw"
-                  type="range"
-                  min="2"
-                  max="4.4"
-                  step="0.1"
-                  value="3.5"
-                />
-              </div>
-              <div class="demo-control">
-                <label for="demoPl">
-                  <span>Petal length</span>
-                  <output id="demoPlOut" for="demoPl">1.4 cm</output>
-                </label>
-                <input
-                  id="demoPl"
-                  type="range"
-                  min="1"
-                  max="6.9"
-                  step="0.1"
-                  value="1.4"
-                />
-              </div>
-              <div class="demo-control">
-                <label for="demoPw">
-                  <span>Petal width</span>
-                  <output id="demoPwOut" for="demoPw">0.2 cm</output>
-                </label>
-                <input
-                  id="demoPw"
-                  type="range"
-                  min="0.1"
-                  max="2.5"
-                  step="0.1"
-                  value="0.2"
-                />
-              </div>
+            <canvas
+              id="heroNetwork"
+              class="hero-canvas"
+              width="720"
+              height="470"
+              aria-hidden="true"
+            ></canvas>
+            <div class="card-foot">
+              <span>Move across the network to highlight nodes.</span>
+              <span aria-hidden="true">3 layers · 14 nodes</span>
             </div>
-            <div class="demo-result">
-              <p class="demo-result-label">Prediction</p>
-              <strong id="demoSpecies">Setosa</strong>
-              <div class="demo-prob-bar" aria-hidden="true">
-                <span id="demoBarSetosa" class="is-winner" style="flex-basis: 97%"></span>
-                <span id="demoBarVersicolor" style="flex-basis: 3%"></span>
-                <span id="demoBarVirginica" style="flex-basis: 0%"></span>
-              </div>
-              <p class="demo-legend" aria-hidden="true">
-                <span>Setosa <span id="demoPctSetosa">97%</span></span>
-                <span>Versicolor <span id="demoPctVersicolor">3%</span></span>
-                <span>Virginica <span id="demoPctVirginica">0%</span></span>
+            <noscript>
+              <p class="canvas-noscript">
+                This interactive network needs JavaScript.
               </p>
-              <p class="sr-only" id="demoAnnounce" aria-live="polite"></p>
-            </div>
-            <div class="demo-foot">
-              <span>Bundled model · runs locally</span>
-              <a
-                class="text-link"
-                href="pages/demo.html?project=Iris%20Flower%20Classifier"
-              >
-                Open full demo
-                <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m9 5 7 7-7 7" />
-                </svg>
-              </a>
-            </div>
+            </noscript>
           </div>
         </div>
       </section>
 
-      <section id="work" class="section" aria-labelledby="work-title">
+      <section class="home-preview" aria-labelledby="preview-title">
         <div class="container">
           <div class="section-heading">
-            <h2 id="work-title">Selected work</h2>
-            <a class="text-link" href="pages/all-projects.html">
-              All 15 projects
+            <div>
+              <p class="kicker">Visualization lab</p>
+              <h2 id="preview-title">Three ways to see learning happen.</h2>
+            </div>
+            <a class="text-link home-preview-link" href="visualize.html">
+              Open the lab
               <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="m9 5 7 7-7 7" />
               </svg>
             </a>
           </div>
-          <div class="work-list">
-            <a
-              class="work-row"
-              href="pages/demo.html?project=Iris%20Flower%20Classifier"
-            >
-              <div class="work-copy">
-                <h3 class="work-title">Iris Flower Classifier</h3>
-                <p class="work-desc">
-                  A four-input classifier that runs entirely in the browser.
-                </p>
-              </div>
-              <div class="work-meta">
-                <span class="work-status">Interactive demo</span>
-                <span class="work-tech">Python · scikit-learn</span>
-              </div>
-              <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m9 5 7 7-7 7" />
-              </svg>
-            </a>
-            <a
-              class="work-row"
-              href="pages/demo.html?project=Calculator%20App"
-            >
-              <div class="work-copy">
-                <h3 class="work-title">Calculator App</h3>
-                <p class="work-desc">
-                  A working calculator with operator precedence and honest
-                  error states.
-                </p>
-              </div>
-              <div class="work-meta">
-                <span class="work-status">Interactive demo</span>
-                <span class="work-tech">JavaScript · HTML · CSS</span>
-              </div>
-              <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m9 5 7 7-7 7" />
-              </svg>
-            </a>
-            <a
-              class="work-row"
-              href="https://github.com/CodeWithYazzy/projects/tree/main/sales-dashboard"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div class="work-copy">
-                <h3 class="work-title">Sales Data Dashboard</h3>
-                <p class="work-desc">
-                  Ninety days of synthetic sales, grouped and plotted with
-                  Pandas and Matplotlib.
-                </p>
-                <span class="sr-only"> (opens in a new tab)</span>
-              </div>
-              <div class="work-meta">
-                <span class="work-status">Learning project</span>
-                <span class="work-tech">Python · Pandas</span>
-              </div>
-              <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m9 5 7 7-7 7" />
-              </svg>
-            </a>
-            <a
-              class="work-row"
-              href="https://github.com/CodeWithYazzy/projects/tree/main/pytorch-image-classifier"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              <div class="work-copy">
-                <h3 class="work-title">PyTorch Image Classifier</h3>
-                <p class="work-desc">
-                  A CNN built to learn CIFAR-10. Training and evaluation are
-                  still to come.
-                </p>
-                <span class="sr-only"> (opens in a new tab)</span>
-              </div>
-              <div class="work-meta">
-                <span class="work-status">In progress</span>
-                <span class="work-tech">PyTorch · CNN</span>
-              </div>
-              <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="m9 5 7 7-7 7" />
-              </svg>
-            </a>
-          </div>
-        </div>
-      </section>
 
-      <section id="about" class="section" aria-labelledby="about-title">
-        <div class="container">
-          <div class="about-grid">
-            <div class="about-copy">
-              <h2 id="about-title">About</h2>
-              <p class="lead">
-                I’m Yasir, a student in Mumbai. I’m teaching myself to build
-                software one project at a time.
-              </p>
-              <p>
-                Most of my work starts with a question I can’t answer yet: how a
-                classifier actually decides, why a chart is misleading, what
-                happens when the test set stays unseen. I build something small
-                to find out.
-              </p>
-              <p>
-                Some projects are finished. Many are exercises. A few are still
-                in progress, and I’ve labeled them that way.
-              </p>
-              <a
-                class="text-link"
-                href="https://github.com/CodeWithYazzy"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                Find me on GitHub
-                <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="m9 5 7 7-7 7" />
+          <div class="preview-grid">
+            <a class="preview-card" href="visualize.html#neural-network">
+              <div class="preview-art" aria-hidden="true">
+                <svg viewBox="0 0 220 120">
+                  <g class="preview-lines">
+                    <path d="M36 34 92 26M36 34 92 60M36 34 92 94M36 60 92 26M36 60 92 60M36 60 92 94M36 86 92 26M36 86 92 60M36 86 92 94M92 26 164 44M92 26 164 76M92 60 164 44M92 60 164 76M92 94 164 44M92 94 164 76" />
+                  </g>
+                  <g class="preview-nodes">
+                    <circle cx="36" cy="34" r="5" />
+                    <circle cx="36" cy="60" r="5" />
+                    <circle cx="36" cy="86" r="5" />
+                    <circle cx="92" cy="26" r="5" />
+                    <circle cx="92" cy="60" r="5" />
+                    <circle cx="92" cy="94" r="5" />
+                    <circle cx="164" cy="44" r="6" class="accent" />
+                    <circle cx="164" cy="76" r="6" class="accent" />
+                  </g>
                 </svg>
-                <span class="sr-only"> (opens in a new tab)</span>
-              </a>
-            </div>
-            <figure class="portrait">
-              <div class="portrait-frame">
-                <img
-                  src="assets/portrait.webp"
-                  width="819"
-                  height="1187"
-                  alt="Yasir Javed Khan"
-                  loading="lazy"
-                />
               </div>
-              <figcaption>
-                <span>Yasir Javed Khan</span>
-                <span>Mumbai, India</span>
-              </figcaption>
-            </figure>
-          </div>
-          <dl class="facts">
-            <div>
-              <dt>Based in</dt>
-              <dd>Mumbai, India</dd>
-            </div>
-            <div>
-              <dt>Working with</dt>
-              <dd>Python, Pandas, scikit-learn, PyTorch</dd>
-            </div>
-            <div>
-              <dt>Learning</dt>
-              <dd>Model evaluation, interfaces, and finishing things</dd>
-            </div>
-          </dl>
-        </div>
-      </section>
+              <div class="preview-copy">
+                <h3>Neural Network Playground</h3>
+                <p>Train a tiny classifier and watch its boundary take shape.</p>
+              </div>
+              <span class="preview-arrow" aria-hidden="true">↗</span>
+            </a>
 
-      <section id="contact" class="contact-section" aria-labelledby="contact-title">
-        <div class="container">
-          <h2 id="contact-title">Contact</h2>
-          <p>
-            If you’d like to talk about a project, share a resource, or ask a
-            question, email is best.
-          </p>
-          <a class="contact-email" href="mailto:codewithyazzy@gmail.com"
-            >codewithyazzy@gmail.com</a
-          >
-          <div class="contact-links">
-            <button id="copyEmail" class="copy-button" type="button">
-              Copy email
-            </button>
-            <a
-              href="https://github.com/CodeWithYazzy"
-              target="_blank"
-              rel="noopener noreferrer"
-              >GitHub <span class="sr-only">(opens in a new tab)</span></a
-            >
-            <a
-              href="https://x.com/codewithyazzy"
-              target="_blank"
-              rel="noopener noreferrer"
-              >X <span class="sr-only">(opens in a new tab)</span></a
-            >
+            <a class="preview-card" href="visualize.html#gradient-descent">
+              <div class="preview-art" aria-hidden="true">
+                <svg viewBox="0 0 220 120">
+                  <path class="preview-grid-line" d="M24 96h172M24 20v76" />
+                  <path
+                    class="preview-curve"
+                    d="M30 30c34 0 30 64 62 64s38-28 62-46c13-10 24-12 36-10"
+                  />
+                  <path class="preview-tangent" d="M72 72l44 22" />
+                  <circle class="preview-dot" cx="94" cy="83" r="6" />
+                  <circle class="preview-ring" cx="94" cy="83" r="12" />
+                </svg>
+              </div>
+              <div class="preview-copy">
+                <h3>Gradient Descent Simulator</h3>
+                <p>Follow each downhill step and see what the learning rate changes.</p>
+              </div>
+              <span class="preview-arrow" aria-hidden="true">↗</span>
+            </a>
+
+            <a class="preview-card" href="visualize.html#k-means">
+              <div class="preview-art" aria-hidden="true">
+                <svg viewBox="0 0 220 120">
+                  <g class="preview-cluster">
+                    <circle cx="52" cy="42" r="4" />
+                    <circle cx="67" cy="33" r="4" />
+                    <circle cx="61" cy="54" r="4" />
+                    <circle cx="42" cy="57" r="4" />
+                    <circle cx="78" cy="47" r="4" />
+                  </g>
+                  <g class="preview-cluster-alt">
+                    <rect x="148" y="30" width="8" height="8" rx="1" />
+                    <rect x="164" y="45" width="8" height="8" rx="1" />
+                    <rect x="139" y="50" width="8" height="8" rx="1" />
+                    <rect x="158" y="63" width="8" height="8" rx="1" />
+                    <rect x="177" y="55" width="8" height="8" rx="1" />
+                  </g>
+                  <g class="preview-cluster-third">
+                    <path d="m96 83 7 12H89Z" />
+                    <path d="m116 76 7 12h-14Z" />
+                    <path d="m110 95 7 12h-14Z" />
+                  </g>
+                  <circle class="preview-centroid" cx="60" cy="46" r="9" />
+                  <circle class="preview-centroid" cx="157" cy="48" r="9" />
+                  <circle class="preview-centroid" cx="106" cy="88" r="9" />
+                </svg>
+              </div>
+              <div class="preview-copy">
+                <h3>K-Means Clustering</h3>
+                <p>Watch points find groups as the centroids move toward them.</p>
+              </div>
+              <span class="preview-arrow" aria-hidden="true">↗</span>
+            </a>
           </div>
         </div>
       </section>
@@ -415,13 +265,34 @@
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <span>© <span id="year">2026</span> Yasir Javed Khan</span>
-        <span>Built with HTML, CSS, and JavaScript.</span>
-        <a href="#">Back to top ↑</a>
+        <div class="footer-copy">
+          <a class="footer-brand" href="index.html">Yasir Javed Khan</a>
+          <p>AI, data science, and machine learning.</p>
+        </div>
+        <div class="footer-links">
+          <a href="mailto:codewithyazzy@gmail.com">Email</a>
+          <a
+            href="https://github.com/CodeWithYazzy"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          >
+          <a
+            href="https://x.com/codewithyazzy"
+            target="_blank"
+            rel="noopener noreferrer"
+            >X</a
+          >
+        </div>
+        <p class="footer-year">
+          © <span id="year"></span> Yasir Javed Khan
+        </p>
       </div>
     </footer>
 
-    <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-    <script src="script.js"></script>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="main.js" defer></script>
+    <script src="canvas-utils.js" defer></script>
+    <script src="hero-network.js" defer></script>
   </body>
 </html>

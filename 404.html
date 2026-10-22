@@ -4,30 +4,39 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Page not found — Yasir Javed Khan</title>
-    <meta name="description" content="This page could not be found. Return home or browse the projects." />
+    <meta
+      name="description"
+      content="This page could not be found. Return home or explore the visualization lab."
+    />
     <meta name="theme-color" content="#fbfbfd" />
-    <link rel="canonical" href="https://yasirlab.in/" />
+    <meta name="color-scheme" content="light dark" />
+    <meta name="robots" content="noindex" />
     <meta property="og:type" content="website" />
     <meta property="og:title" content="Page not found — Yasir Javed Khan" />
     <meta property="og:description" content="This page could not be found." />
-    <meta property="og:url" content="https://yasirlab.in/" />
-    <meta property="og:image" content="https://yasirlab.in/assets/social-card.png" />
+    <meta
+      property="og:image"
+      content="https://yasirlab.in/assets/social-card.png"
+    />
     <meta name="twitter:card" content="summary_large_image" />
     <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
     <link rel="apple-touch-icon" href="assets/favicon.png" />
     <script src="theme.js"></script>
     <link rel="stylesheet" href="style.css" />
-    <meta name="robots" content="noindex" />
   </head>
-  <body>
+  <body id="top">
     <a class="skip-link" href="#main-content">Skip to content</a>
     <header id="navbar" class="site-header">
       <div class="container nav-inner">
-        <a class="brand" href="index.html">Yasir Javed Khan</a>
+        <a class="brand" href="index.html" aria-label="Yasir Javed Khan — home">
+          Yasir Javed Khan
+        </a>
         <nav class="desktop-nav" aria-label="Primary">
-          <a href="index.html#work">Work</a>
-          <a href="index.html#about">About</a>
-          <a href="index.html#contact">Contact</a>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Projects</a>
+          <a href="visualize.html">Visualize</a>
+          <a href="contact.html">Contact</a>
         </nav>
         <div class="nav-actions">
           <button
@@ -48,7 +57,7 @@
           </button>
           <button
             id="hamburger"
-            class="icon-button"
+            class="icon-button menu-toggle"
             type="button"
             aria-label="Open menu"
             aria-expanded="false"
@@ -60,35 +69,63 @@
           </button>
         </div>
       </div>
-      <nav id="mobileMenu" aria-label="Mobile primary" hidden>
+      <nav id="mobileMenu" class="mobile-menu" aria-label="Mobile primary" hidden>
         <div class="container">
-          <a href="index.html#work">Work</a>
-          <a href="index.html#about">About</a>
-          <a href="index.html#contact">Contact</a>
+          <a href="index.html">Home</a>
+          <a href="about.html">About</a>
+          <a href="projects.html">Projects</a>
+          <a href="visualize.html">Visualize</a>
+          <a href="contact.html">Contact</a>
         </div>
       </nav>
     </header>
 
-    <main id="main-content" class="not-found container" tabindex="-1">
-      <h1>Page not found.</h1>
-      <p>The page may have moved, or the link may be incomplete.</p>
-      <div class="button-row">
-        <a href="index.html" class="button primary">Home</a>
-        <a href="pages/all-projects.html" class="button secondary"
-          >Browse projects</a
-        >
-      </div>
+    <main id="main-content" tabindex="-1">
+      <section class="page error-page" aria-labelledby="error-title">
+        <div class="container error-inner">
+          <p class="kicker">404</p>
+          <h1 id="error-title">Page not found.</h1>
+          <p class="lead">
+            The page may have moved, or the link may be incomplete.
+          </p>
+          <div class="button-row">
+            <a class="button primary" href="index.html">Home</a>
+            <a class="button secondary" href="visualize.html">
+              Explore Visualizations
+            </a>
+          </div>
+        </div>
+      </section>
     </main>
 
     <footer class="site-footer">
       <div class="container footer-inner">
-        <span>© <span id="year">2026</span> Yasir Javed Khan</span>
-        <span>Built with HTML, CSS, and JavaScript.</span>
-        <a href="index.html">Home</a>
+        <div class="footer-copy">
+          <a class="footer-brand" href="index.html">Yasir Javed Khan</a>
+          <p>AI, data science, and machine learning.</p>
+        </div>
+        <div class="footer-links">
+          <a href="mailto:codewithyazzy@gmail.com">Email</a>
+          <a
+            href="https://github.com/CodeWithYazzy"
+            target="_blank"
+            rel="noopener noreferrer"
+            >GitHub</a
+          >
+          <a
+            href="https://x.com/codewithyazzy"
+            target="_blank"
+            rel="noopener noreferrer"
+            >X</a
+          >
+        </div>
+        <p class="footer-year">
+          © <span id="year"></span> Yasir Javed Khan
+        </p>
       </div>
     </footer>
 
-    <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-    <script src="script.js"></script>
+    <div id="toast" class="toast" role="status" aria-live="polite"></div>
+    <script src="main.js" defer></script>
   </body>
 </html>

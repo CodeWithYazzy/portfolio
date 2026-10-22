@@ -1,27 +1,60 @@
-"""Browser regressions for the portfolio.
+"""Browser regressions for the five-page portfolio and visualization lab.
 
-Run with Playwright Python and a local axe-core bundle:
+Run with Playwright Python and an axe-core bundle:
 
     PORTFOLIO_AXE_PATH=/path/to/axe.min.js \
       python -m unittest discover -s tests -v
 
-The suite starts its own loopback-only static server. It never contacts
-GitHub or a deployment; external requests are blocked except for the
-explicit fixtures used by the preview-runner test.
+The suite starts its own loopback-only static server and blocks external
+requests. It never contacts a deployment.
 """
 import functools
 import http.server
-import json
 import os
 from pathlib import Path
+import re
 import shutil
 import threading
 import unittest
+import xml.etree.ElementTree as ET
 
 from playwright.sync_api import sync_playwright
 
 ROOT = Path(__file__).resolve().parents[1]
 AXE = os.environ.get("PORTFOLIO_AXE_PATH") or os.environ.get("YASIRLAB_AXE_PATH")
+EMAIL = "codewithyazzy@gmail.com"
+GITHUB = "https://github.com/CodeWithYazzy"
+X_PROFILE = "https://x.com/codewithyazzy"
+NAV = ["Home", "About", "Projects", "Visualize", "Contact"]
+PAGES = [
+    ("/", "Yasir Javed Khan", "Home", "https://yasirlab.in/"),
+    ("/about.html", "Yasir Javed Khan", "About", "https://yasirlab.in/about"),
+    (
+        "/projects.html",
+        "Projects coming soon.",
+        "Projects",
+        "https://yasirlab.in/projects",
+    ),
+    ("/visualize.html", "Visualize", "Visualize", "https://yasirlab.in/visualize"),
+    ("/contact.html", "Let’s talk.", "Contact", "https://yasirlab.in/contact"),
+]
+OLD_PROJECT_NAMES = [
+    "Iris Flower Classifier",
+    "Calculator App",
+    "House Price Predictor",
+    "Heart Disease Predictor",
+    "Sales Data Dashboard",
+    "Sentiment Analysis",
+    "Stock Predictor",
+    "PyTorch Chatbot",
+    "Digit Classifier",
+    "Customer Segmentation",
+    "NumPy Explorer",
+    "Matplotlib Visualizer",
+    "AI Assistant",
+    "Portfolio Website",
+    "PyTorch Classifier",
+]
 
 
 def browser_executable():
@@ -73,12 +106,12 @@ class PortfolioTests(unittest.TestCase):
     def setUp(self):
         self.context = self.browser.new_context(
             viewport={"width": 1440, "height": 1000},
+            color_scheme="light",
             reduced_motion="reduce",
         )
         self.page = self.context.new_page()
         self.errors = []
         self.page.on("pageerror", lambda error: self.errors.append(str(error)))
-        # Exercise the bundled site, never a remote repository or deployment.
         self.context.route("https://**/*", lambda route: route.abort())
 
     def tearDown(self):
@@ -99,413 +132,489 @@ class PortfolioTests(unittest.TestCase):
             str(value),
         )
 
-    def test_without_javascript_keeps_core_content_and_email_available(self):
-        context = self.browser.new_context(java_script_enabled=False)
-        page = context.new_page()
-        try:
-            page.goto(self.base)
-            self.assertTrue(
-                page.get_by_role("heading", name="Yasir Javed Khan", exact=True).is_visible()
-            )
-            self.assertTrue(page.locator("#about").is_visible())
-            self.assertTrue(page.locator("#work").is_visible())
-            self.assertTrue(
-                page.locator("a.contact-email").get_attribute("href").startswith("mailto:")
-            )
-            self.assertEqual(page.locator(".work-row").count(), 4)
-            self.assertTrue(page.locator("a[href='pages/all-projects.html']").first.is_visible())
-            self.assertEqual(page.locator("#projectModal").count(), 0)
-        finally:
-            context.close()
+    def test_each_page_has_exactly_five_navigation_items(self):
+        for path, heading, active, _ in PAGES:
+            with self.subTest(path=path):
+                self.goto(path)
+                desktop = [
+                    text.strip()
+                    for text in self.page.locator(".desktop-nav a").all_inner_texts()
+                ]
+                mobile = [
+                    text.strip()
+                    for text in self.page.locator("#mobileMenu a").all_inner_texts()
+                ]
+                self.assertEqual(desktop, NAV)
+                self.assertEqual(mobile, NAV)
+                self.assertEqual(self.page.locator("h1").count(), 1)
+                self.assertIn(heading, self.page.locator("h1").inner_text())
+                self.assertEqual(
+                    self.page.locator(
+                        f'.desktop-nav a[aria-current="page"]'
+                    ).inner_text(),
+                    active,
+                )
+                self.assertEqual(
+                    self.page.locator(
+                        f'#mobileMenu a[aria-current="page"]'
+                    ).inner_text(),
+                    active,
+                )
+                self.assertEqual(
+                    self.page.locator('a[aria-current="page"]').count(),
+                    2,
+                )
 
-    def test_homepage_structure_and_selected_work(self):
-        self.goto()
-        self.assertEqual(self.page.locator("h1").count(), 1)
+    def test_home_has_hero_network_and_visualization_preview(self):
+        self.goto("/")
         self.assertEqual(
             self.page.locator("h1").inner_text(), "Yasir Javed Khan"
         )
-        for section in ["#work", "#about", "#contact"]:
-            self.assertTrue(self.page.locator(section).is_visible())
-        self.assertEqual(self.page.locator(".work-row").count(), 4)
         self.assertEqual(
-            self.page.locator(".work-title").first.inner_text(),
-            "Iris Flower Classifier",
-        )
-        demo_link = self.page.locator(".work-row").first.get_attribute("href")
-        self.assertIn("pages/demo.html?project=Iris%20Flower%20Classifier", demo_link)
-        self.assertIn("All 15 projects", self.page.locator("#work").inner_text())
-        self.assertIsNone(
-            self.page.locator("script[type='application/ld+json']").evaluate(
-                "el => JSON.parse(el.textContent).jobTitle || null"
-            )
-        )
-
-    def test_gallery_filters_search_empty_and_reset(self):
-        self.goto("/pages/all-projects.html")
-        self.assertEqual(self.page.locator(".project-card").count(), 15)
-        self.assertEqual(
-            self.page.locator("#projectCount").inner_text().strip(), "15 projects"
-        )
-        self.page.locator('[data-filter="Web"]').click()
-        self.assertEqual(self.page.locator(".project-card").count(), 2)
-        self.assertIn(
-            "2 projects", self.page.locator("#projectCount").inner_text()
-        )
-        self.page.locator("#projectSearch").fill("calculator")
-        self.assertEqual(self.page.locator(".project-card").count(), 1)
-        self.page.locator("#projectSearch").fill("no-such-project")
-        self.assertTrue(self.page.locator("#projectEmpty").is_visible())
-        self.assertEqual(self.page.locator(".project-card").count(), 0)
-        self.page.locator("#resetFilters").click()
-        self.assertEqual(self.page.locator(".project-card").count(), 15)
-        self.assertEqual(
-            self.page.locator('[data-filter="All"]').get_attribute("aria-pressed"),
-            "true",
-        )
-        self.assertEqual(self.page.locator("#projectSearch").input_value(), "")
-        self.assertTrue(
-            self.page.locator("#projectSearch").evaluate(
-                "(el) => el === document.activeElement"
-            )
-        )
-
-    def test_archive_cards_expose_status_category_copy_and_links(self):
-        self.goto("/pages/all-projects.html")
-        cards = self.page.locator(".project-card")
-        self.assertEqual(cards.count(), 15)
-        for index in range(cards.count()):
-            card = cards.nth(index)
-            self.assertTrue(card.locator(".project-status").inner_text().strip())
-            self.assertTrue(card.locator(".project-category").inner_text().strip())
-            self.assertTrue(card.locator(".project-title").inner_text().strip())
-            self.assertTrue(card.locator(".project-desc").inner_text().strip())
-            self.assertTrue(card.locator(".project-tech").inner_text().strip())
-            actions = card.locator(".project-actions a")
-            self.assertGreaterEqual(actions.count(), 1)
-            for action_index in range(actions.count()):
-                self.assertTrue(actions.nth(action_index).get_attribute("href"))
-        self.assertEqual(self.page.get_by_text("Try the demo").count(), 2)
-        self.assertEqual(self.page.get_by_text("Visit the site").count(), 1)
-        target = self.page.locator("#projectSearch")
-        self.assertTrue(target.is_visible())
-
-    def test_hero_iris_demo_predicts_all_three_species(self):
-        self.goto()
-        species = self.page.locator("#demoSpecies")
-        self.assertEqual(species.inner_text(), "Setosa")
-        self.assertEqual(self.page.locator("#demoSlOut").inner_text(), "5.1 cm")
-
-        for values, expected in [
-            (["6.0", "2.2", "4.0", "1.0"], "Versicolor"),
-            (["6.3", "3.3", "6.0", "2.5"], "Virginica"),
-        ]:
-            for field_id, value in zip(
-                ["demoSl", "demoSw", "demoPl", "demoPw"], values
-            ):
-                self.set_range(field_id, value)
-            self.assertEqual(species.inner_text(), expected)
-            self.assertIn(expected, self.page.locator("#demoAnnounce").inner_text())
-
-        self.set_range("demoPl", "6.0")
-        self.assertEqual(species.inner_text(), "Virginica")
-        self.assertIn(
-            "is-winner",
-            self.page.locator("#demoBarVirginica").get_attribute("class"),
-        )
-        percentages = [
-            int(self.page.locator("#" + element).inner_text().rstrip("%"))
-            for element in ["demoPctSetosa", "demoPctVersicolor", "demoPctVirginica"]
-        ]
-        self.assertAlmostEqual(sum(percentages), 100, delta=2)
-
-    def test_themes_system_changes_persistence_and_cross_tab_sync(self):
-        self.page.emulate_media(color_scheme="dark")
-        self.goto()
-        self.assertEqual(self.page.locator("html").get_attribute("data-theme"), "dark")
-        self.assertIsNone(self.page.evaluate('localStorage.getItem("theme")'))
-        self.page.emulate_media(color_scheme="light")
-        self.page.wait_for_function(
-            'document.documentElement.dataset.theme === "light"'
-        )
-        other = self.context.new_page()
-        other.goto(self.base + "/pages/all-projects.html")
-        self.page.locator(".theme-toggle").click()
-        other.wait_for_function(
-            'document.documentElement.dataset.theme === "dark"'
-        )
-        self.page.reload()
-        self.assertEqual(self.page.locator("html").get_attribute("data-theme"), "dark")
-        self.goto("/pages/demo.html?project=Calculator%20App")
-        self.assertEqual(
-            self.page.locator(".theme-toggle").get_attribute("aria-pressed"), "true"
-        )
-        self.page.locator(".theme-toggle").click()
-        self.assertEqual(self.page.locator("html").get_attribute("data-theme"), "light")
-        self.assertEqual(
-            self.page.locator(".theme-toggle").get_attribute("aria-pressed"), "false"
-        )
-
-    def test_storage_denied_does_not_break_theme_or_site(self):
-        self.context.add_init_script(
-            'Object.defineProperty(window, "localStorage", { get() { throw new Error("Storage unavailable"); } })'
-        )
-        self.page.emulate_media(color_scheme="dark")
-        self.goto()
-        self.assertEqual(self.page.locator("html").get_attribute("data-theme"), "dark")
-        self.page.locator(".theme-toggle").click()
-        self.assertEqual(self.page.locator("html").get_attribute("data-theme"), "light")
-
-    def test_mobile_menu_keyboard_anchor_and_resize(self):
-        self.page.set_viewport_size({"width": 390, "height": 844})
-        self.goto()
-        button = self.page.locator("#hamburger")
-        button.focus()
-        self.page.keyboard.press("Enter")
-        self.assertEqual(button.get_attribute("aria-expanded"), "true")
-        self.page.keyboard.press("Tab")
-        self.assertTrue(
-            self.page.locator("#mobileMenu a")
-            .first.evaluate("(el) => el === document.activeElement")
-        )
-        self.page.keyboard.press("Escape")
-        self.assertTrue(button.evaluate("(el) => el === document.activeElement"))
-        self.assertFalse(self.page.locator("#mobileMenu").is_visible())
-        button.click()
-        self.page.locator('#mobileMenu a[href="#work"]').click()
-        self.assertFalse(self.page.locator("#mobileMenu").is_visible())
-        self.assertTrue(self.page.url.endswith("#work"))
-        self.assertEqual(self.page.evaluate("document.activeElement.id"), "work")
-        button.click()
-        self.page.set_viewport_size({"width": 1000, "height": 900})
-        self.assertFalse(self.page.locator("#mobileMenu").is_visible())
-
-    def test_copy_email_offers_feedback(self):
-        self.goto("/#contact")
-        self.page.locator("#copyEmail").click()
-        toast = self.page.locator("#toast")
-        self.assertTrue(toast.evaluate("(el) => el.classList.contains('show')"))
-        self.assertIn("email", toast.inner_text().lower())
-
-    def test_calculator_arithmetic_and_error_handling_offline(self):
-        self.goto("/pages/demo.html?project=Calculator%20App")
-        self.page.locator("#runDemo").click()
-        self.page.locator("#calculatorDemo").wait_for(state="visible")
-        self.assertTrue(self.page.locator("#pipeline").is_hidden())
-        for key in ["2", "+", "3", "*", "4", "="]:
-            self.page.locator(f'[data-calc="{key}"]').click()
-        self.assertEqual(self.page.locator("#calculatorDisplay").input_value(), "14")
-        self.page.locator('[data-calc="clear"]').click()
-        for key in ["1", "/", "0", "="]:
-            self.page.locator(f'[data-calc="{key}"]').click()
-        self.assertIn("Cannot divide by zero", self.page.locator("#status").inner_text())
-        self.assertEqual(self.page.evaluate('evaluateLocally("(2+3)^2")'), 25)
-        self.assertEqual(
-            self.page.evaluate(
-                '(() => { try { evaluateLocally("alert(1)") } catch (e) { return e.message } })()'
-            ),
-            "Enter a valid expression.",
-        )
-
-    def test_iris_page_predicts_three_species_and_rejects_empty_input(self):
-        self.goto("/pages/demo.html?project=Iris%20Flower%20Classifier")
-        self.page.locator("#runDemo").click()
-        self.page.locator("#irisDemo").wait_for(state="visible")
-        self.assertTrue(self.page.locator("#pipeline").is_hidden())
-        self.assertEqual(
-            self.page.title(), "Iris Flower Classifier — Yasir Javed Khan"
-        )
-        self.assertIn("Setosa", self.page.locator("#irisResult").inner_text())
-        for values, species in [
-            ([6.0, 2.2, 4.0, 1.0], "Versicolor"),
-            ([6.3, 3.3, 6.0, 2.5], "Virginica"),
-        ]:
-            for field, value in zip(["Sl", "Sw", "Pl", "Pw"], values):
-                self.page.locator("#iris" + field).fill(str(value))
-            self.assertIn(species, self.page.locator("#irisResult").inner_text())
-        self.page.locator("#irisSl").fill("")
-        self.assertIn(
-            "four positive", self.page.locator("#irisResult").inner_text()
-        )
-        self.assertIn(
-            "inference, not measured accuracy",
-            self.page.locator("#irisDemo .demo-note").inner_text(),
-        )
-
-    def test_runner_static_sandbox_and_python_unavailable_fixture(self):
-        # Explicit fixtures, not claims about live GitHub availability.
-        self.goto("/pages/demo.html?project=Portfolio%20Website")
-        detected = self.page.evaluate(
-            'GithubDemoRunner.detectProjectType(["index.html", "tools/sync-catalog.py", "tests/test_portfolio.py"])'
+            self.page.locator(".button.primary").first.get_attribute("href"),
+            "visualize.html",
         )
         self.assertEqual(
-            detected["type"],
-            "A",
-            "Python test/tooling files must not turn a static website into a Python application",
+            self.page.locator(".button.secondary").first.get_attribute("href"),
+            "about.html",
         )
-        detected = self.page.evaluate(
-            'GithubDemoRunner.detectProjectType(["index.html", "requirements.txt", "app.py"])'
-        )
-        self.assertEqual(
-            detected["type"],
-            "E",
-            "A real Python runtime manifest still requires Python",
-        )
-        self.context.unroute("https://**/*")
-        self.context.route(
-            "https://api.github.com/**",
-            lambda route: route.fulfill(
-                json={"tree": [{"path": "index.html", "type": "blob"}]}
-            ),
-        )
-        self.context.route(
-            "https://raw.githubusercontent.com/**",
-            lambda route: route.fulfill(
-                body='<h1>Fixture</h1><button onclick="this.textContent=\'It works\'">Run fixture</button>',
-                content_type="text/html",
-            ),
-        )
-        self.goto("/pages/demo.html?project=Portfolio%20Website")
-        self.page.locator("#runDemo").click()
-        frame = self.page.frame_locator("#demoFrame")
-        frame.get_by_role("button", name="Run fixture").click()
-        self.assertEqual(frame.get_by_role("button").inner_text(), "It works")
-        self.assertNotIn(
-            "allow-same-origin",
-            self.page.locator("#demoFrame").get_attribute("sandbox"),
-        )
-        self.assertTrue(self.page.locator("#pipeline").is_hidden())
-        self.context.route(
-            "https://api.github.com/**",
-            lambda route: route.fulfill(
-                json={
-                    "tree": [
-                        {"path": "sales-dashboard/src/analysis.py", "type": "blob"}
-                    ]
-                }
-            ),
-        )
-        self.goto("/pages/demo.html?project=Sales%20Data%20Dashboard")
-        self.page.locator("#runDemo").click()
-        self.page.locator("#errorPanel").wait_for(state="visible")
-        self.assertIn("Python required", self.page.locator("#errorPanel").inner_text())
-        self.assertTrue(self.page.locator("#pipeline").is_hidden())
-
-    def test_bundled_catalog_fallback_when_json_unavailable(self):
-        self.context.route("**/assets/projects.json", lambda route: route.abort())
-        self.goto("/pages/all-projects.html")
-        self.assertEqual(self.page.locator(".project-card").count(), 15)
-        self.goto("/pages/demo.html?project=Calculator%20App")
-        self.page.locator("#runDemo").click()
-        self.page.locator("#calculatorDemo").wait_for(state="visible")
-
-    def test_file_protocol_catalog_fallback(self):
-        try:
-            self.page.goto((ROOT / "pages/all-projects.html").as_uri())
-        except Exception as error:
-            if "ERR_BLOCKED_BY_ADMINISTRATOR" in str(error):
-                self.skipTest(
-                    "Managed Chromium policy prohibits file:// navigation; HTTP fallback is tested separately."
-                )
-            raise
-        self.page.wait_for_function(
-            'document.querySelectorAll(".project-card").length === 15'
-        )
-        self.page.goto((ROOT / "pages/demo.html").as_uri() + "?project=Calculator%20App")
-        self.page.locator("#runDemo").click()
-        self.page.locator("#calculatorDemo").wait_for(state="visible")
-
-    def test_responsive_layouts_and_seo(self):
-        for width in [320, 390, 768, 1440]:
-            self.page.set_viewport_size({"width": width, "height": 900})
-            for path in [
-                "/",
-                "/pages/all-projects.html",
-                "/pages/demo.html?project=Iris%20Flower%20Classifier",
-                "/404.html",
-            ]:
-                with self.subTest(width=width, path=path):
-                    self.goto(path)
-                    self.assertFalse(
-                        self.page.evaluate(
-                            "document.documentElement.scrollWidth > innerWidth"
-                        ),
-                        "Horizontal overflow",
-                    )
-                    self.assertEqual(self.page.locator("main").count(), 1)
-                    self.assertEqual(self.page.locator("h1").count(), 1)
-                    self.assertTrue(
-                        self.page.locator("meta[name=description]").get_attribute(
-                            "content"
-                        )
-                    )
-                    self.assertTrue(
-                        self.page.locator("link[rel=canonical]")
-                        .get_attribute("href")
-                        .startswith("https://yasirlab.in/")
-                    )
-        self.goto()
-        schema = json.loads(
-            self.page.locator('script[type="application/ld+json"]').inner_text()
-        )
-        self.assertEqual(schema["@type"], "Person")
-        self.assertNotIn("jobTitle", schema)
         body = self.page.locator("body").inner_text().lower()
-        for claim in ["years of experience", "award-winning", "certified"]:
-            self.assertNotIn(claim, body)
-
-    def test_axe_accessibility_pages_themes_and_demos(self):
-        self.assertTrue(
-            AXE and Path(AXE).is_file(),
-            "Set PORTFOLIO_AXE_PATH to the axe-core bundle; the audit must not be silently skipped.",
+        self.assertNotIn("iris", body)
+        self.assertNotIn("selected work", body)
+        self.assertEqual(self.page.locator(".preview-card").count(), 3)
+        anchors = self.page.locator(".preview-card").evaluate_all(
+            "cards => cards.map(card => card.getAttribute('href'))"
         )
-        paths = [
-            "/",
-            "/pages/all-projects.html",
-            "/pages/demo.html?project=Iris%20Flower%20Classifier",
-            "/404.html",
-        ]
-        for width in [390, 1440]:
-            self.page.set_viewport_size({"width": width, "height": 900})
-            for theme in ["light", "dark"]:
-                for path in paths:
-                    with self.subTest(width=width, theme=theme, path=path):
-                        self.goto(path)
-                        self.page.evaluate(
-                            "(theme) => { document.documentElement.dataset.theme = theme }",
-                            theme,
-                        )
-                        if "demo.html" in path:
-                            self.page.locator("#runDemo").click()
-                            self.page.locator("#irisDemo").wait_for(state="visible")
-                        if path == "/" and width == 390:
-                            self.page.locator("#hamburger").click()
-                        self.audit_axe()
-                self.goto()
-                self.page.evaluate(
-                    "(theme) => { document.documentElement.dataset.theme = theme }",
-                    theme,
-                )
-                self.page.locator("#copyEmail").click()
-                self.audit_axe()
-
-    def audit_axe(self):
-        self.page.add_script_tag(path=AXE)
-        violations = self.page.evaluate(
-            """async () => {
-                const result = await axe.run(document, {
-                    runOnly: {
-                        type: 'tag',
-                        values: ['wcag2a', 'wcag2aa', 'wcag21aa', 'best-practice']
-                    }
-                });
-                return result.violations.map((violation) => ({
-                    id: violation.id,
-                    impact: violation.impact,
-                    nodes: violation.nodes.map((node) => node.target)
-                }));
+        self.assertEqual(
+            anchors,
+            [
+                "visualize.html#neural-network",
+                "visualize.html#gradient-descent",
+                "visualize.html#k-means",
+            ],
+        )
+        self.page.wait_for_timeout(150)
+        painted = self.page.locator("#heroNetwork").evaluate(
+            """canvas => {
+                const data = canvas.getContext('2d').getImageData(
+                    0, 0, canvas.width, canvas.height
+                ).data;
+                let count = 0;
+                for (let i = 3; i < data.length; i += 4) {
+                    if (data[i] > 0) count += 1;
+                }
+                return count;
             }"""
         )
-        self.assertEqual(violations, [])
+        self.assertGreater(painted, 1000, "The hero network should be painted")
+
+    def test_projects_page_is_coming_soon_without_invented_work(self):
+        self.goto("/projects.html")
+        body = self.page.locator("body").inner_text()
+        self.assertIn("Projects coming soon", body)
+        self.assertIn("I haven’t published any projects yet", body)
+        self.assertEqual(self.page.locator("article").count(), 0)
+        self.assertEqual(self.page.locator(".project-card").count(), 0)
+        for name in OLD_PROJECT_NAMES:
+            self.assertNotIn(name, body)
+        self.assertNotIn("Iris", body)
+        self.assertEqual(
+            self.page.locator("main .button.primary").get_attribute("href"),
+            "visualize.html",
+        )
+
+    def test_about_uses_only_verified_personal_details(self):
+        self.goto("/about.html")
+        body = self.page.locator("main").inner_text()
+        self.assertIn("Yasir Javed Khan", body)
+        self.assertIn("Mumbai", body)
+        self.assertIn("AI, data science, and machine learning", body)
+        portrait = self.page.locator('img[src="assets/portrait.webp"]')
+        self.assertTrue(portrait.is_visible())
+        self.assertIn("Portrait of Yasir Javed Khan", portrait.get_attribute("alt"))
+        for unverified in [
+            "student",
+            "education",
+            "work experience",
+            "skills",
+            "award",
+            "achievement",
+        ]:
+            self.assertNotIn(unverified, body.lower())
+        main = self.page.locator("main")
+        self.assertEqual(
+            main.locator(f'a[href="{GITHUB}"][target="_blank"]').count(),
+            1,
+        )
+        self.assertEqual(
+            main.locator(f'a[href="{X_PROFILE}"][target="_blank"]').count(),
+            1,
+        )
+
+    def test_contact_has_confirmed_links_and_copy_feedback(self):
+        self.context.grant_permissions(
+            ["clipboard-read", "clipboard-write"], origin=self.base
+        )
+        self.goto("/contact.html")
+        self.assertEqual(
+            self.page.locator(".email-link").inner_text().strip(), EMAIL
+        )
+        self.assertEqual(
+            self.page.locator(".email-link").get_attribute("href"),
+            f"mailto:{EMAIL}",
+        )
+        self.assertEqual(
+            self.page.locator(f'a[href="{GITHUB}"]').count(), 2
+        )
+        self.assertEqual(
+            self.page.locator(f'a[href="{X_PROFILE}"]').count(), 2
+        )
+        self.page.locator("#copyEmail").click()
+        self.page.wait_for_function(
+            "document.querySelector('#toast').textContent.includes('copied')"
+        )
+        self.assertEqual(
+            self.page.evaluate("navigator.clipboard.readText()"), EMAIL
+        )
+
+    def test_neural_network_trains_resets_and_steps(self):
+        self.goto("/visualize.html")
+        self.page.wait_for_function(
+            "document.querySelector('#nnStatus').dataset.epoch === '0'"
+        )
+        initial = float(
+            self.page.locator("#nnStatus").get_attribute("data-accuracy")
+        )
+        self.assertLess(initial, 0.8)
+        self.page.locator("#nnRun").click()
+        self.assertEqual(self.page.locator("#nnRun").inner_text().strip(), "Pause")
+        self.page.wait_for_function(
+            """() => {
+                const status = document.querySelector('#nnStatus');
+                return Number(status.dataset.epoch) > 100
+                    && Number(status.dataset.accuracy) > 0.8;
+            }""",
+            timeout=20000,
+        )
+        self.page.locator("#nnRun").click()
+        self.assertEqual(self.page.locator("#nnRun").inner_text().strip(), "Train")
+        self.page.locator("#nnReset").click()
+        self.assertEqual(
+            self.page.locator("#nnStatus").get_attribute("data-epoch"), "0"
+        )
+        self.page.locator("#nnStep").click()
+        self.assertEqual(
+            self.page.locator("#nnStatus").get_attribute("data-epoch"), "10"
+        )
+        self.set_range("nnUnits", 3)
+        self.assertEqual(
+            self.page.locator("#nnStatus").get_attribute("data-epoch"), "0"
+        )
+        self.assertEqual(
+            self.page.locator("#nnUnitsValue").inner_text(), "3"
+        )
+
+    def test_gradient_descent_steps_and_converges(self):
+        self.goto("/visualize.html")
+        self.page.wait_for_function(
+            "document.querySelector('#gdStatus').dataset.x === '-2.0000'"
+        )
+        start_loss = float(self.page.locator("#gdStatus").get_attribute("data-loss"))
+        for _ in range(3):
+            self.page.locator("#gdStep").click()
+        x_after = float(self.page.locator("#gdStatus").get_attribute("data-x"))
+        loss_after = float(self.page.locator("#gdStatus").get_attribute("data-loss"))
+        self.assertGreater(x_after, -1.5)
+        self.assertLess(loss_after, start_loss)
+        self.page.locator("#gdReset").click()
+        self.assertAlmostEqual(
+            float(self.page.locator("#gdStatus").get_attribute("data-x")), -2.0
+        )
+        self.set_range("gdLr", 0.4)
+        self.page.locator("#gdRun").click()
+        self.page.wait_for_function(
+            "document.querySelector('#gdStatus').dataset.state.includes('Converged')",
+            timeout=8000,
+        )
+        self.assertAlmostEqual(
+            float(self.page.locator("#gdStatus").get_attribute("data-x")),
+            1.4,
+            places=1,
+        )
+        self.page.locator("#gdReset").click()
+        self.page.select_option("#gdFunction", "double")
+        self.assertEqual(
+            self.page.locator("#gdStatus").get_attribute("data-function"), "double"
+        )
+        self.assertIn(
+            "double well",
+            self.page.locator("#gdCanvas").get_attribute("aria-label").lower(),
+        )
+        self.set_range("gdStart", 0)
+        self.page.locator("#gdStep").click()
+        self.assertIn(
+            "local maximum",
+            self.page.locator("#gdStatus").get_attribute("data-state").lower(),
+        )
+
+    def test_kmeans_converges_resets_and_changes_k(self):
+        self.goto("/visualize.html")
+        self.page.wait_for_function(
+            "document.querySelector('#kmStatus').dataset.iteration === '0'"
+        )
+        self.assertEqual(
+            self.page.locator("#kmLegend .legend-item").count(), 3
+        )
+        self.page.locator("#kmRun").click()
+        self.page.wait_for_function(
+            "document.querySelector('#kmStatus').dataset.state === 'converged'",
+            timeout=6000,
+        )
+        self.assertGreaterEqual(
+            int(self.page.locator("#kmStatus").get_attribute("data-iteration")), 1
+        )
+        self.assertGreater(
+            float(self.page.locator("#kmStatus").get_attribute("data-inertia")), 0
+        )
+        labels = self.page.locator("#kmLegend .legend-item").all_inner_texts()
+        self.assertEqual(len(labels), 3)
+        for label in labels:
+            self.assertRegex(label.strip(), r"^Cluster \d: \d+$")
+        self.page.locator("#kmReset").click()
+        self.assertEqual(
+            self.page.locator("#kmStatus").get_attribute("data-iteration"), "0"
+        )
+        self.assertTrue(self.page.locator("#kmRun").is_enabled())
+        self.set_range("kmK", 4)
+        self.assertEqual(
+            self.page.locator("#kmStatus").get_attribute("data-clusters"), "4"
+        )
+        self.assertEqual(
+            self.page.locator("#kmLegend .legend-item").count(), 4
+        )
+        self.assertEqual(
+            self.page.locator("#kmStatus").get_attribute("data-iteration"), "0"
+        )
+
+    def test_theme_choice_persists_across_pages(self):
+        self.goto("/")
+        self.assertEqual(
+            self.page.evaluate("document.documentElement.dataset.theme"), "light"
+        )
+        self.page.locator(".theme-toggle").click()
+        self.assertEqual(
+            self.page.evaluate("document.documentElement.dataset.theme"), "dark"
+        )
+        self.assertEqual(
+            self.page.evaluate("localStorage.getItem('theme')"), "dark"
+        )
+        self.assertEqual(
+            self.page.locator('meta[name="theme-color"]').get_attribute("content"),
+            "#000000",
+        )
+        self.goto("/about.html")
+        self.assertEqual(
+            self.page.evaluate("document.documentElement.dataset.theme"), "dark"
+        )
+        self.page.locator(".theme-toggle").click()
+        self.goto("/contact.html")
+        self.assertEqual(
+            self.page.evaluate("document.documentElement.dataset.theme"), "light"
+        )
+
+    def test_mobile_menu_has_five_items_and_escape_closes_it(self):
+        self.page.set_viewport_size({"width": 390, "height": 844})
+        self.goto("/")
+        self.assertFalse(self.page.locator(".desktop-nav").is_visible())
+        self.assertTrue(self.page.locator("#hamburger").is_visible())
+        self.page.locator("#hamburger").click()
+        self.assertTrue(self.page.locator("#mobileMenu").is_visible())
+        self.assertEqual(
+            [
+                text.strip()
+                for text in self.page.locator("#mobileMenu a").all_inner_texts()
+            ],
+            NAV,
+        )
+        self.assertEqual(
+            self.page.locator('#mobileMenu a[aria-current="page"]').inner_text(),
+            "Home",
+        )
+        self.assertEqual(
+            self.page.locator("#hamburger").get_attribute("aria-expanded"), "true"
+        )
+        self.page.keyboard.press("Escape")
+        self.assertFalse(self.page.locator("#mobileMenu").is_visible())
+        self.assertEqual(
+            self.page.evaluate("document.activeElement.id"), "hamburger"
+        )
+        self.assertFalse(
+            self.page.evaluate(
+                "document.documentElement.scrollWidth > document.documentElement.clientWidth"
+            )
+        )
+
+    def test_responsive_layouts_do_not_overflow(self):
+        pages = PAGES + [("/404.html", "Page not found.", None, None)]
+        for width in (320, 390, 768, 1440):
+            self.page.set_viewport_size({"width": width, "height": 900})
+            for path, heading, _, _ in pages:
+                with self.subTest(width=width, path=path):
+                    self.goto(path)
+                    self.assertEqual(self.page.locator("h1").count(), 1)
+                    self.assertIn(heading, self.page.locator("h1").inner_text())
+                    overflow = self.page.evaluate(
+                        "document.documentElement.scrollWidth > document.documentElement.clientWidth + 1"
+                    )
+                    self.assertFalse(overflow)
+
+    def test_metadata_sitemap_and_internal_links(self):
+        for path, _, _, canonical in PAGES:
+            with self.subTest(path=path):
+                self.goto(path)
+                self.assertEqual(
+                    self.page.locator('link[rel="canonical"]').get_attribute("href"),
+                    canonical,
+                )
+                self.assertTrue(
+                    self.page.locator('meta[name="description"]')
+                    .get_attribute("content")
+                    .strip()
+                )
+                self.assertEqual(
+                    self.page.locator('meta[property="og:image"]').get_attribute(
+                        "content"
+                    ),
+                    "https://yasirlab.in/assets/social-card.png",
+                )
+                hrefs = self.page.locator("a[href]").evaluate_all(
+                    "links => links.map(link => link.getAttribute('href'))"
+                )
+                for href in hrefs:
+                    self.assertNotIn("pages/", href)
+                    if href.startswith(("http", "mailto:", "#")):
+                        continue
+                    target = href.split("#", 1)[0].split("?", 1)[0]
+                    if target:
+                        self.assertTrue(
+                            (ROOT / target).is_file(),
+                            f"Missing local link target: {target}",
+                        )
+        sitemap = ET.parse(ROOT / "sitemap.xml")
+        namespace = {"s": "http://www.sitemaps.org/schemas/sitemap/0.9"}
+        locations = {
+            node.text.strip()
+            for node in sitemap.findall(".//s:loc", namespace)
+        }
+        self.assertEqual(
+            locations,
+            {
+                "https://yasirlab.in/",
+                "https://yasirlab.in/about",
+                "https://yasirlab.in/projects",
+                "https://yasirlab.in/visualize",
+                "https://yasirlab.in/contact",
+            },
+        )
+        robots = (ROOT / "robots.txt").read_text(encoding="utf-8")
+        self.assertIn("Sitemap: https://yasirlab.in/sitemap.xml", robots)
+
+    def test_core_content_without_javascript(self):
+        context = self.browser.new_context(
+            java_script_enabled=False,
+            viewport={"width": 1440, "height": 1000},
+        )
+        page = context.new_page()
+        try:
+            page.goto(self.base + "/")
+            self.assertTrue(
+                page.get_by_role(
+                    "heading", name="Yasir Javed Khan", exact=True
+                ).is_visible()
+            )
+            self.assertTrue(
+                page.get_by_role(
+                    "link", name="Explore Visualizations", exact=True
+                ).is_visible()
+            )
+            page.goto(self.base + "/visualize.html")
+            self.assertTrue(
+                page.get_by_role("heading", name="Visualize", exact=True).is_visible()
+            )
+            self.assertTrue(page.locator(".noscript-note").is_visible())
+            page.goto(self.base + "/contact.html")
+            self.assertTrue(
+                page.locator(".email-link").get_attribute("href").startswith("mailto:")
+            )
+        finally:
+            context.close()
+
+    @unittest.skipUnless(AXE and Path(AXE).is_file(), "axe-core bundle not configured")
+    def test_accessibility_audits_light_dark_and_mobile(self):
+        def audit():
+            self.page.add_script_tag(path=AXE)
+            violations = self.page.evaluate(
+                """async () => {
+                    const result = await axe.run(document, {
+                        runOnly: {
+                            type: 'tag',
+                            values: [
+                                'wcag2a',
+                                'wcag2aa',
+                                'wcag21a',
+                                'wcag21aa',
+                                'best-practice'
+                            ]
+                        },
+                        resultTypes: ['violations']
+                    });
+                    return result.violations.map(violation => ({
+                        id: violation.id,
+                        impact: violation.impact,
+                        help: violation.help,
+                        nodes: violation.nodes.map(node => ({
+                            target: node.target,
+                            summary: node.failureSummary
+                        }))
+                    }));
+                }"""
+            )
+            self.assertEqual(violations, [], f"Axe violations on {self.page.url}")
+
+        for path, _, _, _ in PAGES:
+            with self.subTest(path=path, theme="light", width="desktop"):
+                self.goto(path)
+                audit()
+            with self.subTest(path=path, theme="dark", width="desktop"):
+                self.page.locator(".theme-toggle").click()
+                audit()
+            with self.subTest(path=path, theme="dark", width="mobile"):
+                self.page.set_viewport_size({"width": 390, "height": 844})
+                audit()
+
+        self.page.set_viewport_size({"width": 390, "height": 844})
+        self.goto("/")
+        self.page.locator("#hamburger").click()
+        audit()
+
+    def test_no_old_demo_catalog_or_project_copy_survives(self):
+        for path, _, _, _ in PAGES:
+            with self.subTest(path=path):
+                self.goto(path)
+                body = self.page.locator("body").inner_text()
+                self.assertNotIn("Iris", body)
+                self.assertNotIn("Selected work", body)
+                self.assertNotIn("All 15 projects", body)
+                for name in OLD_PROJECT_NAMES:
+                    self.assertNotIn(name, body)
+                hrefs = " ".join(
+                    self.page.locator("a[href]").evaluate_all(
+                        "links => links.map(link => link.getAttribute('href'))"
+                    )
+                )
+                self.assertNotIn("demo.html", hrefs)
+                self.assertNotIn("all-projects", hrefs)
+                self.assertNotIn("projects.json", hrefs)
 
 
 if __name__ == "__main__":

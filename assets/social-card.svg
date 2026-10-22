@@ -1,1 +1,11 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><rect width="1200" height="630" fill="#f5f5f7"/><text x="100" y="110" fill="#646469" font-family="Arial,sans-serif" font-size="28">YasirLab 2.0 / Yasir Javed Khan</text><text x="94" y="300" fill="#1d1d1f" font-family="Arial,sans-serif" font-size="112" font-weight="bold" letter-spacing="-6">Curiosity.</text><text x="94" y="425" fill="#0066cc" font-family="Arial,sans-serif" font-size="112" font-weight="bold" letter-spacing="-6">In progress.</text><text x="100" y="540" fill="#646469" font-family="Arial,sans-serif" font-size="22">Personal portfolio. AI &amp; ML laboratory. Independent ideas.</text></svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-label="Yasir Javed Khan — exploring AI, data, and machine learning">
+  <rect width="1200" height="630" fill="#fbfbfd"/>
+  <circle cx="1110" cy="90" r="230" fill="#eef4fb"/>
+  <text x="92" y="88" fill="#5f6065" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="25">Yasir Javed Khan · Mumbai, India</text>
+  <text x="1108" y="88" fill="#5f6065" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="21" text-anchor="end">AI · Data · Machine Learning</text>
+  <text x="88" y="292" fill="#1d1d1f" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="94" font-weight="600" letter-spacing="-5">Exploring AI, data,</text>
+  <text x="88" y="400" fill="#1d1d1f" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="94" font-weight="600" letter-spacing="-5">and machine <tspan fill="#0066cc">learning.</tspan></text>
+  <line x1="92" y1="506" x2="1108" y2="506" stroke="#dedee3" stroke-width="1"/>
+  <text x="92" y="558" fill="#5f6065" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="22">Interactive experiments in how models learn.</text>
+  <text x="1108" y="558" fill="#0066cc" font-family="-apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif" font-size="22" text-anchor="end">yasirlab.in</text>
+</svg>
