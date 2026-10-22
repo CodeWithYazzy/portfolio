@@ -1,0 +1,39 @@
+{
+  "scope": "Packaged local preview; Lighthouse12.8.2 mobile preset; uncompressed loopback HTTP; not production field data",
+  "browserTests": {
+    "methods": 16,
+    "passed": 16,
+    "failures": 0,
+    "durationSeconds": 99.143
+  },
+  "nodeTests": {
+    "tests": 37,
+    "passed": 37
+  },
+  "axeAuditStates": 30,
+  "axeViolations": 0,
+  "pendingPersonalDetail": "Exact display name",
+  "contact": "Form hidden unless explicitly enabled and fully configured; real delivery not tested",
+  "home": {
+    "scores": {
+      "performance": 100,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "LCP": "1.4\u00a0s",
+    "CLS": "0",
+    "TBT": "0\u00a0ms"
+  },
+  "visualize": {
+    "scores": {
+      "performance": 99,
+      "accessibility": 100,
+      "best-practices": 100,
+      "seo": 100
+    },
+    "LCP": "1.7\u00a0s",
+    "CLS": "0",
+    "TBT": "0\u00a0ms"
+  }
+}

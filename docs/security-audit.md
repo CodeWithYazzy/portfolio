@@ -1,3 +1,5 @@
+> Historical report for the preceding portfolio revision. See [the current five-page review](five-page-redesign.md) for the latest structure and validation.
+
 # Security and privacy audit — 18 October 2026
 
 ## Scope and evidence

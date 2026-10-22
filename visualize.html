@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Visualize — YasirLab</title>
+    <meta
+      name="description"
+      content="Explore real browser-based gradient descent, K-means clustering, and neural-network architecture experiments. Transparent educational simulations."
+    />
+    <meta name="theme-color" content="#0b101c" />
+    <link rel="canonical" href="https://yasirlab.in/visualize" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Visualize — YasirLab" />
+    <meta
+      property="og:description"
+      content="Explore real browser-based gradient descent, K-means clustering, and neural-network architecture experiments. Transparent educational simulations."
+    />
+    <meta property="og:url" content="https://yasirlab.in/visualize" />
+    <meta
+      property="og:image"
+      content="https://yasirlab.in/assets/social-card.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="YasirLab — AI and data science, made visible"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/favicon.png" />
+    <script src="/theme.js"></script>
+    <link
+      rel="preload"
+      href="/assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/style.css" />
+  </head>
+  <body class="">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container nav-row">
+        <a class="brand" href="/index.html" aria-label="YasirLab home"
+          ><span class="brand-icon" aria-hidden="true">y.</span
+          ><span>YasirLab</span></a
+        >
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/index.html">Home</a><a href="/about.html">About</a
+          ><a href="/projects.html">Projects</a
+          ><a href="/visualize.html" aria-current="page">Visualize</a
+          ><a href="/contact.html">Contact</a>
+        </nav>
+        <div class="nav-actions">
+          <button
+            class="icon-button theme-toggle"
+            type="button"
+            aria-label="Switch to light mode"
+            aria-pressed="true"
+          >
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+              /></svg
+            ><svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.9 13.1A9 9 0 0 1 10.9 3.1 9 9 0 1 0 20.9 13.1Z" />
+            </svg></button
+          ><button
+            id="hamburger"
+            class="icon-button menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
+            aria-label="Open menu"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 8h16M4 16h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav id="mobileMenu" aria-label="Mobile primary" hidden>
+        <a href="/index.html">Home</a><a href="/about.html">About</a
+        ><a href="/projects.html">Projects</a
+        ><a href="/visualize.html" aria-current="page">Visualize</a
+        ><a href="/contact.html">Contact</a>
+      </nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <section class="container visualize-intro">
+        <p class="eyebrow">THE VISUALIZATION LAB</p>
+        <div class="visualize-heading">
+          <div>
+            <h1>
+              Machine learning,<br /><span class="muted">made visible.</span>
+            </h1>
+            <p class="page-lead">
+              Small, interactive experiments in machine learning.<br />Adjust
+              the controls. Follow the process. Ask why.
+            </p>
+          </div>
+          <p class="local-note">
+            <span aria-hidden="true">◌</span> Runs locally in your browser<br />No
+            account. No uploaded data.
+          </p>
+        </div>
+      </section>
+      <section class="container lab-shell">
+        <div
+          class="lab-tabs"
+          role="tablist"
+          aria-label="Choose a visualization"
+        >
+          <button
+            id="tab-gradient"
+            role="tab"
+            type="button"
+            aria-selected="true"
+            aria-controls="panel-gradient"
+            data-tab="gradient"
+          >
+            Gradient descent</button
+          ><button
+            id="tab-clustering"
+            role="tab"
+            type="button"
+            aria-selected="false"
+            aria-controls="panel-clustering"
+            data-tab="clustering"
+            tabindex="-1"
+          >
+            K-means clustering</button
+          ><button
+            id="tab-network"
+            role="tab"
+            type="button"
+            aria-selected="false"
+            aria-controls="panel-network"
+            data-tab="network"
+            tabindex="-1"
+          >
+            Neural network
+          </button>
+        </div>
+        <div
+          id="panel-gradient"
+          role="tabpanel"
+          aria-labelledby="tab-gradient"
+          tabindex="0"
+          class="experiment-panel"
+        >
+          <div class="experiment-description">
+            <div>
+              <span class="eyebrow">01 / OPTIMIZATION</span>
+              <h2>Find the bottom of the curve.</h2>
+              <p>
+                Gradient descent updates a value in the direction that reduces a
+                function. Here, the loss is f(x) = x² and the gradient is 2x.
+              </p>
+            </div>
+            <span class="pill">Mathematical simulation</span>
+          </div>
+          <div class="workspace">
+            <div class="controls" role="group" aria-label="Experiment controls">
+              <div class="control-group">
+                <label for="learningRate"
+                  >Learning rate
+                  <output id="rateValue" for="learningRate">0.12</output></label
+                ><input
+                  type="range"
+                  id="learningRate"
+                  min="0.02"
+                  max="1.2"
+                  step="0.02"
+                  value="0.12"
+                />
+                <p>
+                  For this function, rates between 0 and 1 converge. Try going
+                  above 1.
+                </p>
+              </div>
+              <div class="control-group">
+                <label for="startX"
+                  >Starting x
+                  <output id="startValue" for="startX">3.0</output></label
+                ><input
+                  type="range"
+                  id="startX"
+                  min="-4"
+                  max="4"
+                  step="0.2"
+                  value="3"
+                />
+              </div>
+              <div class="control-buttons">
+                <button id="gradientRun" class="button primary" type="button">
+                  Run</button
+                ><button
+                  id="gradientStep"
+                  class="button secondary"
+                  type="button"
+                >
+                  Step</button
+                ><button id="gradientReset" class="text-button" type="button">
+                  Reset
+                </button>
+              </div>
+              <p class="formula">xₙ₊₁ = xₙ − η · 2xₙ</p>
+              <p class="help-note">
+                This is a one-variable function, not training an AI model.
+              </p>
+            </div>
+            <div class="plot-area">
+              <div class="chart-heading">
+                <span>OBJECTIVE / f(x) = x²</span
+                ><span class="chart-key"
+                  ><i aria-hidden="true"></i> Current position</span
+                >
+              </div>
+              <svg
+                class="experiment-chart"
+                id="gradientChart"
+                viewBox="0 0 760 360"
+                role="img"
+                aria-labelledby="gradientChartTitle gradientChartDesc"
+              >
+                <title id="gradientChartTitle">
+                  Gradient descent on x squared
+                </title>
+                <desc id="gradientChartDesc">
+                  A parabola with the current position and previous steps
+                  marked. Exact values are available below.
+                </desc>
+                <g id="gradientPlot"></g>
+              </svg>
+              <div class="metrics">
+                <div>
+                  <span>Iteration</span
+                  ><strong id="gradientIteration">0</strong>
+                </div>
+                <div>
+                  <span>Current x</span><strong id="gradientX">3.0000</strong>
+                </div>
+                <div>
+                  <span>Loss · x²</span
+                  ><strong id="gradientLoss">9.0000</strong>
+                </div>
+              </div>
+              <p
+                id="gradientStatus"
+                class="experiment-status"
+                role="status"
+                aria-live="polite"
+              >
+                Ready. Run the simulation or take one step.
+              </p>
+            </div>
+          </div>
+          <details class="explanation">
+            <summary>Why does the learning rate matter?</summary>
+            <p>
+              Each update multiplies x by (1 − 2η). When 0 &lt; η &lt; 1, the
+              magnitude shrinks toward zero. At η = 1, x oscillates. Above 1, it
+              grows. This behavior belongs to this particular quadratic; real
+              loss landscapes can behave very differently.
+            </p>
+          </details>
+        </div>
+        <div
+          id="panel-clustering"
+          role="tabpanel"
+          aria-labelledby="tab-clustering"
+          tabindex="0"
+          class="experiment-panel"
+          hidden
+        >
+          <div class="experiment-description">
+            <div>
+              <span class="eyebrow">02 / UNSUPERVISED LEARNING</span>
+              <h2>Let the groups take shape.</h2>
+              <p>
+                K-means alternates between assigning each point to its nearest
+                center and moving each center to the mean of its assigned
+                points.
+              </p>
+            </div>
+            <span class="pill">Lloyd’s algorithm</span>
+          </div>
+          <div class="workspace">
+            <div class="controls" role="group" aria-label="Experiment controls">
+              <div class="control-group">
+                <label for="clusterCount"
+                  >Number of clusters
+                  <output id="clusterValue" for="clusterCount">3</output></label
+                ><input
+                  type="range"
+                  id="clusterCount"
+                  min="2"
+                  max="5"
+                  step="1"
+                  value="3"
+                />
+              </div>
+              <button
+                id="generatePoints"
+                type="button"
+                class="button secondary full-width"
+              >
+                Generate new points
+              </button>
+              <div class="control-group add-point">
+                <p class="control-label">Add a point</p>
+                <div class="point-inputs">
+                  <label for="pointX"
+                    >X<input
+                      id="pointX"
+                      type="number"
+                      min="0"
+                      max="100"
+                      step="1"
+                      value="50" /></label
+                  ><label for="pointY"
+                    >Y<input
+                      id="pointY"
+                      type="number"
+                      min="0"
+                      max="100"
+                      step="1"
+                      value="50" /></label
+                  ><button id="addPoint" type="button" class="small-button">
+                    Add
+                  </button>
+                </div>
+                <p>
+                  Use the fields or click the plot. Coordinates range from 0 to
+                  100.
+                </p>
+              </div>
+              <div class="control-buttons">
+                <button id="clusterRun" type="button" class="button primary">
+                  Run</button
+                ><button
+                  id="clusterStep"
+                  type="button"
+                  class="button secondary"
+                >
+                  Step</button
+                ><button id="clusterReset" type="button" class="text-button">
+                  Reset
+                </button>
+              </div>
+              <p class="help-note">
+                Synthetic points. Farthest-first initialization. Empty clusters
+                keep their previous center.
+              </p>
+            </div>
+            <div class="plot-area">
+              <div class="chart-heading">
+                <span>DATA SPACE / X × Y</span
+                ><span id="pointCount">36 points</span>
+              </div>
+              <svg
+                class="experiment-chart clustering-chart"
+                id="clusterChart"
+                viewBox="0 0 760 360"
+                role="img"
+                aria-labelledby="clusterChartTitle clusterChartDesc"
+              >
+                <title id="clusterChartTitle">
+                  K-means data points and cluster centers
+                </title>
+                <desc id="clusterChartDesc">
+                  Click to add a point, or use the X and Y fields. Assigned
+                  groups have distinct colors and shapes; labeled crosshairs
+                  mark centers.
+                </desc>
+                <g id="clusterPlot"></g>
+              </svg>
+              <div
+                id="clusterLegend"
+                class="cluster-legend"
+                aria-label="Cluster membership counts"
+              ></div>
+              <div class="metrics">
+                <div>
+                  <span>Iteration</span><strong id="clusterIteration">0</strong>
+                </div>
+                <div>
+                  <span>Points</span><strong id="clusterPoints">36</strong>
+                </div>
+                <div>
+                  <span>Within-cluster SSE</span
+                  ><strong id="clusterLoss">—</strong>
+                </div>
+              </div>
+              <p
+                id="clusterStatus"
+                class="experiment-status"
+                role="status"
+                aria-live="polite"
+              >
+                Ready. Step once to assign points and move the centers.
+              </p>
+            </div>
+          </div>
+          <details class="explanation">
+            <summary>What does the result mean?</summary>
+            <p>
+              The objective is the sum of squared distances from points to their
+              assigned centers (SSE). K-means can settle at a local optimum and
+              depends on initialization and k. The generated groups do not
+              establish that a particular number of clusters is correct for real
+              data.
+            </p>
+          </details>
+        </div>
+        <div
+          id="panel-network"
+          role="tabpanel"
+          aria-labelledby="tab-network"
+          tabindex="0"
+          class="experiment-panel"
+          hidden
+        >
+          <div class="experiment-description">
+            <div>
+              <span class="eyebrow">03 / ARCHITECTURE</span>
+              <h2>See how a network connects.</h2>
+              <p>
+                Explore a fully connected network. Each neuron in a layer
+                connects to every neuron in the next layer. Select a neuron to
+                inspect its connections.
+              </p>
+            </div>
+            <span class="pill">Architecture only · no inference</span>
+          </div>
+          <div class="workspace">
+            <div class="controls" role="group" aria-label="Experiment controls">
+              <div class="control-group">
+                <label for="networkInputs"
+                  >Input neurons
+                  <output id="inputsValue" for="networkInputs">3</output></label
+                ><input
+                  id="networkInputs"
+                  type="range"
+                  min="1"
+                  max="6"
+                  value="3"
+                />
+              </div>
+              <div class="control-group">
+                <label for="hiddenLayers"
+                  >Hidden layers
+                  <output id="layersValue" for="hiddenLayers">2</output></label
+                ><input
+                  id="hiddenLayers"
+                  type="range"
+                  min="1"
+                  max="3"
+                  value="2"
+                />
+              </div>
+              <div class="control-group">
+                <label for="hiddenWidth"
+                  >Neurons per hidden layer
+                  <output id="widthValue" for="hiddenWidth">4</output></label
+                ><input
+                  id="hiddenWidth"
+                  type="range"
+                  min="2"
+                  max="8"
+                  value="4"
+                />
+              </div>
+              <div class="control-group">
+                <label for="networkOutputs"
+                  >Output neurons
+                  <output id="outputsValue" for="networkOutputs"
+                    >2</output
+                  ></label
+                ><input
+                  id="networkOutputs"
+                  type="range"
+                  min="1"
+                  max="4"
+                  value="2"
+                />
+              </div>
+              <button id="networkReset" class="button secondary" type="button">
+                Reset
+              </button>
+              <p class="help-note">
+                Connections represent possible weights. No weights are trained,
+                and no predictions or activations are generated.
+              </p>
+            </div>
+            <div class="plot-area">
+              <div class="chart-heading">
+                <span>FULLY CONNECTED / DENSE NETWORK</span
+                ><span>Select a neuron · scroll diagram if needed</span>
+              </div>
+              <div
+                class="network-viewport"
+                tabindex="0"
+                role="region"
+                aria-label="Scrollable neural network diagram"
+              >
+                <svg
+                  class="experiment-chart network-chart"
+                  id="networkChart"
+                  viewBox="0 0 760 360"
+                  role="group"
+                  aria-labelledby="networkChartTitle"
+                >
+                  <title id="networkChartTitle">
+                    Interactive fully connected neural network architecture
+                  </title>
+                  <g id="networkPlot"></g>
+                </svg>
+              </div>
+              <div class="metrics">
+                <div>
+                  <span>Weight connections</span
+                  ><strong id="networkWeights">36</strong>
+                </div>
+                <div>
+                  <span>Bias terms</span><strong id="networkBiases">10</strong>
+                </div>
+                <div>
+                  <span>Total parameters</span
+                  ><strong id="networkParameters">46</strong>
+                </div>
+              </div>
+              <p
+                id="networkStatus"
+                class="experiment-status"
+                role="status"
+                aria-live="polite"
+              >
+                Select a neuron to highlight its incoming and outgoing
+                connections.
+              </p>
+            </div>
+          </div>
+          <details class="explanation">
+            <summary>How are parameters counted?</summary>
+            <p>
+              Between adjacent layers of sizes a and b there are a × b weights.
+              Each non-input neuron adds one bias. This explorer counts those
+              parameters only; a functioning model also needs activation
+              functions, a task, data, and a training procedure.
+            </p>
+          </details>
+        </div>
+        <noscript
+          ><p class="notice">
+            These experiments need JavaScript. Their explanations remain
+            available, but the plots and controls cannot run without it.
+          </p></noscript
+        >
+      </section>
+      <p class="container lab-footnote">
+        Educational experiments, with the assumptions left in. No model API,
+        tracking, or uploaded data.
+      </p>
+    </main>
+    <footer class="footer">
+      <div class="container footer-row">
+        <a href="/index.html" class="footer-brand"
+          >YasirLab<span aria-hidden="true">.</span></a
+        >
+        <p>A personal space for learning and exploration.</p>
+        <span>© <span id="year">2026</span> YasirLab</span>
+      </div>
+    </footer>
+    <script src="/profile.js" defer></script>
+    <script src="/script.js" defer></script>
+    <script src="/visualize-core.js" defer></script>
+    <script src="/visualize.js" defer></script>
+  </body>
+</html>

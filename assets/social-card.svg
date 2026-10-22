@@ -1,13 +1,1 @@
-<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
-<style>@font-face{font-family:Manrope;src:url('fonts/manrope-latin.woff2')}text{font-family:Manrope,Arial,sans-serif}</style>
-<rect width="1200" height="630" fill="#faf9f6"/>
-<path d="M68 118H1132" stroke="#d7d7d3"/>
-<text x="68" y="84" fill="#202124" font-size="24" font-weight="600">YasirLab 2.0</text>
-<text x="900" y="84" fill="#62646b" font-size="13">AN OPEN NOTEBOOK.</text>
-<image href="iteration-study.svg" x="615" y="165" width="560" height="450"/>
-<text x="64" y="302" fill="#202124" font-size="98" font-weight="550" letter-spacing="-7">Curiosity.</text>
-<text x="64" y="408" fill="#62646b" font-size="98" font-weight="550" letter-spacing="-7">In progress.</text>
-<text x="68" y="485" fill="#62646b" font-size="19">Small builds. Open questions. Real learning.</text>
-<circle cx="73" cy="563" r="4" fill="#254de8"/>
-<text x="90" y="568" fill="#62646b" font-size="13">Yasir Javed Khan / yasirlab.in</text>
-</svg>
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"><style>@font-face{font-family:Manrope;src:url('fonts/manrope-latin.woff2')}text{font-family:Manrope,Arial,sans-serif}</style><rect width="1200" height="630" fill="#0b101c"/><path d="M70 120h1060" stroke="#253047"/><text x="70" y="85" font-size="26" fill="#edf1fb">YasirLab.</text><text x="70" y="270" font-size="64" fill="#edf1fb" letter-spacing="-2">AI &amp; data science,</text><text x="70" y="350" font-size="64" fill="#a8b3c9" letter-spacing="-2">made visible.</text><text x="73" y="430" font-size="20" fill="#a8b3c9">Explore. Adjust. Understand.</text><text x="73" y="552" font-size="15" fill="#91aaff">yasirlab.in / visualize</text><g transform="translate(750 190)"><rect width="380" height="320" rx="16" fill="#111a2b" stroke="#2c3951"/><path d="M30 80h320M30 160h320M30 240h320" stroke="#253047"/><path d="M40 70Q190 470 340 70" fill="none" stroke="#91aaff" stroke-width="3"/><circle cx="290" cy="181" r="7" fill="#b5a1e8"/><text x="30" y="38" fill="#a8b3c9" font-size="14">f(x) = x²</text></g></svg>

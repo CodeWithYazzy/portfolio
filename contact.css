@@ -1,6 +1,6 @@
 /* Contact composition and feedback, using the site's shared theme tokens. */
 .contact-intro h2 {
-  letter-spacing: -0.065em;
+  letter-spacing: -0.04em;
   line-height: 1.02;
 }
 .contact-direct {
@@ -34,8 +34,8 @@
   height: 40px;
   padding: 10px;
   border-radius: 12px;
-  color: var(--blue);
-  background: var(--blue-soft);
+  color: var(--muted);
+  background: var(--surface);
 }
 .contact-envelope svg,
 .contact-success-mark svg {

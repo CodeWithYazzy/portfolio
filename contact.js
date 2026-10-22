@@ -348,6 +348,7 @@
         availability.hidden = true;
         submit.disabled = false;
         form.dataset.state = "ready";
+        form.hidden = false;
         if (interacted) startVerification();
         return;
       }
@@ -356,7 +357,7 @@
     }
     config = { enabled: false };
     availability.textContent =
-      "Direct messaging isn’t available yet. Please use the email address alongside this form.";
+      "Direct messaging is not currently available. Confirmed contact links will appear here.";
     form.dataset.state = "unavailable";
     submitLabel.textContent = "Messaging unavailable";
     submit.disabled = true;

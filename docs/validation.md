@@ -1,3 +1,5 @@
+> Historical report for the preceding portfolio revision. See [the current five-page review](five-page-redesign.md) for the latest structure and validation.
+
 # Validation — premium/security follow-up
 
 Local verification on 18 October 2026, using Chromium 154, Python Playwright, Node 24, axe-core 4.10.3 and Lighthouse 12.8.2. Results describe this branch, **not a production deployment**.

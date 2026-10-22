@@ -25,9 +25,15 @@ http
     const url = new URL(req.url, "http://localhost");
     for (const item of config.headers[0].headers)
       res.setHeader(item.key, item.value);
-    if (/^\/pages\/demo(?:\.html)?\/?$/.test(url.pathname))
-      for (const item of config.headers[1].headers)
-        res.setHeader(item.key, item.value);
+    const redirect = (config.redirects || []).find(
+      (item) => item.source === url.pathname,
+    );
+    if (redirect) {
+      res.writeHead(redirect.permanent ? 308 : 307, {
+        Location: redirect.destination,
+      });
+      return res.end();
+    }
     if (url.pathname === "/api/contact") return contact(req, res);
     if (url.pathname === "/api/contact-config") return contactConfig(req, res);
     if (!["GET", "HEAD"].includes(req.method)) {

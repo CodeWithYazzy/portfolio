@@ -1,3 +1,5 @@
+> Historical report for the preceding portfolio revision. See [the current five-page review](five-page-redesign.md) for the latest structure and validation.
+
 # Content audit for YasirLab 2.0
 
 The portfolio checkout and every text/source file were reviewed before implementation, including deployment rules, the catalog and duplicate fallback, the demo controller, safe arithmetic parser, fixed Iris coefficients, and GitHub sandbox runner. Existing photographs and raster project assets remain available; the new gallery uses original decorative SVG studies.

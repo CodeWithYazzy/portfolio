@@ -28,9 +28,13 @@ test("packaged output only contains public runtime files", () => {
     "index.html",
     "404.html",
     "contact.js",
-    "motion.js",
+    "visualize.js",
+    "visualize-core.js",
+    "about.html",
+    "projects.html",
+    "visualize.html",
+    "contact.html",
     "assets/fonts/manrope-latin.woff2",
-    "pages/demo.html",
   ])
     assert.equal(
       fs.existsSync(path.join(root, "public", required)),

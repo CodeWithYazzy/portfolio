@@ -1,23 +1,23 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="dark">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>YasirLab 2.0 — Curiosity. In progress.</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>YasirLab — AI & Data Science, made visible</title>
     <meta
       name="description"
-      content="Yasir Javed Khan’s personal portfolio and independent learning laboratory. Explore small web builds, AI/ML learning projects, and clearly labeled concepts."
+      content="A personal AI and data science learning space. Explore interactive gradient descent, clustering, and neural-network architecture experiments."
     />
-    <meta name="theme-color" content="#f5f5f7" />
+    <meta name="theme-color" content="#0b101c" />
     <link rel="canonical" href="https://yasirlab.in/" />
     <meta property="og:type" content="website" />
     <meta
       property="og:title"
-      content="YasirLab 2.0 — Curiosity. In progress."
+      content="YasirLab — AI &amp; Data Science, made visible"
     />
     <meta
       property="og:description"
-      content="Yasir Javed Khan’s personal portfolio and independent learning laboratory. Explore small web builds, AI/ML learning projects, and clearly labeled concepts."
+      content="A personal AI and data science learning space. Explore interactive gradient descent, clustering, and neural-network architecture experiments."
     />
     <meta property="og:url" content="https://yasirlab.in/" />
     <meta
@@ -26,74 +26,65 @@
     />
     <meta
       property="og:image:alt"
-      content="YasirLab 2.0 — Curiosity. In progress."
+      content="YasirLab — AI and data science, made visible"
     />
     <meta name="twitter:card" content="summary_large_image" />
-    <link rel="icon" href="assets/logo.svg" type="image/svg+xml" />
-    <link rel="apple-touch-icon" href="assets/favicon.png" />
-    <script src="theme.js"></script>
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/favicon.png" />
+    <script src="/theme.js"></script>
     <link
       rel="preload"
-      href="assets/fonts/manrope-latin.woff2"
+      href="/assets/fonts/manrope-latin.woff2"
       as="font"
       type="font/woff2"
       crossorigin
     />
-    <link rel="stylesheet" href="style.css" />
-    <link rel="stylesheet" href="contact.css" />
+    <link rel="stylesheet" href="/style.css" />
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
-        "@type": "Person",
-        "name": "Yasir Javed Khan",
-        "url": "https://yasirlab.in/",
-        "sameAs": [
-          "https://github.com/CodeWithYazzy",
-          "https://x.com/codewithyazzy"
-        ]
+        "@type": "WebSite",
+        "name": "YasirLab",
+        "url": "https://yasirlab.in/"
       }
     </script>
   </head>
-  <body>
-    <a class="skip-link" href="#main-content">Skip to content</a>
-    <header id="navbar" class="site-header">
-      <div class="container nav-inner">
-        <a class="brand" href="index.html"
-          ><span class="brand-mark" aria-hidden="true">y<span>.</span></span
-          ><span
-            >Yasir<span class="brand-light">Lab</span
-            ><span class="version">2.0</span></span
-          ></a
+  <body class="">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container nav-row">
+        <a class="brand" href="/index.html" aria-label="YasirLab home"
+          ><span class="brand-icon" aria-hidden="true">y.</span
+          ><span>YasirLab</span></a
         >
-        <nav class="desktop-nav" aria-label="Primary">
-          <a href="#home" aria-current="location">Overview</a
-          ><a href="#projects">Work</a><a href="#lab">Lab</a
-          ><a href="#about">About</a><a href="#contact">Contact</a>
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/index.html" aria-current="page">Home</a
+          ><a href="/about.html">About</a><a href="/projects.html">Projects</a
+          ><a href="/visualize.html">Visualize</a
+          ><a href="/contact.html">Contact</a>
         </nav>
         <div class="nav-actions">
           <button
             class="icon-button theme-toggle"
             type="button"
-            aria-label="Switch to dark mode"
-            aria-pressed="false"
+            aria-label="Switch to light mode"
+            aria-pressed="true"
           >
-            <svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path
-                d="M20.9 13.1A9 9 0 0 1 10.9 3.1 9 9 0 1 0 20.9 13.1Z"
-              /></svg
-            ><svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
               <circle cx="12" cy="12" r="4" />
               <path
                 d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
-              />
+              /></svg
+            ><svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.9 13.1A9 9 0 0 1 10.9 3.1 9 9 0 1 0 20.9 13.1Z" />
             </svg></button
           ><button
             id="hamburger"
-            class="icon-button"
+            class="icon-button menu-toggle"
             type="button"
-            aria-label="Open menu"
             aria-expanded="false"
             aria-controls="mobileMenu"
+            aria-label="Open menu"
           >
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M4 8h16M4 16h16" />
@@ -102,706 +93,136 @@
         </div>
       </div>
       <nav id="mobileMenu" aria-label="Mobile primary" hidden>
-        <a href="#home" aria-current="location">Overview</a
-        ><a href="#projects">Work</a><a href="#lab">Lab</a
-        ><a href="#about">About</a><a href="#contact">Contact</a>
+        <a href="/index.html" aria-current="page">Home</a
+        ><a href="/about.html">About</a><a href="/projects.html">Projects</a
+        ><a href="/visualize.html">Visualize</a
+        ><a href="/contact.html">Contact</a>
       </nav>
     </header>
-    <main id="main-content" tabindex="-1">
-      <section id="home" class="hero">
-        <div class="container">
-          <div class="hero-kicker">
-            <p class="eyebrow">INDEPENDENT MIND. OPEN NOTEBOOK.</p>
-            <span class="mono">YASIRLAB / VOL. 02</span>
-          </div>
-          <div class="hero-grid">
-            <div class="hero-copy">
-              <h1>
-                <span class="headline-line">Curiosity.</span>
-                <span class="headline-line headline-secondary"
-                  >In progress.</span
-                >
-              </h1>
-              <p class="hero-description">
-                I’m Yasir. I build for the web, explore machine learning, and
-                follow the questions in between.
-              </p>
-              <div class="button-row">
-                <a class="button primary" href="#projects"
-                  >Explore the work <span aria-hidden="true">↗</span></a
-                ><a class="text-link" href="#lab"
-                  >Inside the lab <span aria-hidden="true">→</span></a
-                >
-              </div>
-              <p class="hero-footnote">
-                <span class="status-dot" aria-hidden="true"></span> LEARNING IN
-                PUBLIC. ONE BUILD AT A TIME.
-              </p>
-            </div>
-            <figure class="hero-visual" aria-labelledby="iteration-caption">
-              <div class="sculpture-grid" aria-hidden="true"></div>
-              <img
-                class="iteration-art"
-                src="assets/iteration-study.svg"
-                alt=""
-                width="720"
-                height="580"
-                fetchpriority="high"
-              />
-              <span class="visual-coordinate coordinate-top" aria-hidden="true"
-                >FIG. 001 — ITERATION</span
-              >
-              <span class="visual-coordinate coordinate-side" aria-hidden="true"
-                >IDEA → BUILD → LEARN ↻</span
-              >
-              <figcaption id="iteration-caption">
-                <span class="visual-dot" aria-hidden="true"></span> An
-                open-ended practice.<span
-                  >Original computational illustration</span
-                >
-              </figcaption>
-            </figure>
-          </div>
-          <div class="intro-strip">
-            <p>
-              Small steps. Open questions.<br /><strong
-                >A little further, every time.</strong
-              >
+    <main id="main" tabindex="-1">
+      <section class="home-hero" data-interactive-background>
+        <div class="container hero-layout">
+          <div class="hero-copy">
+            <p class="eyebrow">
+              <span class="small-line" aria-hidden="true"></span> AI &amp; DATA
+              SCIENCE
             </p>
-            <a href="#projects"
-              ><span class="strip-number">01 / BUILD</span> Things you can
-              explore <span aria-hidden="true">↗</span></a
-            ><a href="#lab"
-              ><span class="strip-number">02 / QUESTION</span> Ideas still
-              taking shape <span aria-hidden="true">↗</span></a
+            <h1>
+              <span data-profile="name">[Your name]</span>
+            </h1>
+            <p class="profile-role" data-profile="title">
+              Class 10 student · Aspiring machine learning engineer
+            </p>
+            <p class="hero-introduction" data-profile="introduction">
+              I’m learning Python, working with NumPy, and exploring PyTorch to
+              understand how machine learning models are built and trained.
+            </p>
+            <p class="hero-interests">
+              A personal space for exploring machine learning, deep learning,
+              data science, and LLMs.
+            </p>
+            <div class="button-row">
+              <a class="button primary" href="/visualize.html"
+                >Explore Visualizations <span aria-hidden="true">↗</span></a
+              ><a class="button secondary" href="/about.html">About Me</a>
+            </div>
+            <div class="hero-note">
+              <span aria-hidden="true">↳</span> Start with a question. Explore
+              it interactively.
+            </div>
+          </div>
+          <div class="preview-panel">
+            <div class="panel-top">
+              <span class="mono">GRADIENT DESCENT</span
+              ><span class="simulation-label">Interactive preview</span>
+            </div>
+            <div class="preview-heading">
+              <h2>A curve. A step.<br />A smaller loss.</h2>
+              <p>Follow the gradient of f(x) = x².</p>
+            </div>
+            <svg
+              id="homeChart"
+              class="preview-chart"
+              viewBox="0 0 560 310"
+              role="img"
+              aria-labelledby="homeChartTitle"
             >
-          </div>
-        </div>
-      </section>
-      <section id="projects" class="section">
-        <div class="container">
-          <div class="section-heading">
-            <div>
-              <p class="eyebrow">01 / SELECTED WORK</p>
-              <h2>
-                Small builds.<br /><span class="muted">Real learning.</span>
-              </h2>
+              <title id="homeChartTitle">
+                Gradient descent on the quadratic function x squared
+              </title>
+              <g id="homePlot"></g>
+            </svg>
+            <div class="preview-readout">
+              <span>STEP <strong id="homeStep">0</strong></span
+              ><span>LOSS <strong id="homeLoss">5.7600</strong></span
+              ><button class="small-button" type="button" id="homeRun">
+                Run preview <span aria-hidden="true">→</span>
+              </button>
             </div>
-            <div class="section-aside">
-              <p>
-                Working browser demos and learning projects, with the scope and
-                limitations left in.
+            <div class="preview-bottom">
+              <p class="preview-disclaimer">
+                A mathematical simulation in your browser.
               </p>
-              <a class="text-link" href="pages/all-projects.html"
-                >Browse the full collection <span aria-hidden="true">→</span></a
-              >
+              <button id="homeReset" class="text-button" type="button">
+                Reset preview
+              </button>
             </div>
-          </div>
-          <div
-            id="projectsGrid"
-            class="projects-grid"
-            data-featured="true"
-          ></div>
-          <noscript
-            ><p>
-              Explore
-              <a
-                class="text-link"
-                href="pages/demo.html?project=Iris%20Flower%20Classifier"
-                >the Iris demo</a
-              >,
-              <a
-                class="text-link"
-                href="pages/demo.html?project=Calculator%20App"
-                >the calculator</a
-              >, or
-              <a
-                class="text-link"
-                href="https://github.com/CodeWithYazzy/projects"
-                >the project source on GitHub</a
-              >. Enable JavaScript for interactive previews.
-            </p></noscript
-          >
-          <div class="collection-note">
-            <span class="note-symbol" aria-hidden="true">↳</span>
-            <p>
-              Every project is a snapshot of learning.
-              <strong
-                >Browser demos, learning exercises, and scaffolds are labeled
-                individually.</strong
-              >
-              Illustrations are visual studies, not product screenshots.
-            </p>
           </div>
         </div>
       </section>
-      <section id="lab" class="section lab-section" data-story>
+      <section class="home-experiments section">
         <div class="container">
           <div class="section-heading">
             <div>
-              <p class="eyebrow">02 / THE LABORATORY</p>
-              <h2>
-                Beyond the build.<br /><span class="muted"
-                  >Into the unknown.</span
-                >
-              </h2>
+              <p class="eyebrow">THE VISUALIZATION LAB</p>
+              <h2>Explore the fundamentals.</h2>
             </div>
-            <div class="section-aside">
-              <p>
-                A space for questions before they become projects. These are
-                proposed experiments, not completed research.
-              </p>
-              <span class="pill">Concepts · no results claimed</span>
-            </div>
-          </div>
-          <div class="lab-layout">
-            <div class="lab-intro">
-              <div class="lab-visual" aria-hidden="true">
-                <div class="lab-orbit orbit-one"></div>
-                <div class="lab-orbit orbit-two"></div>
-                <div class="lab-orbit orbit-three"></div>
-                <div class="lab-core">y<span>.</span></div>
-                <span class="lab-signal signal-one"></span
-                ><span class="lab-signal signal-two"></span
-                ><span class="lab-visual-label"
-                  >A QUESTION IS A BEGINNING.</span
-                >
-              </div>
-              <h3>Start with a question.<br />Leave with a next step.</h3>
-              <p>
-                Open a concept to see the hypothesis, a possible method, and
-                what would count as evidence.
-              </p>
-              <div class="lab-process">
-                <span>Question</span><span aria-hidden="true">→</span
-                ><span>Build</span><span aria-hidden="true">→</span
-                ><span>Evaluate</span>
-              </div>
-              <span class="mono">THE NOTEBOOK IS STILL OPEN.</span>
-            </div>
-            <div class="lab-list">
-              <button
-                class="lab-card"
-                type="button"
-                data-lab="0"
-                aria-haspopup="dialog"
-              >
-                <span class="lab-index">01</span
-                ><span class="lab-card-copy"
-                  ><span class="concept-label">CONCEPT</span
-                  ><span class="lab-title">CNN vs transfer learning</span
-                  ><span class="lab-question"
-                    >Could pretrained features help a small image dataset?</span
-                  ></span
-                ><span class="lab-plus" aria-hidden="true">+</span>
-              </button>
-              <button
-                class="lab-card"
-                type="button"
-                data-lab="1"
-                aria-haspopup="dialog"
-              >
-                <span class="lab-index">02</span
-                ><span class="lab-card-copy"
-                  ><span class="concept-label">CONCEPT</span
-                  ><span class="lab-title">Model evaluation</span
-                  ><span class="lab-question"
-                    >What changes when the test set stays unseen?</span
-                  ></span
-                ><span class="lab-plus" aria-hidden="true">+</span>
-              </button>
-              <button
-                class="lab-card"
-                type="button"
-                data-lab="2"
-                aria-haspopup="dialog"
-              >
-                <span class="lab-index">03</span
-                ><span class="lab-card-copy"
-                  ><span class="concept-label">CONCEPT</span
-                  ><span class="lab-title">Hyperparameter search</span
-                  ><span class="lab-question"
-                    >Which settings are worth the extra compute?</span
-                  ></span
-                ><span class="lab-plus" aria-hidden="true">+</span>
-              </button>
-              <button
-                class="lab-card"
-                type="button"
-                data-lab="3"
-                aria-haspopup="dialog"
-              >
-                <span class="lab-index">04</span
-                ><span class="lab-card-copy"
-                  ><span class="concept-label">CONCEPT</span
-                  ><span class="lab-title">Attention & text</span
-                  ><span class="lab-question"
-                    >When is a simple text baseline enough?</span
-                  ></span
-                ><span class="lab-plus" aria-hidden="true">+</span>
-              </button>
-              <button
-                class="lab-card"
-                type="button"
-                data-lab="4"
-                aria-haspopup="dialog"
-              >
-                <span class="lab-index">05</span
-                ><span class="lab-card-copy"
-                  ><span class="concept-label">CONCEPT</span
-                  ><span class="lab-title">Understanding data</span
-                  ><span class="lab-question"
-                    >What should we know before fitting a model?</span
-                  ></span
-                ><span class="lab-plus" aria-hidden="true">+</span>
-              </button>
-              <button
-                class="lab-card"
-                type="button"
-                data-lab="5"
-                aria-haspopup="dialog"
-              >
-                <span class="lab-index">06</span
-                ><span class="lab-card-copy"
-                  ><span class="concept-label">CONCEPT</span
-                  ><span class="lab-title">Inference trade-offs</span
-                  ><span class="lab-question"
-                    >What do smaller models give up to run faster?</span
-                  ></span
-                ><span class="lab-plus" aria-hidden="true">+</span>
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section id="about" class="section">
-        <div class="container">
-          <p class="eyebrow">03 / THE PERSON BEHIND THE LAB</p>
-          <div class="about-grid">
-            <div class="about-copy">
-              <h2>
-                A person first.<br /><span class="muted"
-                  >A work in progress.</span
-                >
-              </h2>
-              <p class="large-copy">
-                YasirLab is where I connect the things I’m curious about:
-                software, data, and how machines learn.
-              </p>
-              <p>
-                I’m Yasir Javed Khan, a developer learning through practice in
-                India. This site brings together my personal work, AI/ML
-                exercises, and ideas for what to try next.
-              </p>
-              <p>
-                It’s also the beginning of an independent technology identity: a
-                place to make useful things, share the process, and let the work
-                develop over time.
-              </p>
-              <a
-                class="text-link"
-                href="https://github.com/CodeWithYazzy"
-                target="_blank"
-                rel="noopener noreferrer"
-                >Find me on GitHub
-                <span aria-hidden="true"
-                  ><svg
-                    class="arrow-icon"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 19 19 5M5 5h14v14" /></svg></span
-              ></a>
-            </div>
-            <figure class="about-portrait">
-              <img
-                src="assets/me.webp"
-                width="1165"
-                height="1350"
-                alt="Yasir Javed Khan"
-                loading="lazy"
-              />
-              <figcaption>
-                <span>Yasir Javed Khan</span
-                ><span
-                  >India
-                  <svg
-                    class="arrow-icon"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 19 19 5M5 5h14v14" /></svg
-                ></span>
-              </figcaption>
-            </figure>
-          </div>
-          <div class="learning-journal">
-            <div>
-              <p class="eyebrow">THE LEARNING JOURNAL</p>
-              <h3>A practice,<br />not a finish line.</h3>
-            </div>
-            <div class="journal-entry">
-              <span class="journal-label">BUILDING</span>
-              <h4>For the web</h4>
-              <p>
-                HTML, CSS, and JavaScript. Practicing responsive interfaces,
-                accessibility, and the small details that make a site useful.
-              </p>
-            </div>
-            <div class="journal-entry">
-              <span class="journal-label">PRACTICING</span>
-              <h4>Working with data</h4>
-              <p>
-                Python, NumPy, Pandas, and scikit-learn. Learning to distinguish
-                a working example from a well-evaluated model.
-              </p>
-            </div>
-            <div class="journal-entry">
-              <span class="journal-label">EXPLORING</span>
-              <h4>What comes next</h4>
-              <p>
-                Neural networks, retrieval, and model evaluation. Questions in
-                the lab are a learning roadmap, with results still to come.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-      <section
-        id="contact"
-        class="section contact-section"
-        aria-labelledby="contactHeading"
-      >
-        <div class="container contact-grid">
-          <div class="contact-intro">
-            <p class="eyebrow">04 / OPEN A CONVERSATION</p>
-            <h2 id="contactHeading">
-              An idea.<br />A question.<br /><span class="muted">A hello.</span>
-            </h2>
-            <p class="large-copy">
-              The best part of building in public is the conversation. Share
-              what you’re exploring. I’d like to hear it.
+            <p>
+              Change a parameter. See what happens.<br />Three small experiments
+              in how machine learning works.
             </p>
-            <div class="contact-direct">
-              <p class="contact-caption">PREFER EMAIL?</p>
-              <a class="contact-email" href="mailto:codewithyazzy@gmail.com"
-                >codewithyazzy@gmail.com
-                <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
-                  <path d="M5 19 19 5M5 5h14v14" />
-                </svg>
-              </a>
-              <div class="contact-links">
-                <button id="copyEmail" type="button" class="text-link">
-                  Copy email
-                  <svg
-                    class="arrow-icon"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <rect x="8" y="8" width="12" height="12" rx="2" />
-                    <path d="M15 4H6a2 2 0 0 0-2 2v9" />
-                  </svg>
-                </button>
-                <a
-                  class="text-link"
-                  href="https://github.com/CodeWithYazzy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >GitHub
-                  <svg
-                    class="arrow-icon"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 19 19 5M5 5h14v14" /></svg
-                ></a>
-                <a
-                  class="text-link"
-                  href="https://x.com/codewithyazzy"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  >X
-                  <svg
-                    class="arrow-icon"
-                    viewBox="0 0 24 24"
-                    aria-hidden="true"
-                  >
-                    <path d="M5 19 19 5M5 5h14v14" /></svg
-                ></a>
-              </div>
-            </div>
           </div>
-          <form
-            id="contactForm"
-            class="contact-form"
-            method="post"
-            action="/api/contact"
-            novalidate
-            aria-labelledby="contactFormHeading"
-            data-state="loading"
-          >
-            <div class="contact-form-heading">
-              <span class="contact-envelope" aria-hidden="true"
-                ><svg viewBox="0 0 24 24">
-                  <rect x="3" y="5" width="18" height="14" rx="3" />
-                  <path d="m4 7 8 6 8-6" /></svg
-              ></span>
-              <p class="contact-caption">A NOTE TO YASIR</p>
-            </div>
-            <h3 id="contactFormHeading">Leave a little context.</h3>
-            <p class="form-note" id="contactHelp">
-              Send a message here, without opening an email app.
-            </p>
-            <noscript
-              ><p class="contact-availability">
-                This form needs JavaScript. You can still use the email address
-                alongside it.
-              </p></noscript
+          <div class="experiment-previews">
+            <a class="experiment-link" href="/visualize.html#gradient"
+              ><span class="experiment-number">01 / OPTIMIZATION</span>
+              <h3>Gradient descent</h3>
+              <p>See how step size changes the path toward a minimum.</p>
+              <span class="experiment-enter"
+                >Explore <span aria-hidden="true">↗</span></span
+              ></a
+            ><a class="experiment-link" href="/visualize.html#clustering"
+              ><span class="experiment-number">02 / UNSUPERVISED LEARNING</span>
+              <h3>K-means clustering</h3>
+              <p>
+                Move from scattered points to groups, one iteration at a time.
+              </p>
+              <span class="experiment-enter"
+                >Explore <span aria-hidden="true">↗</span></span
+              ></a
+            ><a class="experiment-link" href="/visualize.html#network"
+              ><span class="experiment-number">03 / ARCHITECTURE</span>
+              <h3>Neural networks</h3>
+              <p>Build a fully connected network and inspect its structure.</p>
+              <span class="experiment-enter"
+                >Explore <span aria-hidden="true">↗</span></span
+              ></a
             >
-            <p
-              id="contactAvailability"
-              class="contact-availability"
-              role="status"
-            >
-              Checking message availability…
-            </p>
-            <fieldset id="contactFields">
-              <legend class="sr-only">Your message</legend>
-              <div class="row2">
-                <div class="field">
-                  <label for="name">Your name</label>
-                  <input
-                    id="name"
-                    name="name"
-                    autocomplete="name"
-                    required
-                    minlength="2"
-                    maxlength="80"
-                    aria-describedby="nameError"
-                    placeholder="How should I call you?"
-                  />
-                  <span class="field-error" id="nameError"></span>
-                </div>
-                <div class="field">
-                  <label for="email">Email address</label>
-                  <input
-                    id="email"
-                    name="email"
-                    type="email"
-                    inputmode="email"
-                    autocomplete="email"
-                    required
-                    maxlength="254"
-                    aria-describedby="emailError"
-                    placeholder="you@example.com"
-                  />
-                  <span class="field-error" id="emailError"></span>
-                </div>
-              </div>
-              <div class="field">
-                <label for="subject">Subject</label>
-                <input
-                  id="subject"
-                  name="subject"
-                  required
-                  minlength="3"
-                  maxlength="120"
-                  aria-describedby="subjectError"
-                  placeholder="A project, a question, an idea…"
-                />
-                <span class="field-error" id="subjectError"></span>
-              </div>
-              <div class="field">
-                <label for="message"
-                  >Your message
-                  <span class="field-optional">20–5,000 characters</span></label
-                >
-                <textarea
-                  id="message"
-                  name="message"
-                  rows="5"
-                  required
-                  minlength="20"
-                  maxlength="5000"
-                  aria-describedby="messageError"
-                  placeholder="What are you thinking about?"
-                ></textarea>
-                <span class="field-error" id="messageError"></span>
-              </div>
-              <div class="contact-trap" aria-hidden="true" inert>
-                <label for="contactWebsite">Leave this field empty</label>
-                <input
-                  id="contactWebsite"
-                  name="website"
-                  type="text"
-                  tabindex="-1"
-                  autocomplete="off"
-                />
-              </div>
-              <div
-                id="contactVerification"
-                class="contact-verification"
-                role="group"
-                aria-label="Spam verification"
-              ></div>
-              <p id="verificationStatus" class="contact-verification-note"></p>
-              <button
-                type="submit"
-                disabled
-                class="button primary contact-submit"
-                aria-describedby="contactHelp formStatus"
-              >
-                <span class="contact-submit-label">Send message</span>
-                <span class="contact-spinner" aria-hidden="true"></span>
-                <svg
-                  class="arrow-icon contact-submit-arrow"
-                  viewBox="0 0 24 24"
-                  aria-hidden="true"
-                >
-                  <path d="M5 12h14m-6-6 6 6-6 6" />
-                </svg>
-              </button>
-            </fieldset>
-            <div
-              id="contactSuccess"
-              class="contact-success"
-              tabindex="-1"
-              hidden
-            >
-              <span class="contact-success-mark" aria-hidden="true"
-                ><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></svg
-              ></span>
-              <h4>Message accepted.</h4>
-              <p>
-                Your note was accepted for delivery. Thanks for starting a
-                conversation.
-              </p>
-              <button id="contactAgain" type="button" class="text-link">
-                Write another message <span aria-hidden="true">↗</span>
-              </button>
-            </div>
-            <p
-              id="formStatus"
-              class="form-status"
-              role="status"
-              aria-live="polite"
-              aria-atomic="true"
-            ></p>
-            <p class="contact-privacy">
-              Your details are used to reply. Spam protection by Cloudflare;
-              email delivery by Resend. Messages are not saved in this browser.
-              Spam protection loads when you use the form.
-            </p>
-          </form>
+          </div>
         </div>
       </section>
     </main>
-    <footer class="site-footer">
-      <div class="container">
-        <div class="footer-statement">
-          <p class="eyebrow">THE NEXT CHAPTER IS STILL OPEN.</p>
-          <p>Keep asking.<br /><span>Keep making.</span></p>
-          <a
-            href="#contact"
-            class="footer-connect"
-            aria-label="Start a conversation"
-            >↗</a
-          >
-        </div>
-        <div class="footer-top">
-          <a class="brand" href="index.html"
-            ><span class="brand-mark" aria-hidden="true">y<span>.</span></span
-            ><span
-              >Yasir<span class="brand-light">Lab</span
-              ><span class="version">2.0</span></span
-            ></a
-          >
-          <p>A personal practice.<br />An open laboratory.</p>
-          <a
-            class="text-link"
-            href="https://github.com/CodeWithYazzy"
-            target="_blank"
-            rel="noopener noreferrer"
-            >Follow the work
-            <span aria-hidden="true"
-              ><svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M5 19 19 5M5 5h14v14" /></svg></span
-          ></a>
-        </div>
-        <div class="footer-bottom">
-          <span>© <span id="year">2026</span> Yasir Javed Khan</span
-          ><span>Made with curiosity. Built for the web.</span
-          ><a href="mailto:codewithyazzy@gmail.com"
-            >Say hello
-            <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 19 19 5M5 5h14v14" /></svg
-          ></a>
-        </div>
+    <footer class="footer">
+      <div class="container footer-row">
+        <a href="/index.html" class="footer-brand"
+          >YasirLab<span aria-hidden="true">.</span></a
+        >
+        <p>A personal space for learning and exploration.</p>
+        <span>© <span id="year">2026</span> YasirLab</span>
       </div>
     </footer>
-    <div id="toast" role="status" aria-live="polite" aria-atomic="true"></div>
-    <dialog
-      id="projectModal"
-      aria-labelledby="modalTitle"
-      aria-describedby="modalDesc"
-    >
-      <div class="dialog-content">
-        <button
-          type="button"
-          class="icon-button dialog-close"
-          aria-label="Close project details"
-        >
-          ×
-        </button>
-        <p class="eyebrow" id="modalStatus"></p>
-        <h2 id="modalTitle"></h2>
-        <p id="modalDesc"></p>
-        <div class="detail-note">
-          <h3>What to know</h3>
-          <p id="modalLimitations"></p>
-        </div>
-        <div class="button-row">
-          <a id="modalDemo" class="button primary" href="pages/demo.html"
-            >Explore project <span aria-hidden="true">→</span></a
-          ><a
-            id="modalGithub"
-            class="button secondary"
-            href="https://github.com/CodeWithYazzy"
-            target="_blank"
-            rel="noopener noreferrer"
-            >View source
-            <svg class="arrow-icon" viewBox="0 0 24 24" aria-hidden="true">
-              <path d="M5 19 19 5M5 5h14v14" /></svg
-          ></a>
-        </div>
-      </div>
-    </dialog>
-    <dialog
-      id="labModal"
-      aria-labelledby="labModalTitle"
-      aria-describedby="labModalDesc"
-    >
-      <div class="dialog-content">
-        <button
-          class="icon-button dialog-close"
-          type="button"
-          aria-label="Close lab concept"
-        >
-          ×
-        </button>
-        <p class="eyebrow">LAB NOTE / CONCEPT · NOT RUN</p>
-        <h2 id="labModalTitle"></h2>
-        <p id="labModalDesc"></p>
-        <dl id="labModalBody"></dl>
-        <p class="concept-disclaimer">
-          No experiment has been run for this note. Results and conclusions are
-          intentionally open.
-        </p>
-      </div>
-    </dialog>
-    <script src="assets/projects.js"></script>
-    <script src="script.js"></script>
-    <script src="motion.js"></script>
-    <script src="contact.js"></script>
+    <script src="/profile.js" defer></script>
+    <script src="/script.js" defer></script>
+    <script src="/visualize-core.js" defer></script>
+    <script src="/home.js" defer></script>
   </body>
 </html>

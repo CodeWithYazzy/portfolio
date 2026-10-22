@@ -1,3 +1,5 @@
+> Historical report for the preceding portfolio revision. See [the current five-page review](five-page-redesign.md) for the latest structure and validation.
+
 # Component audit and visual review
 
 This pass improves the existing YasirLab implementation from `main` at `aaf9039`, preserving static HTML/CSS/JavaScript and all 15 catalog entries. No framework migration or animation library was introduced.

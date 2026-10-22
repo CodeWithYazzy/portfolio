@@ -33,25 +33,7 @@
         },
         {
           "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; media-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://challenges.cloudflare.com; script-src 'self' 'sha256-sp+GxPblmNwPuCHNJqJ5M9FNk41vNFCZy9dVl2LtkcU=' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com;"
-        }
-      ]
-    },
-    {
-      "source": "/pages/demo",
-      "headers": [
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; media-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://challenges.cloudflare.com; script-src 'self' data:; frame-src 'self' data: https:;"
-        }
-      ]
-    },
-    {
-      "source": "/pages/demo.html",
-      "headers": [
-        {
-          "key": "Content-Security-Policy",
-          "value": "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; media-src 'self' data:; connect-src 'self' https://api.github.com https://raw.githubusercontent.com https://challenges.cloudflare.com; script-src 'self' data:; frame-src 'self' data: https:;"
+          "value": "default-src 'self'; base-uri 'none'; object-src 'none'; frame-ancestors 'self'; form-action 'self'; style-src 'self' 'unsafe-inline'; font-src 'self' data:; img-src 'self' data:; media-src 'self' data:; connect-src 'self' https://challenges.cloudflare.com; script-src 'self' 'sha256-Yyrb7dAUHQnQScDQatprFBv5iHDakvTtYvgayD34FcU=' https://challenges.cloudflare.com; frame-src 'self' https://challenges.cloudflare.com;"
         }
       ]
     },
@@ -72,6 +54,23 @@
           "value": "no-store"
         }
       ]
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/pages/demo",
+      "destination": "/visualize",
+      "permanent": true
+    },
+    {
+      "source": "/pages/demo.html",
+      "destination": "/visualize",
+      "permanent": true
+    },
+    {
+      "source": "/pages/all-projects",
+      "destination": "/projects",
+      "permanent": true
     }
   ]
 }

@@ -1,70 +1,61 @@
-# YasirLab 2.0
+# YasirLab
 
-A personal developer portfolio, an AI/ML learning laboratory, and an evolving independent technology identity for Yasir Javed Khan.
+A five-page AI/Data Science learning portfolio, built with HTML, CSS and vanilla JavaScript. No frontend framework, runtime package installation, authentication or visualization service is required.
 
-The site uses semantic HTML, CSS, and vanilla JavaScript. No frontend framework or application package dependencies are required. A small Node script packages an explicit static-file allowlist for Vercel; the app remains HTML/CSS/JavaScript. Manrope is self-hosted under the OFL license, and icons are local SVGs.
+## Pages
 
-## Run locally
+- **Home** — personal introduction and a functional quadratic gradient-descent preview.
+- **About** — the owner's confirmed Class 10 learning story, Python/NumPy experience, PyTorch learning and goals.
+- **Projects** — the requested Coming Soon empty state. There is no project catalog or invented work.
+- **Visualize** — gradient descent, K-means clustering and an interactive dense-network architecture explorer.
+- **Contact** — confirmed email, GitHub and YouTube links. A submission form is hidden unless the pre-existing server integration is fully configured and explicitly enabled.
 
-```bash
-cd /workspace/portfolio  # or your local checkout
+The exact display name remains a clearly marked placeholder until the owner supplies it. No professional employment, certifications, achievements, university affiliation or completed projects are claimed.
+
+## Run and build
+
+```sh
 node tools/build-static.js
 node tools/preview.js
 ```
 
-Open `index.html`, `pages/all-projects.html`, or `pages/demo.html?project=Iris%20Flower%20Classifier` through that server. The explicit `.html` links also work on basic static hosts. Vercel's existing clean URLs remain supported. The bundled catalog is designed to support direct file browsing too, but this cloud browser prohibits `file://` navigation; use HTTP for the verified workflow.
+The loopback preview serves `public/` on port 8766. `PORT` can select another port. On a static-only host, serve the packaged `public/` folder; the contact form stays hidden when its API is absent. Vercel builds root `api/` functions separately. No provider accounts are needed to use the five pages or the visualizations.
 
-## Structure
+The build copies an explicit list of browser files. Tests, docs, credentials, server helpers and source tools are excluded from public URLs. Vercel keeps clean URLs; explicit `.html` navigation also works on basic static servers.
 
-- `index.html`: overview, selected work, six lab concepts, about, and contact.
-- `pages/all-projects.html`: searchable collection with category filters and project details.
-- `pages/demo.html`, `demo-page.js`, `demo.css`: preview interface and existing calculator/Iris implementation.
-- `demo-runner.js`: GitHub source inspection, project-type detection, and sandboxed static previews. Python and server projects display their runtime requirements rather than simulated output.
-- `contact.js`, `contact.css`, `api/`, `lib/contact-service.js`: accessible contact UI and server-only delivery controls.
-- `motion.js`: bounded scroll-linked transforms, sticky navigation and native motion enhancements.
-- `style.css`: shared light/dark tokens, layout, components, and reduced-motion behavior.
-- `theme.js`: pre-paint system/stored theme selection; `script.js` handles persistence and interactive components.
-- `assets/projects.json`: authoritative project content. Run `python3 tools/sync-catalog.py` after edits to regenerate `assets/projects.js`, the offline fallback.
-- `assets/*-study.svg`: original decorative illustrations, explicitly distinguished from product screenshots.
-- `tests/test_portfolio.py`: automated browser, accessibility, responsive, and interaction regressions.
-- `docs/`: content audit, validation results, and screenshots for review.
+## Customize content
 
-## Content standards
+Edit `profile.js` for the confirmed display name, title, introduction, skills, background, email and approved public links. `name:null` deliberately leaves `[Your name]` visible. Use only verified personal details. These values are public; never place credentials in this file.
 
-Label each item as a browser demo, learning project, scaffold, or website. Describe synthetic and toy datasets explicitly. Record limitations alongside source links. The lab cards are **proposed concepts, not completed experiments**. No awards, years of experience, employment titles, or model-performance figures are claimed without supporting evidence. See [the content audit](docs/content-audit.md).
+Core content and confirmed contact links also exist directly in the HTML so they remain useful without JavaScript. After changing personal copy in `profile.js`, update the matching HTML fallback in `index.html`, `about.html` or `contact.html`. The `data-profile` attributes identify those locations. Social links are limited to the user-provided GitHub/YouTube profiles; no LinkedIn account is invented.
 
-The calculator uses a recursive-descent parser in the browser, without `eval`. Iris uses the fixed coefficients already bundled with the site. Neither local example needs a Python API or GitHub access. Other source previews may use `api.github.com` and `raw.githubusercontent.com`, subject to GitHub availability and unauthenticated API limits.
+To add real projects later, replace the Coming Soon content in `projects.html` with semantic project articles and genuine source/demo links. Add only projects the owner confirms. There are no hidden fake cards, countdowns or promised dates.
 
-The contact form submits to a Vercel Function with server-side validation, Turnstile verification, shared Upstash rate limits and Resend delivery. It is **disabled until explicitly configured**. No real delivery has been tested. See [provider/DNS/environment setup](docs/contact-setup.md) before enabling it. Copy email and a separate email link remain available.
+## Educational experiments
 
-## Validate
+`visualize-core.js` contains pure, deterministic algorithms, shared by the browser and Node tests. `visualize.js` renders accessible SVG plots and connects the controls. `home.js` runs the small Home preview.
 
-Python 3, Chromium, and Playwright Python are required for the browser suite. Axe-core is used as a test tool only. For example, install test tools outside the checkout:
+- Gradient descent uses `f(x)=x²`, derivative `2x`, and the exact update `x ← x − η·2x`. The explanation documents convergence/oscillation/divergence for this specific function. Runs stop on convergence, chart-range escape or an iteration bound.
+- K-means runs actual nearest-center assignment and mean updates (Lloyd iterations), with seeded synthetic data and farthest-first initialization. Empty clusters retain their center. Changing data resets iteration state. Color and shape distinguish groups; numeric coordinate inputs provide a keyboard alternative to plot clicking.
+- The network explorer shows fully connected layer structures and exact weight/bias counts. Selecting a neuron highlights its connections. It does **not** train a model, invent weights or produce predictions.
 
-```bash
-python3 -m venv /tmp/yasirlab-test-env
-/tmp/yasirlab-test-env/bin/pip install playwright==1.55.0
-npm install --prefix /tmp/yasirlab-checks --cache /tmp/yasirlab-npm-cache --no-save --package-lock=false axe-core@4.10.3
-YASIRLAB_AXE_PATH=/tmp/yasirlab-checks/node_modules/axe-core/axe.min.js \
-  /tmp/yasirlab-test-env/bin/python -m unittest discover -s tests -v
-```
+Tabs support arrow/Home/End keys, sharable fragments and hidden-panel focus isolation. Runs stop when switching experiments or hiding the browser tab. Reduced-motion preferences remove decorative animation. No data is uploaded and there are no analytics, model APIs, animation libraries or external font requests.
 
-The cloud environment already provides Python Playwright and `/usr/bin/chromium`, so its tests can use `python3` directly. Set `CHROMIUM_PATH` for another browser binary. The suite starts its own loopback server. It explicitly mocks GitHub for runner tests and blocks external requests elsewhere; it does not claim live GitHub integrations are verified.
+## Contact
 
-```bash
+The supplied public inbox is `codewithyazzy@gmail.com`. Email and confirmed social links work immediately. The earlier guarded server implementation remains optional and disabled by default; see [contact setup](docs/contact-setup.md). Its form is not displayed unless `GET /api/contact-config` reports complete, explicitly enabled configuration. Do not enable it with dummy keys. Real email delivery remains unverified and requires separately authorized testing. No real emails were sent during this redesign.
+
+## Validation
+
+```sh
 node --test tests/*.test.js
-node --check contact.js
-node --check motion.js
-node --check theme.js
-node --check script.js
-node --check demo-page.js
-node --check demo-runner.js
-python3 tools/sync-catalog.py
-git diff --check
+YASIRLAB_AXE_PATH=/path/to/axe.min.js python3 -m unittest discover -s tests -v
+python3 tools/capture-review.py
+node tools/update-csp.js  # after changing the Home JSON-LD block
 ```
 
-Tests cover mobile navigation, native-dialog focus, theme preference and persistence, filters/search, contact validation, failure preservation and submission deduplication, calculator errors, Iris predictions, offline catalog fallback, responsive overflow, semantic SEO metadata, and axe audits. Automated accessibility checks are supplemented with keyboard and visual review; they do not replace testing with assistive technology.
+Browser tests need Python Playwright, Chromium and a local axe-core bundle. Tool dependencies can be installed outside the repository, for example `npm install --prefix /tmp/yasirlab-checks axe-core@4.10.3 lighthouse@12.8.2`. They are development tools, not app dependencies.
 
-## Deployment
+See [five-page review and measured validation](docs/five-page-redesign.md) and [screenshots](docs/screenshots/five-page/). Earlier audit/screenshot documents refer to prior iterations. Calculator/Iris demos and the old catalog were removed at the owner's explicit request. Their old demo URLs redirect to Visualize on Vercel; the old gallery URL leads to Projects.
 
-Vercel runs `node tools/build-static.js` with output `public/`, and builds root `api/` functions separately. Do not upload the repository root to a static host. Source tests/docs/server helpers are excluded from public output. Review [security findings](docs/security-audit.md), [component audit](docs/component-audit.md) and [validation](docs/validation.md). This work is on `enhancement/yasirlab-premium-secure-contact`, from the latest `main`. Merging or production deployment requires the owner’s approval. Configure and verify a preview first; production delivery stays disabled until approved.
+No merge or production deployment is authorized by this change. Review the branch and preview before approving a release.

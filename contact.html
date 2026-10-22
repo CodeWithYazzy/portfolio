@@ -1,0 +1,309 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Contact — YasirLab</title>
+    <meta
+      name="description"
+      content="Get in touch through confirmed contact details. Direct messaging is shown only when submission is configured."
+    />
+    <meta name="theme-color" content="#0b101c" />
+    <link rel="canonical" href="https://yasirlab.in/contact" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Contact — YasirLab" />
+    <meta
+      property="og:description"
+      content="Get in touch through confirmed contact details. Direct messaging is shown only when submission is configured."
+    />
+    <meta property="og:url" content="https://yasirlab.in/contact" />
+    <meta
+      property="og:image"
+      content="https://yasirlab.in/assets/social-card.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="YasirLab — AI and data science, made visible"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <link rel="icon" href="/assets/logo.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/assets/favicon.png" />
+    <script src="/theme.js"></script>
+    <link
+      rel="preload"
+      href="/assets/fonts/manrope-latin.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="/contact.css" />
+  </head>
+  <body class="">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <header class="site-header">
+      <div class="container nav-row">
+        <a class="brand" href="/index.html" aria-label="YasirLab home"
+          ><span class="brand-icon" aria-hidden="true">y.</span
+          ><span>YasirLab</span></a
+        >
+        <nav class="site-nav" aria-label="Primary">
+          <a href="/index.html">Home</a><a href="/about.html">About</a
+          ><a href="/projects.html">Projects</a
+          ><a href="/visualize.html">Visualize</a
+          ><a href="/contact.html" aria-current="page">Contact</a>
+        </nav>
+        <div class="nav-actions">
+          <button
+            class="icon-button theme-toggle"
+            type="button"
+            aria-label="Switch to light mode"
+            aria-pressed="true"
+          >
+            <svg class="sun-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="12" cy="12" r="4" />
+              <path
+                d="M12 2v2m0 16v2M2 12h2m16 0h2M5 5l1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"
+              /></svg
+            ><svg class="moon-icon" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M20.9 13.1A9 9 0 0 1 10.9 3.1 9 9 0 1 0 20.9 13.1Z" />
+            </svg></button
+          ><button
+            id="hamburger"
+            class="icon-button menu-toggle"
+            type="button"
+            aria-expanded="false"
+            aria-controls="mobileMenu"
+            aria-label="Open menu"
+          >
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M4 8h16M4 16h16" />
+            </svg>
+          </button>
+        </div>
+      </div>
+      <nav id="mobileMenu" aria-label="Mobile primary" hidden>
+        <a href="/index.html">Home</a><a href="/about.html">About</a
+        ><a href="/projects.html">Projects</a
+        ><a href="/visualize.html">Visualize</a
+        ><a href="/contact.html" aria-current="page">Contact</a>
+      </nav>
+    </header>
+    <main id="main" tabindex="-1">
+      <section class="container page-intro">
+        <p class="eyebrow">CONTACT</p>
+        <h1>Let’s connect.</h1>
+        <p class="page-lead">
+          A question, a useful resource, or something you’re learning. There’s
+          always room for a good conversation.
+        </p>
+      </section>
+      <section class="container contact-page-layout section-tight">
+        <div class="contact-details">
+          <h2>Find me here</h2>
+          <p id="profileEmail">
+            <a class="contact-email" href="mailto:codewithyazzy@gmail.com"
+              >codewithyazzy@gmail.com</a
+            >
+          </p>
+          <div data-social-links>
+            <div class="social-links">
+              <a
+                href="https://github.com/codewithyazzy"
+                target="_blank"
+                rel="noopener noreferrer"
+                >GitHub ↗</a
+              ><a
+                href="https://youtube.com/codewithyazzy"
+                target="_blank"
+                rel="noopener noreferrer"
+                >YouTube ↗</a
+              >
+            </div>
+          </div>
+          <p class="contact-context">
+            You can reach me by email or through the profiles above.
+          </p>
+        </div>
+        <div>
+          <p id="contactAvailability" class="notice" role="status">
+            Direct messaging is not currently available.
+          </p>
+          <form
+            id="contactForm"
+            class="contact-form"
+            hidden
+            method="post"
+            action="/api/contact"
+            novalidate
+            aria-labelledby="contactFormHeading"
+            data-state="loading"
+          >
+            <div class="contact-form-heading">
+              <span class="contact-envelope" aria-hidden="true"
+                ><svg viewBox="0 0 24 24">
+                  <rect x="3" y="5" width="18" height="14" rx="3" />
+                  <path d="m4 7 8 6 8-6" /></svg
+              ></span>
+              <p class="contact-caption">SEND A MESSAGE</p>
+            </div>
+            <h3 id="contactFormHeading">Send a message</h3>
+            <p class="form-note" id="contactHelp">
+              Send a message here, without opening an email app.
+            </p>
+            <noscript
+              ><p class="contact-availability">
+                This form needs JavaScript. Confirmed contact links are listed
+                on this page.
+              </p></noscript
+            >
+            <fieldset id="contactFields">
+              <legend class="sr-only">Your message</legend>
+              <div class="row2">
+                <div class="field">
+                  <label for="name">Your name</label>
+                  <input
+                    id="name"
+                    name="name"
+                    autocomplete="name"
+                    required
+                    minlength="2"
+                    maxlength="80"
+                    aria-describedby="nameError"
+                    placeholder="How should I call you?"
+                  />
+                  <span class="field-error" id="nameError"></span>
+                </div>
+                <div class="field">
+                  <label for="email">Email address</label>
+                  <input
+                    id="email"
+                    name="email"
+                    type="email"
+                    inputmode="email"
+                    autocomplete="email"
+                    required
+                    maxlength="254"
+                    aria-describedby="emailError"
+                    placeholder="you@example.com"
+                  />
+                  <span class="field-error" id="emailError"></span>
+                </div>
+              </div>
+              <div class="field">
+                <label for="subject">Subject</label>
+                <input
+                  id="subject"
+                  name="subject"
+                  required
+                  minlength="3"
+                  maxlength="120"
+                  aria-describedby="subjectError"
+                  placeholder="A project, a question, an idea…"
+                />
+                <span class="field-error" id="subjectError"></span>
+              </div>
+              <div class="field">
+                <label for="message"
+                  >Your message
+                  <span class="field-optional">20–5,000 characters</span></label
+                >
+                <textarea
+                  id="message"
+                  name="message"
+                  rows="5"
+                  required
+                  minlength="20"
+                  maxlength="5000"
+                  aria-describedby="messageError"
+                  placeholder="What are you thinking about?"
+                ></textarea>
+                <span class="field-error" id="messageError"></span>
+              </div>
+              <div class="contact-trap" aria-hidden="true" inert>
+                <label for="contactWebsite">Leave this field empty</label>
+                <input
+                  id="contactWebsite"
+                  name="website"
+                  type="text"
+                  tabindex="-1"
+                  autocomplete="off"
+                />
+              </div>
+              <div
+                id="contactVerification"
+                class="contact-verification"
+                role="group"
+                aria-label="Spam verification"
+              ></div>
+              <p id="verificationStatus" class="contact-verification-note"></p>
+              <button
+                type="submit"
+                disabled
+                class="button primary contact-submit"
+                aria-describedby="contactHelp formStatus"
+              >
+                <span class="contact-submit-label">Send message</span>
+                <span class="contact-spinner" aria-hidden="true"></span>
+                <svg
+                  class="arrow-icon contact-submit-arrow"
+                  viewBox="0 0 24 24"
+                  aria-hidden="true"
+                >
+                  <path d="M5 12h14m-6-6 6 6-6 6" />
+                </svg>
+              </button>
+            </fieldset>
+            <div
+              id="contactSuccess"
+              class="contact-success"
+              tabindex="-1"
+              hidden
+            >
+              <span class="contact-success-mark" aria-hidden="true"
+                ><svg viewBox="0 0 24 24"><path d="m5 12 4 4L19 6" /></svg
+              ></span>
+              <h4>Message accepted.</h4>
+              <p>
+                Your note was accepted for delivery. Thanks for starting a
+                conversation.
+              </p>
+              <button id="contactAgain" type="button" class="text-link">
+                Write another message <span aria-hidden="true">↗</span>
+              </button>
+            </div>
+            <p
+              id="formStatus"
+              class="form-status"
+              role="status"
+              aria-live="polite"
+              aria-atomic="true"
+            ></p>
+            <p class="contact-privacy">
+              Your details are used to reply. Spam protection by Cloudflare;
+              email delivery by Resend. Messages are not saved in this browser.
+              Spam protection loads when you use the form.
+            </p>
+          </form>
+          <noscript
+            ><p class="help-note">
+              Any confirmed contact links above work without JavaScript.
+            </p></noscript
+          >
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div class="container footer-row">
+        <a href="/index.html" class="footer-brand"
+          >YasirLab<span aria-hidden="true">.</span></a
+        >
+        <p>A personal space for learning and exploration.</p>
+        <span>© <span id="year">2026</span> YasirLab</span>
+      </div>
+    </footer>
+    <script src="/profile.js" defer></script>
+    <script src="/script.js" defer></script>
+    <script src="/contact.js" defer></script>
+  </body>
+</html>
