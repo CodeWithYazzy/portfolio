@@ -1,4 +1,4 @@
-/* YasirLab 2.0 — progressive enhancements, no framework or runtime dependencies. */
+/* Page interactions: theme, navigation, hero demo, archive. */
 (() => {
   "use strict";
   const $ = (selector, root = document) => root.querySelector(selector);
@@ -7,7 +7,7 @@
   ];
   const root = document.documentElement;
   const systemTheme = matchMedia("(prefers-color-scheme: dark)");
-  const motion = matchMedia("(prefers-reduced-motion: reduce)");
+
   function storedTheme() {
     try {
       return localStorage.getItem("theme");
@@ -17,10 +17,8 @@
   }
   function applyTheme(theme) {
     root.dataset.theme = theme;
-    $('meta[name="theme-color"]')?.setAttribute(
-      "content",
-      theme === "dark" ? "#111113" : "#f5f5f7",
-    );
+    const color = theme === "dark" ? "#000000" : "#fbfbfd";
+    $('meta[name="theme-color"]')?.setAttribute("content", color);
     $$(".theme-toggle").forEach((button) => {
       button.setAttribute("aria-pressed", String(theme === "dark"));
       button.setAttribute(
@@ -36,7 +34,7 @@
       try {
         localStorage.setItem("theme", next);
       } catch {
-        /* Current page still toggles. */
+        /* The current page still toggles. */
       }
       applyTheme(next);
     }),
@@ -57,6 +55,14 @@
   });
   if ($("#year")) $("#year").textContent = new Date().getFullYear();
 
+  // Add a border to the header after scrolling.
+  const header = $("#navbar");
+  if (header) {
+    const onScroll = () => header.classList.toggle("is-scrolled", scrollY > 4);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+  }
+
   const menu = $("#mobileMenu");
   const hamburger = $("#hamburger");
   function setMenu(open, restoreFocus = false) {
@@ -74,13 +80,13 @@
     if (event.key === "Escape" && menu && !menu.hidden) setMenu(false, true);
   });
   document.addEventListener("click", (event) => {
-    if (menu && !menu.hidden && !event.target.closest("#navbar"))
-      setMenu(false);
+    if (menu && !menu.hidden && !event.target.closest("#navbar")) setMenu(false);
   });
-  matchMedia("(min-width: 761px)").addEventListener("change", (event) => {
+  matchMedia("(min-width: 701px)").addEventListener("change", (event) => {
     if (event.matches) setMenu(false);
   });
-  // Native anchor links retain keyboard behavior, history, and reduced-motion support.
+
+  // Focus the target section when an in-page link is used.
   $$('a[href*="#"]').forEach((link) =>
     link.addEventListener("click", () => {
       const url = new URL(link.href, location.href);
@@ -95,29 +101,32 @@
       );
       if (target) {
         target.setAttribute("tabindex", "-1");
-        // Focus without moving the viewport; the native anchor performs scrolling.
         requestAnimationFrame(() => target.focus({ preventScroll: true }));
       }
     }),
   );
-  if ("IntersectionObserver" in window && $("#home")) {
+
+  if ("IntersectionObserver" in window && $("#work")) {
+    const links = $$(".desktop-nav a");
     const observer = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries)
-          if (entry.isIntersecting) {
-            $$(".desktop-nav a").forEach((link) => {
-              if (new URL(link.href).hash === "#" + entry.target.id)
-                link.setAttribute("aria-current", "location");
-              else link.removeAttribute("aria-current");
-            });
-          }
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue;
+          links.forEach((link) => {
+            if (new URL(link.href).hash === "#" + entry.target.id)
+              link.setAttribute("aria-current", "location");
+            else link.removeAttribute("aria-current");
+          });
+        }
       },
-      { rootMargin: "-15% 0px -65% 0px" },
+      { rootMargin: "-20% 0px -65% 0px" },
     );
-    $$("#home, #projects, #lab, #about, #contact").forEach((section) =>
-      observer.observe(section),
-    );
+    ["work", "about", "contact"].forEach((id) => {
+      const section = document.getElementById(id);
+      if (section) observer.observe(section);
+    });
   }
+
   let toastTimer;
   function toast(message) {
     const el = $("#toast");
@@ -125,174 +134,105 @@
     el.textContent = message;
     el.classList.add("show");
     clearTimeout(toastTimer);
-    toastTimer = setTimeout(() => el.classList.remove("show"), 5000);
+    toastTimer = setTimeout(() => el.classList.remove("show"), 4000);
   }
   $("#copyEmail")?.addEventListener("click", async () => {
     try {
       await navigator.clipboard.writeText("codewithyazzy@gmail.com");
       toast("Email address copied.");
     } catch {
-      toast("Copy is unavailable here. Use the email address above.");
+      toast("Copy is unavailable. The email link is above.");
     }
   });
-  const form = $("#contactForm");
-  if (form) {
-    form.querySelector('button[type="submit"]').disabled = false;
-    const fields = ["name", "email", "subject", "message"].map((id) =>
-      $("#" + id),
-    );
-    function error(field, message) {
-      $("#" + field.id + "Error").textContent = message;
-      if (message) {
-        field.setAttribute("aria-invalid", "true");
-        field.setAttribute("aria-describedby", field.id + "Error");
-      } else {
-        field.removeAttribute("aria-invalid");
-        field.removeAttribute("aria-describedby");
-      }
-    }
-    fields.forEach((field) =>
-      field.addEventListener("input", () => error(field, "")),
-    );
-    form.addEventListener("submit", (event) => {
-      event.preventDefault();
-      let firstInvalid;
-      fields.forEach((field) => {
-        let message = "";
-        if (!field.value.trim())
-          message = `Please enter ${field.id === "name" ? "your name" : field.id === "subject" ? "a subject" : field.id === "message" ? "a message" : "your email address"}.`;
-        else if (field.id === "email" && field.validity.typeMismatch)
-          message = "Please enter a valid email address.";
-        else if (field.id === "message" && field.value.trim().length < 10)
-          message = "Please write at least 10 characters.";
-        error(field, message);
-        if (message && !firstInvalid) firstInvalid = field;
-      });
-      const status = $("#formStatus");
-      if (firstInvalid) {
-        status.textContent = "Please check the highlighted fields.";
-        firstInvalid.focus();
-        return;
-      }
-      const subject = $("#subject").value.trim();
-      const body = `Name: ${$("#name").value.trim()}\nEmail: ${$("#email").value.trim()}\n\n${$("#message").value.trim()}`;
-      const href = `mailto:codewithyazzy@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
-      status.textContent =
-        "Your email draft is ready. Finish sending it in your email app. Your message stays here if the app does not open.";
-      const draft = document.createElement('a');
-      draft.href = href;
-      draft.target = '_blank';
-      draft.rel = 'noopener noreferrer';
-      document.body.append(draft);
-      draft.click();
-      draft.remove();
-    });
-  }
 
-  // Native dialogs provide focus containment, Escape handling, and focus restoration.
-  $$("dialog").forEach((dialog) => {
-    dialog.addEventListener('keydown', event => {
-      if (event.key !== 'Tab') return;
-      const focusable = $$('button:not([disabled]), a[href], input:not([disabled]), textarea:not([disabled])', dialog).filter(el => el.getClientRects().length);
-      const first = focusable[0], last = focusable[focusable.length - 1];
-      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
-      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-    });
-    $(".dialog-close", dialog)?.addEventListener("click", () => dialog.close());
-    dialog.addEventListener("click", (event) => {
-      const box = dialog.getBoundingClientRect();
-      if (
-        event.target === dialog &&
-        (event.clientX < box.left ||
-          event.clientX > box.right ||
-          event.clientY < box.top ||
-          event.clientY > box.bottom)
-      )
-        dialog.close();
-    });
-    dialog.addEventListener("close", () => {
-      document.body.style.overflow = "";
-    });
-  });
-  function showDialog(dialog) {
-    dialog.showModal();
-    document.body.style.overflow = "hidden";
-  }
-  const concepts = [
+  // Iris coefficients shared with the demo page.
+  const IRIS_MEAN = [5.8575, 3.049166666666666, 3.759166666666667, 1.2075];
+  const IRIS_SCALE = [
+    0.8514362865182572, 0.44515836757520594, 1.7808001868698118,
+    0.7636712316173764,
+  ];
+  const IRIS_COEF = [
     [
-      "CNN vs transfer learning",
-      "Could pretrained features help a small image dataset?",
-      "Pretrained features might improve a small-data baseline.",
-      "Choose an image dataset, fix a split and augmentation, compare a small CNN with a pretrained backbone.",
-      "Held-out accuracy, per-class recall, and training cost. Keep the test data out of tuning.",
+      -1.0003651631318553, 1.0634839402359453, -1.7895002222546368,
+      -1.716586636558806,
     ],
     [
-      "Model evaluation",
-      "What changes when the test set stays unseen?",
-      "A careful split could expose overfitting hidden by training scores.",
-      "Start with a small classification baseline. Compare training and validation behavior; reserve a final test set.",
-      "A split description, confusion matrix, and per-class metrics, including errors and limitations.",
+      0.4566888535508926, -0.37542898149273707, -0.11516979607648324,
+      -0.7865034740380231,
     ],
     [
-      "Hyperparameter search",
-      "Which settings are worth the extra compute?",
-      "A limited random search may be a useful starting point.",
-      "Set a compute budget and fixed validation folds. Compare defaults with a small randomized search.",
-      "Validation performance and compute cost, followed by one final held-out evaluation.",
-    ],
-    [
-      "Attention & text",
-      "When is a simple text baseline enough?",
-      "TF-IDF may provide a useful reference before a more complex model.",
-      "Select a properly deduplicated text dataset. Compare a linear baseline with a small attention-based model.",
-      "Per-class F1, inference time, and example errors. No conclusion before the comparison.",
-    ],
-    [
-      "Understanding data",
-      "What should we know before fitting a model?",
-      "Inspecting distributions and missing values may reveal better preprocessing choices.",
-      "Profile one dataset. Fit preprocessing on training data only, and compare a baseline with one controlled change.",
-      "Distribution summaries, missing-value counts, and a documented validation comparison.",
-    ],
-    [
-      "Inference trade-offs",
-      "What do smaller models give up to run faster?",
-      "A smaller model might trade some performance for lower cost.",
-      "Use fixed inputs and one hardware target. Compare an original model with a supported smaller variant.",
-      "Latency distributions, model size, and held-out performance with hardware and batch size stated.",
+      0.5436763095809638, -0.6880549587432071, 1.90467001833112,
+      2.5030901105968293,
     ],
   ];
-  $$("[data-lab]").forEach((button) =>
-    button.addEventListener("click", () => {
-      const [title, question, hypothesis, method, evidence] =
-        concepts[Number(button.dataset.lab)];
-      $("#labModalTitle").textContent = title;
-      $("#labModalDesc").textContent = question;
-      const body = $("#labModalBody");
-      body.replaceChildren();
-      for (const [label, text] of [
-        ["Hypothesis", hypothesis],
-        ["Possible method", method],
-        ["Evidence to collect", evidence],
-        ["Result", "Not run. No measured result is available."],
-      ]) {
-        const dt = document.createElement("dt");
-        dt.textContent = label;
-        const dd = document.createElement("dd");
-        dd.textContent = text;
-        body.append(dt, dd);
-      }
-      showDialog($("#labModal"));
-    }),
+  const IRIS_INTERCEPT = [
+    -0.3054433182228682, 1.8808490584010606, -1.5754057401781931,
+  ];
+  const IRIS_LABELS = ["setosa", "versicolor", "virginica"];
+  const irisInputs = ["demoSl", "demoSw", "demoPl", "demoPw"].map((id) =>
+    document.getElementById(id),
   );
+  if (irisInputs.every(Boolean) && $("#demoSpecies")) {
+    const speciesEl = $("#demoSpecies");
+    const announceEl = $("#demoAnnounce");
+    const bars = [
+      $("#demoBarSetosa"),
+      $("#demoBarVersicolor"),
+      $("#demoBarVirginica"),
+    ];
+    const percents = [
+      $("#demoPctSetosa"),
+      $("#demoPctVersicolor"),
+      $("#demoPctVirginica"),
+    ];
+    const outputs = ["demoSlOut", "demoSwOut", "demoPlOut", "demoPwOut"].map(
+      (id) => document.getElementById(id),
+    );
+    const capitalize = (word) => word.charAt(0).toUpperCase() + word.slice(1);
+
+    function renderIris(announce) {
+      const values = irisInputs.map((input) => parseFloat(input.value));
+      values.forEach((value, index) => {
+        if (outputs[index]) outputs[index].textContent = `${value.toFixed(1)} cm`;
+      });
+      if (values.some((value) => !Number.isFinite(value) || value <= 0)) {
+        speciesEl.textContent = "Check inputs";
+        return;
+      }
+      const x = values.map(
+        (value, index) => (value - IRIS_MEAN[index]) / IRIS_SCALE[index],
+      );
+      const logits = IRIS_COEF.map(
+        (row, r) =>
+          row.reduce((sum, weight, i) => sum + weight * x[i], 0) +
+          IRIS_INTERCEPT[r],
+      );
+      const max = Math.max(...logits);
+      const exps = logits.map((value) => Math.exp(value - max));
+      const total = exps.reduce((sum, value) => sum + value, 0);
+      const probs = exps.map((value) => value / total);
+      const winner = probs.indexOf(Math.max(...probs));
+      speciesEl.textContent = capitalize(IRIS_LABELS[winner]);
+      bars.forEach((bar, index) => {
+        if (!bar) return;
+        bar.style.flexBasis = `${(probs[index] * 100).toFixed(1)}%`;
+        bar.classList.toggle("is-winner", index === winner);
+        if (percents[index])
+          percents[index].textContent = `${Math.round(probs[index] * 100)}%`;
+      });
+      if (announce && announceEl)
+        announceEl.textContent = `${capitalize(IRIS_LABELS[winner])}, ${Math.round(probs[winner] * 100)} percent.`;
+    }
+    irisInputs.forEach((input) =>
+      input.addEventListener("input", () => renderIris(true)),
+    );
+    renderIris(false);
+  }
 
   const grid = $("#projectsGrid");
   let catalog = window.PROJECT_CATALOG || [];
   let selectedFilter = "All";
   const pagePrefix = location.pathname.includes("/pages/") ? "../" : "";
-  function localPreview(project) {
-    return `${pagePrefix}pages/demo.html?project=${encodeURIComponent(project.name)}`;
-  }
   function safeURL(url) {
     try {
       const parsed = new URL(url);
@@ -303,108 +243,63 @@
       return "https://github.com/CodeWithYazzy";
     }
   }
-  function openProject(project) {
-    $("#modalTitle").textContent = project.name;
-    $("#modalStatus").textContent = `${project.category} / ${project.status}`;
-    $("#modalDesc").textContent = project.description;
-    $("#modalLimitations").textContent = project.limitations;
-    $("#modalDemo").href =
-      project.name === "Portfolio Website"
-        ? pagePrefix + "index.html"
-        : localPreview(project);
-    $("#modalDemo").textContent =
-      project.name === "Portfolio Website"
-        ? "Explore this site →"
-        : project.localDemo
-          ? "Try browser demo →"
-          : "Explore project →";
-    $("#modalGithub").href = safeURL(project.github);
-    showDialog($("#projectModal"));
+  function demoFor(project) {
+    if (project.name === "Portfolio Website")
+      return { href: pagePrefix + "index.html", label: "Visit the site" };
+    if (project.localDemo)
+      return {
+        href: `${pagePrefix}pages/demo.html?project=${encodeURIComponent(project.name)}`,
+        label: "Try the demo",
+      };
+    return null;
   }
-  function addArrow(element) {
-    const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
-    svg.setAttribute("viewBox", "0 0 24 24");
-    svg.setAttribute("class", "arrow-icon");
-    svg.setAttribute("aria-hidden", "true");
-    const path = document.createElementNS("http://www.w3.org/2000/svg", "path");
-    path.setAttribute("d", "M5 19 19 5M5 5h14v14");
-    svg.append(path);
-    element.append(svg);
-  }
-  function makeCard(project, index) {
+  function makeCard(project) {
     const card = document.createElement("article");
     card.className = "project-card";
-    const art = document.createElement("div");
-    art.className = "project-art";
-    const img = document.createElement("img");
-    const illustration =
-      project.localDemo === "iris"
-        ? "iris-study"
-        : project.localDemo === "calculator"
-          ? "calculator-study"
-          : project.category === "Web"
-            ? "web-study"
-            : project.category === "Data"
-              ? "data-study"
-              : "model-study";
-    img.src = `${pagePrefix}assets/${illustration}.svg`;
-    img.alt = "";
-    img.width = 560;
-    img.height = 420;
-    img.loading = "lazy";
-    const artLabel = document.createElement("span");
-    artLabel.className = "project-art-label";
-    artLabel.textContent =
-      "VISUAL STUDY / " + String(index + 1).padStart(2, "0");
-    art.append(img, artLabel);
-    const copy = document.createElement("div");
-    copy.className = "project-copy";
-    const meta = document.createElement("div");
-    meta.className = "project-meta";
+
+    const top = document.createElement("p");
+    top.className = "project-top";
     const status = document.createElement("span");
     status.className = "project-status";
     status.textContent = project.status;
     const category = document.createElement("span");
+    category.className = "project-category";
     category.textContent = project.category;
-    meta.append(status, category);
+    top.append(status, category);
+
     const title = document.createElement("h3");
+    title.className = "project-title";
     title.textContent = project.name;
+
     const desc = document.createElement("p");
+    desc.className = "project-desc";
     desc.textContent = project.description;
-    const tags = document.createElement("div");
-    tags.className = "tags";
-    (project.technologies || []).slice(0, 3).forEach((technology) => {
-      const tag = document.createElement("span");
-      tag.textContent = technology;
-      tags.append(tag);
-    });
+
+    const tech = document.createElement("p");
+    tech.className = "project-tech";
+    tech.textContent = (project.technologies || []).slice(0, 3).join(" · ");
+
     const actions = document.createElement("div");
     actions.className = "project-actions";
-    const button = document.createElement("button");
-    button.type = "button";
-    button.textContent = project.localDemo
-      ? "Explore demo "
-      : "Explore project ";
-    button.setAttribute(
-      "aria-label",
-      `Explore ${project.localDemo ? "demo" : "project"}: ${project.name}`,
-    );
-    button.setAttribute("aria-haspopup", "dialog");
-    button.addEventListener("click", () => openProject(project));
+    const demo = demoFor(project);
+    if (demo) {
+      const link = document.createElement("a");
+      link.href = demo.href;
+      link.textContent = demo.label;
+      actions.append(link);
+    }
     const source = document.createElement("a");
     source.href = safeURL(project.github);
-    source.textContent = "Source ";
+    source.textContent = "Source";
     source.target = "_blank";
     source.rel = "noopener noreferrer";
-    source.setAttribute(
-      "aria-label",
-      `${project.name} source on GitHub (opens in new tab)`,
-    );
-    addArrow(button);
-    addArrow(source);
-    actions.append(button, source);
-    copy.append(meta, title, desc, tags, actions);
-    card.append(art, copy);
+    const note = document.createElement("span");
+    note.className = "sr-only";
+    note.textContent = " (opens in a new tab)";
+    source.append(note);
+    actions.append(source);
+
+    card.append(top, title, desc, tech, actions);
     return card;
   }
   function renderGallery() {
@@ -412,7 +307,6 @@
     const query = ($("#projectSearch")?.value || "").trim().toLowerCase();
     const projects = catalog.filter(
       (project) =>
-        (!grid.dataset.featured || project.featured) &&
         (selectedFilter === "All" || project.category === selectedFilter) &&
         [project.name, project.description, ...(project.technologies || [])]
           .join(" ")
@@ -420,9 +314,13 @@
           .includes(query),
     );
     grid.replaceChildren(...projects.map(makeCard));
-    if ($("#projectCount"))
-      $("#projectCount").textContent =
-        `${projects.length} ${projects.length === 1 ? "project" : "projects"}${selectedFilter === "All" ? " in the collection" : " in " + selectedFilter.toLowerCase()}`;
+    const count = $("#projectCount");
+    if (count) {
+      const filter = selectedFilter === "All" ? "" : ` · ${selectedFilter}`;
+      count.textContent = `${projects.length} ${
+        projects.length === 1 ? "project" : "projects"
+      }${filter}`;
+    }
     if ($("#projectEmpty")) $("#projectEmpty").hidden = projects.length !== 0;
   }
   $$("[data-filter]").forEach((button) =>
@@ -460,38 +358,7 @@
         renderGallery();
       })
       .catch(() => {
-        /* The bundled catalog also supports offline/file browsing. */
+        /* The bundled catalog also supports offline browsing. */
       });
-  }
-  if (!motion.matches && "IntersectionObserver" in window) {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            entry.target.classList.remove("reveal-pending");
-            observer.unobserve(entry.target);
-          }
-        });
-      },
-      { threshold: 0.08 },
-    );
-    $$(".section-heading, .about-grid, .learning-journal, .lab-intro").forEach(
-      (el) => {
-        el.classList.add("reveal-ready", "reveal-pending");
-        observer.observe(el);
-      },
-    );
-    motion.addEventListener("change", () => {
-      if (motion.matches)
-        $$(".reveal-pending").forEach((el) =>
-          el.classList.remove("reveal-pending"),
-        );
-    });
-    // Fragment navigation and browser Find must never land on invisible content.
-    window.addEventListener("hashchange", () =>
-      $$(".reveal-pending").forEach((el) =>
-        el.classList.remove("reveal-pending"),
-      ),
-    );
   }
 })();

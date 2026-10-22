@@ -1,4 +1,4 @@
-// Project preview controller. Local arithmetic and Iris inference are preserved.
+// Project demo page: load catalog data and run the local examples.
 const params = new URLSearchParams(location.search);
 const requestedName = params.get("project") || params.get("title") || "";
 const fallback = {
@@ -56,7 +56,7 @@ const engineeringSectionEl = document.getElementById("engineeringSection");
 const engineeringGridEl = document.getElementById("engineeringGrid");
 const verificationBannerEl = document.getElementById("verificationBanner");
 let calculatorExpression = "";
-// Fixed Iris coefficients retained from the original browser demo.
+// Iris coefficients used by the browser demo.
 const IRIS_MEAN = [5.8575, 3.049166666666666, 3.759166666666667, 1.2075];
 const IRIS_SCALE = [
   0.8514362865182572, 0.44515836757520594, 1.7808001868698118,
@@ -92,18 +92,18 @@ function renderProject(project) {
     project.status || "Project not found";
   titleEl.textContent = project.name;
   if (headerEl) headerEl.textContent = project.name;
-  document.title = project.name + " — YasirLab 2.0";
+  document.title = project.name + " — Yasir Javed Khan";
   descriptionEl.textContent =
     project.description || "Project details are not available right now.";
   const repoInfo = runner ? runner.parseGithubUrl(project.github || "") : null;
   if (sourceCodeEl) {
     sourceCodeEl.href = project.github || "https://github.com/CodeWithYazzy";
-    sourceCodeEl.textContent = repoInfo ? "Open Source Code" : "GitHub Profile";
+    sourceCodeEl.textContent = repoInfo ? "View source" : "GitHub profile";
   }
   if (availabilityTextEl) {
     availabilityTextEl.textContent = repoInfo
-      ? "This project links to GitHub. Run Demo checks what can run here; browser examples are labeled separately."
-      : "A specific public repository was not provided for this project yet, so there is no live source to run.";
+      ? "Run the browser demo, or read the source on GitHub."
+      : "No public repository is linked for this project yet.";
   }
   tagsEl.replaceChildren();
   (Array.isArray(project.technologies) ? project.technologies : []).forEach(
@@ -292,7 +292,7 @@ function scrollToEl(el) {
   }
 }
 
-// Auto-scroll to the running demo, then retire the floating arrow.
+// Auto-scroll to the demo, then hide the floating arrow.
 function settleDemo(target) {
   scrollToEl(target);
   setTimeout(() => {
@@ -579,10 +579,7 @@ function renderIrisResult(sl, sw, pl, pw) {
   probs.forEach((pr, i) => {
     const s = document.createElement("span");
     s.textContent = `${IRIS_LABELS[i]} ${(pr * 100).toFixed(1)}%`;
-    if (IRIS_LABELS[i] === label)
-      (s.style.background = "#0B1220"),
-        (s.style.color = "#fff"),
-        (s.style.borderColor = "#0B1220");
+    if (IRIS_LABELS[i] === label) s.classList.add("is-winner");
     p.appendChild(s);
   });
   irisResultEl.append(strong, p);
@@ -595,7 +592,7 @@ async function runIrisLocal(sourceInfo) {
   showIris(true);
   if (irisSlEl) irisSlEl.focus();
   statusEl.textContent =
-    "Iris browser example ready — bundled coefficients, local inference. No accuracy claim is made here.";
+    "Iris demo ready. Everything runs locally in this browser.";
   if (sourceInfo && sourceInfo.path) {
     const card = availabilityTextEl.parentElement;
     let meta = document.getElementById("ghSourceMeta");
@@ -688,6 +685,8 @@ runDemoEl.addEventListener("click", () => {
   executeRun(false).finally(() => {
     runDemoEl.classList.remove("loading");
     runDemoEl.disabled = false;
+    // Hide the loading steps once the demo finishes.
+    pipelineEl.hidden = true;
   });
   runDemoEl.classList.add("loading");
   runDemoEl.disabled = true;

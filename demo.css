@@ -1,4 +1,4 @@
-/* Layout for the existing demo runner; shared visual tokens are in style.css. */
+/* Demo page layout. Shared tokens live in style.css. */
 .demo-main .desc {
   max-width: 740px;
 }
