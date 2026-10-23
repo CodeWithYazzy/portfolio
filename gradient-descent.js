@@ -100,6 +100,7 @@
       : running
         ? "running"
         : "ready";
+    status.classList.toggle("is-live", running);
     canvas.setAttribute(
       "aria-label",
       `Gradient descent plot of the ${fn.name} function after ${steps} steps. Current x is ${format(x)}, loss is ${format(value)}.${message ? ` ${message}` : ""}`,
@@ -265,6 +266,8 @@
     clearTimeout(timer);
     runButton.textContent = "Run";
     runButton.setAttribute("aria-pressed", "false");
+    status.classList.remove("is-live");
+    status.dataset.state = finished ? message || "finished" : "ready";
   }
 
   function finish(nextMessage) {

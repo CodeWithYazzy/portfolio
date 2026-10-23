@@ -1,5 +1,15 @@
 // Apply before first paint, including when browser storage is unavailable.
 (() => {
+  const root = document.documentElement;
+  root.classList.add("js");
+
+  // If the motion layer cannot start, make every reveal visible.
+  setTimeout(() => {
+    if (!root.classList.contains("motion-ready")) {
+      root.classList.add("reveal-fallback");
+    }
+  }, 2500);
+
   let saved;
   try {
     saved = localStorage.getItem("theme");

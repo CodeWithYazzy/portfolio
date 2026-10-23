@@ -117,21 +117,21 @@
       <section class="hero" aria-labelledby="intro-title">
         <div class="container hero-grid">
           <div class="hero-copy">
-            <p class="kicker hero-kicker">
+            <p class="kicker hero-kicker" data-reveal="intro">
               <span class="status-dot" aria-hidden="true"></span>
               AI · Data Science · Machine Learning
             </p>
-            <h1 id="intro-title">Yasir Javed Khan</h1>
-            <p class="lead hero-lede">
+            <h1 id="intro-title" data-reveal="intro">Yasir Javed Khan</h1>
+            <p class="lead hero-lede" data-reveal="intro">
               I’m interested in AI, data science, and machine learning — and in
-              making how they work easier to see.
+              making how they work <span class="text-highlight">easier to see</span>.
             </p>
-            <p class="hero-description">
+            <p class="hero-description" data-reveal="intro">
               This site is a small lab: interactive experiments in neural
               networks, optimization, and clustering, built from scratch in the
               browser.
             </p>
-            <div class="button-row">
+            <div class="button-row" data-reveal="intro">
               <a class="button primary" href="visualize.html">
                 Explore Visualizations
               </a>
@@ -139,7 +139,7 @@
             </div>
           </div>
 
-          <div class="network-card">
+          <div class="network-card" data-reveal="intro">
             <div class="card-bar">
               <span>Neural network</span>
               <span class="card-bar-note">Interactive</span>
@@ -166,7 +166,7 @@
 
       <section class="home-preview" aria-labelledby="preview-title">
         <div class="container">
-          <div class="section-heading">
+          <div class="section-heading" data-reveal="scroll">
             <div>
               <p class="kicker">Visualization lab</p>
               <h2 id="preview-title">Three ways to see learning happen.</h2>
@@ -179,8 +179,8 @@
             </a>
           </div>
 
-          <div class="preview-grid">
-            <a class="preview-card" href="visualize.html#neural-network">
+          <div class="preview-grid" data-reveal-group>
+            <a class="preview-card" href="visualize.html#neural-network" data-reveal="card">
               <div class="preview-art" aria-hidden="true">
                 <svg viewBox="0 0 220 120">
                   <g class="preview-lines">
@@ -205,7 +205,7 @@
               <span class="preview-arrow" aria-hidden="true">↗</span>
             </a>
 
-            <a class="preview-card" href="visualize.html#gradient-descent">
+            <a class="preview-card" href="visualize.html#gradient-descent" data-reveal="card">
               <div class="preview-art" aria-hidden="true">
                 <svg viewBox="0 0 220 120">
                   <path class="preview-grid-line" d="M24 96h172M24 20v76" />
@@ -225,7 +225,7 @@
               <span class="preview-arrow" aria-hidden="true">↗</span>
             </a>
 
-            <a class="preview-card" href="visualize.html#k-means">
+            <a class="preview-card" href="visualize.html#k-means" data-reveal="card">
               <div class="preview-art" aria-hidden="true">
                 <svg viewBox="0 0 220 120">
                   <g class="preview-cluster">
@@ -294,5 +294,7 @@
     <script src="main.js" defer></script>
     <script src="canvas-utils.js" defer></script>
     <script src="hero-network.js" defer></script>
+    <script src="vendor/motion.js" defer></script>
+    <script src="animations.js" defer></script>
   </body>
 </html>

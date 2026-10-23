@@ -159,6 +159,7 @@
       : running
         ? "running"
         : "ready";
+    status.classList.toggle("is-live", running);
     canvas.setAttribute(
       "aria-label",
       `Cluster plot with ${points.length} points and ${k} clusters. Iteration ${iteration}.${iteration ? ` Inertia ${inertia.toFixed(1)}.` : " No iterations have run."}`,
@@ -257,6 +258,8 @@
     clearTimeout(timer);
     runButton.textContent = "Run";
     runButton.setAttribute("aria-pressed", "false");
+    status.classList.remove("is-live");
+    status.dataset.state = converged ? "converged" : "ready";
   }
 
   function finish() {

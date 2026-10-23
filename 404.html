@@ -83,12 +83,12 @@
     <main id="main-content" tabindex="-1">
       <section class="page error-page" aria-labelledby="error-title">
         <div class="container error-inner">
-          <p class="kicker">404</p>
-          <h1 id="error-title">Page not found.</h1>
-          <p class="lead">
+          <p class="kicker" data-reveal="intro">404</p>
+          <h1 id="error-title" data-reveal="intro">Page not found.</h1>
+          <p class="lead" data-reveal="intro">
             The page may have moved, or the link may be incomplete.
           </p>
-          <div class="button-row">
+          <div class="button-row" data-reveal="intro">
             <a class="button primary" href="index.html">Home</a>
             <a class="button secondary" href="visualize.html">
               Explore Visualizations
@@ -127,5 +127,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script src="main.js" defer></script>
+    <script src="vendor/motion.js" defer></script>
+    <script src="animations.js" defer></script>
   </body>
 </html>

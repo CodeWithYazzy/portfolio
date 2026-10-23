@@ -4,7 +4,9 @@
 
   const root = document.documentElement;
   const systemTheme = matchMedia("(prefers-color-scheme: dark)");
+  const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)");
   const EMAIL = "codewithyazzy@gmail.com";
+  let themeTimer;
 
   function storedTheme() {
     try {
@@ -14,7 +16,15 @@
     }
   }
 
-  function applyTheme(theme) {
+  function applyTheme(theme, smooth = false) {
+    if (smooth) {
+      root.classList.add("is-theme-switching");
+      clearTimeout(themeTimer);
+      themeTimer = setTimeout(
+        () => root.classList.remove("is-theme-switching"),
+        360,
+      );
+    }
     root.dataset.theme = theme;
     const color = theme === "dark" ? "#000000" : "#fbfbfd";
     document
@@ -48,7 +58,7 @@
       } catch {
         /* The current page can still switch. */
       }
-      applyTheme(next);
+      applyTheme(next, true);
     });
   });
 
@@ -84,10 +94,76 @@
   const menu = document.querySelector("#mobileMenu");
   const menuButton = document.querySelector("#hamburger");
   const menuQuery = matchMedia("(min-width: 821px)");
+  let menuAnimation = null;
+
+  function clearMenuStyles() {
+    if (!menu) return;
+    menu.style.removeProperty("height");
+    menu.style.removeProperty("overflow");
+    menu.style.removeProperty("opacity");
+    menu.style.removeProperty("transform");
+  }
 
   function setMenu(open, restoreFocus = false) {
     if (!menu || !menuButton) return;
-    menu.hidden = !open;
+
+    if (menuAnimation) {
+      menuAnimation.stop();
+      menuAnimation = null;
+    }
+
+    const shouldAnimate = Boolean(window.Motion) && !reduceMotion.matches;
+
+    if (open) {
+      menu.hidden = false;
+      menu.style.overflow = "hidden";
+      const targetHeight = menu.scrollHeight;
+      if (shouldAnimate) {
+        menuAnimation = window.Motion.animate(
+          menu,
+          {
+            height: ["0px", `${targetHeight}px`],
+            opacity: [0, 1],
+            transform: ["translateY(-6px)", "translateY(0px)"],
+          },
+          {
+            duration: 0.28,
+            ease: [0.23, 1, 0.32, 1],
+            onComplete: () => {
+              menuAnimation = null;
+              clearMenuStyles();
+            },
+          },
+        );
+      } else {
+        clearMenuStyles();
+      }
+    } else {
+      if (shouldAnimate && !menu.hidden) {
+        const startHeight = menu.getBoundingClientRect().height;
+        menuAnimation = window.Motion.animate(
+          menu,
+          {
+            height: [`${startHeight}px`, "0px"],
+            opacity: [1, 0],
+            transform: ["translateY(0px)", "translateY(-4px)"],
+          },
+          {
+            duration: 0.18,
+            ease: [0.4, 0, 1, 1],
+            onComplete: () => {
+              menu.hidden = true;
+              menuAnimation = null;
+              clearMenuStyles();
+            },
+          },
+        );
+      } else {
+        menu.hidden = true;
+        clearMenuStyles();
+      }
+    }
+
     menuButton.setAttribute("aria-expanded", String(open));
     menuButton.setAttribute("aria-label", open ? "Close menu" : "Open menu");
     if (restoreFocus) menuButton.focus();

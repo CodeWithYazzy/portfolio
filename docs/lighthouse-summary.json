@@ -1,17 +1,17 @@
 {
-  "lighthouse_version": "12.8.2",
-  "scope": "Local Python static server. Lighthouse simulated mobile and desktop presets. Four runs: home and visualization lab.",
+  "lighthouse_version": "13.5.0",
+  "scope": "Local Python static server. Lighthouse simulated mobile and desktop presets. Four runs: home and visualization lab. The motion layer is included.",
   "runs": {
     "home_mobile": {
       "scores": {
-        "performance": 100,
+        "performance": 96,
         "accessibility": 100,
         "best-practices": 100,
         "seo": 100
       },
-      "largest_contentful_paint": "1.2 s",
+      "largest_contentful_paint": "2.3 s",
       "cumulative_layout_shift": "0",
-      "total_blocking_time": "0 ms"
+      "total_blocking_time": "180 ms"
     },
     "home_desktop": {
       "scores": {
@@ -20,20 +20,20 @@
         "best-practices": 100,
         "seo": 100
       },
-      "largest_contentful_paint": "0.3 s",
+      "largest_contentful_paint": "0.5 s",
       "cumulative_layout_shift": "0",
       "total_blocking_time": "0 ms"
     },
     "visualize_mobile": {
       "scores": {
-        "performance": 100,
+        "performance": 97,
         "accessibility": 100,
         "best-practices": 100,
         "seo": 100
       },
-      "largest_contentful_paint": "1.7 s",
+      "largest_contentful_paint": "2.6 s",
       "cumulative_layout_shift": "0",
-      "total_blocking_time": "10 ms"
+      "total_blocking_time": "30 ms"
     },
     "visualize_desktop": {
       "scores": {
@@ -42,7 +42,7 @@
         "best-practices": 100,
         "seo": 100
       },
-      "largest_contentful_paint": "0.4 s",
+      "largest_contentful_paint": "0.6 s",
       "cumulative_layout_shift": "0",
       "total_blocking_time": "0 ms"
     }

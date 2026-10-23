@@ -91,14 +91,14 @@
     <main id="main-content" tabindex="-1">
       <section class="page contact-page" aria-labelledby="contact-title">
         <div class="container contact-inner">
-          <p class="kicker">Contact</p>
-          <h1 id="contact-title">Let’s talk<span class="accent-dot">.</span></h1>
-          <p class="lead contact-lede">
+          <p class="kicker" data-reveal="intro">Contact</p>
+          <h1 id="contact-title" data-reveal="intro">Let’s talk<span class="accent-dot">.</span></h1>
+          <p class="lead contact-lede" data-reveal="intro">
             If you’d like to discuss an idea, share a resource, or ask a
             question, email is the best way to reach me.
           </p>
 
-          <div class="contact-primary">
+          <div class="contact-primary" data-reveal="intro">
             <a class="email-link" href="mailto:codewithyazzy@gmail.com">
               codewithyazzy@gmail.com
             </a>
@@ -107,12 +107,13 @@
             </button>
           </div>
 
-          <div class="contact-links" aria-label="Social profiles">
+          <div class="contact-links" aria-label="Social profiles" data-reveal-group>
             <a
               class="contact-link"
               href="https://github.com/CodeWithYazzy"
               target="_blank"
               rel="noopener noreferrer"
+              data-reveal="card"
             >
               <span>
                 <span class="contact-link-label">GitHub</span>
@@ -125,6 +126,7 @@
               href="https://x.com/codewithyazzy"
               target="_blank"
               rel="noopener noreferrer"
+              data-reveal="card"
             >
               <span>
                 <span class="contact-link-label">X</span>
@@ -166,5 +168,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script src="main.js" defer></script>
+    <script src="vendor/motion.js" defer></script>
+    <script src="animations.js" defer></script>
   </body>
 </html>

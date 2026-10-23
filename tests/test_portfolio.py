@@ -549,6 +549,91 @@ class PortfolioTests(unittest.TestCase):
         finally:
             context.close()
 
+    def test_motion_layer_reveals_content_and_keeps_controls_working(self):
+        context = self.browser.new_context(
+            viewport={"width": 1440, "height": 1000},
+            color_scheme="light",
+            reduced_motion="no-preference",
+        )
+        context.route("https://**/*", lambda route: route.abort())
+        page = context.new_page()
+        errors = []
+        page.on("pageerror", lambda error: errors.append(str(error)))
+        page.on(
+            "console",
+            lambda message: (
+                errors.append(message.text) if message.type == "error" else None
+            ),
+        )
+
+        try:
+            page.goto(self.base + "/")
+            page.wait_for_load_state("networkidle")
+            self.assertEqual(page.evaluate("typeof window.Motion"), "object")
+            page.wait_for_function(
+                "document.querySelector('#intro-title').classList.contains('is-revealed')"
+            )
+
+            page.locator(".preview-grid").scroll_into_view_if_needed()
+            page.wait_for_function(
+                "[...document.querySelectorAll('.preview-card')].every("
+                "card => card.classList.contains('is-revealed'))"
+            )
+
+            card = page.locator(".preview-card").first
+            card.hover(position={"x": 32, "y": 42})
+            page.wait_for_timeout(250)
+            self.assertNotEqual(
+                card.evaluate("el => el.style.getPropertyValue('--ry')"), "0deg"
+            )
+
+            theme_before = page.evaluate("document.documentElement.dataset.theme")
+            page.locator(".theme-toggle").click()
+            theme_after = page.evaluate("document.documentElement.dataset.theme")
+            self.assertNotEqual(theme_before, theme_after)
+
+            page.goto(self.base + "/visualize.html")
+            page.wait_for_load_state("networkidle")
+            page.locator("#nnRun").scroll_into_view_if_needed()
+            page.locator("#nnRun").click()
+            page.wait_for_timeout(250)
+            self.assertIn(
+                "is-live", page.locator("#nnStatus").get_attribute("class") or ""
+            )
+            page.locator("#nnRun").click()
+            page.wait_for_timeout(100)
+            self.assertNotIn(
+                "is-live", page.locator("#nnStatus").get_attribute("class") or ""
+            )
+
+            page.goto(self.base + "/")
+            page.wait_for_load_state("networkidle")
+            page.evaluate("scrollTo(0, document.documentElement.scrollHeight)")
+            page.wait_for_timeout(300)
+            self.assertTrue(
+                page.locator(".scroll-progress").evaluate(
+                    "el => el.classList.contains('is-visible')"
+                )
+            )
+
+            page.set_viewport_size({"width": 390, "height": 844})
+            page.evaluate("scrollTo(0, 0)")
+            page.locator("#hamburger").click()
+            page.wait_for_timeout(400)
+            self.assertFalse(
+                page.locator("#mobileMenu").evaluate("el => el.hidden")
+            )
+            page.keyboard.press("Escape")
+            page.wait_for_timeout(300)
+            self.assertTrue(page.locator("#mobileMenu").evaluate("el => el.hidden"))
+            self.assertEqual(
+                page.locator("#hamburger").get_attribute("aria-expanded"), "false"
+            )
+        finally:
+            context.close()
+
+        self.assertEqual(errors, [], "Unexpected JavaScript errors")
+
     @unittest.skipUnless(AXE and Path(AXE).is_file(), "axe-core bundle not configured")
     def test_accessibility_audits_light_dark_and_mobile(self):
         def audit():

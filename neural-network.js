@@ -195,6 +195,7 @@
     runButton.textContent = "Train";
     runButton.setAttribute("aria-pressed", "false");
     stepButton.disabled = false;
+    status.classList.remove("is-live");
   }
 
   function resetTraining(announcement = false) {
@@ -225,6 +226,7 @@
     status.dataset.epoch = String(epoch);
     status.dataset.loss = loss.toFixed(4);
     status.dataset.accuracy = accuracy.toFixed(4);
+    status.classList.toggle("is-live", running);
     canvas.setAttribute(
       "aria-label",
       `Decision boundary plot after ${epoch} training epochs. Loss ${loss.toFixed(2)}, accuracy ${(accuracy * 100).toFixed(0)} percent.`,

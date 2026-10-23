@@ -92,21 +92,21 @@
       <section class="page about-page" aria-labelledby="about-title">
         <div class="container about-grid">
           <div class="about-copy">
-            <p class="kicker">About</p>
-            <h1 id="about-title">Yasir Javed Khan</h1>
-            <p class="lead about-lede">
+            <p class="kicker" data-reveal="intro">About</p>
+            <h1 id="about-title" data-reveal="intro">Yasir Javed Khan</h1>
+            <p class="lead about-lede" data-reveal="intro">
               I’m based in Mumbai, and I’m interested in AI, data science, and
               machine learning.
             </p>
-            <p class="page-body">
+            <p class="page-body" data-reveal="intro">
               The visualization lab is where I work through ideas by building
               them: a small neural network trained in the browser, gradient
               descent drawn step by step, clusters forming in real time.
             </p>
-            <p class="page-body">
+            <p class="page-body" data-reveal="intro">
               Projects will appear here when there is something real to share.
             </p>
-            <a class="text-link" href="visualize.html">
+            <a class="text-link" href="visualize.html" data-reveal="intro">
               Explore the visualization lab
               <svg class="chevron" viewBox="0 0 24 24" aria-hidden="true">
                 <path d="m9 5 7 7-7 7" />
@@ -114,7 +114,7 @@
             </a>
           </div>
 
-          <figure class="portrait-frame">
+          <figure class="portrait-frame" data-reveal="intro">
             <img
               src="assets/portrait.webp"
               alt="Portrait of Yasir Javed Khan"
@@ -127,7 +127,7 @@
         </div>
 
         <div class="container">
-          <dl class="fact-list">
+          <dl class="fact-list" data-reveal="scroll">
             <div class="fact">
               <dt>Based in</dt>
               <dd>Mumbai, India</dd>
@@ -190,5 +190,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script src="main.js" defer></script>
+    <script src="vendor/motion.js" defer></script>
+    <script src="animations.js" defer></script>
   </body>
 </html>

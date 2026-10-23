@@ -91,16 +91,16 @@
     <main id="main-content" tabindex="-1">
       <section class="page projects-page" aria-labelledby="projects-title">
         <div class="container projects-inner">
-          <p class="kicker">Projects</p>
-          <h1 id="projects-title">Projects coming soon<span class="accent-dot">.</span></h1>
-          <p class="lead projects-lede">
+          <p class="kicker" data-reveal="intro">Projects</p>
+          <h1 id="projects-title" data-reveal="intro">Projects coming soon<span class="accent-dot">.</span></h1>
+          <p class="lead projects-lede" data-reveal="intro">
             I haven’t published any projects yet. When there’s something real to
             show, it will appear here.
           </p>
-          <p class="page-body projects-body">
+          <p class="page-body projects-body" data-reveal="intro">
             In the meantime, the visualization lab is open.
           </p>
-          <a class="button primary" href="visualize.html">
+          <a class="button primary" href="visualize.html" data-reveal="intro">
             Explore Visualizations
           </a>
         </div>
@@ -136,5 +136,7 @@
 
     <div id="toast" class="toast" role="status" aria-live="polite"></div>
     <script src="main.js" defer></script>
+    <script src="vendor/motion.js" defer></script>
+    <script src="animations.js" defer></script>
   </body>
 </html>

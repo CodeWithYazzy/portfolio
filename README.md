@@ -2,7 +2,7 @@
 
 The source for [yasirlab.in](https://yasirlab.in), a five-page personal site about AI, data science, and machine learning. The centerpiece is a visualization lab: three interactive experiments that run entirely in the browser.
 
-The site is hand-written HTML, CSS, and JavaScript. There is no framework, package manager, build step, or runtime dependency.
+The site is hand-written HTML, CSS, and JavaScript. There is no framework, package manager, or build step. Motion is vendored locally as a progressive enhancement; the pages and labs remain fully usable without it.
 
 ## Pages
 
@@ -23,14 +23,16 @@ The experiments use no ML libraries. All calculations and drawing happen in `can
 
 ## Files
 
-- `style.css` — design tokens, light/dark themes, responsive layout, and reduced-motion rules.
+- `style.css` — design tokens, light/dark themes, responsive layout, reveal and hover states, and reduced-motion rules.
 - `theme.js` — applies the stored or system theme before paint.
-- `main.js` — theme switching, navigation, mobile menu, copy-email feedback, and small UI details.
+- `main.js` — theme switching, navigation, the animated mobile menu, copy-email feedback, and small UI details.
+- `animations.js` — scroll reveals, the scroll-progress line, pointer spotlight/tilt, and reduced-motion fallbacks.
+- `vendor/motion.js` — vendored Motion 14.6.0 (MIT) used for reveals and menu motion. See `vendor/README.md` for source and license notes.
 - `canvas-utils.js` — shared canvas sizing, theme colors, seeded random numbers, and shape helpers.
 - `hero-network.js` — the subtle interactive network on the home page.
 - `neural-network.js`, `gradient-descent.js`, `k-means.js` — the three lab experiments.
 - `assets/portrait.webp` — the supplied portrait.
-- `tests/test_portfolio.py` — Playwright and axe browser checks.
+- `tests/test_portfolio.py` — Playwright and axe browser checks, including a normal-motion smoke test.
 - `docs/` — content audit, validation notes, Lighthouse results, and screenshots.
 
 ## Run locally
@@ -53,18 +55,20 @@ $env:PYTHONIOENCODING = "utf-8"
 python -m unittest discover -s tests -v
 ```
 
-The suite starts its own loopback-only static server and blocks external requests. It checks navigation, page content, both themes, the mobile menu, no-JavaScript fallbacks, responsive overflow at 320–1440 px, metadata, internal links, all three labs, and axe audits in 16 desktop/mobile states. Set `CHROMIUM_PATH` if Chrome is not in a standard location.
+The suite starts its own loopback-only static server and blocks external requests. It checks navigation, page content, both themes, the mobile menu, no-JavaScript fallbacks, responsive overflow at 320–1440 px, metadata, internal links, all three labs, axe audits in 16 desktop/mobile states, and a normal-motion smoke test. Set `CHROMIUM_PATH` if Chrome is not in a standard location.
 
 Useful static checks:
 
 ```powershell
 node --check main.js
 node --check theme.js
+node --check animations.js
 node --check canvas-utils.js
 node --check hero-network.js
 node --check neural-network.js
 node --check gradient-descent.js
 node --check k-means.js
+node --check vendor/motion.js
 git diff --check
 ```
 
